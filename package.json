@@ -1,0 +1,23 @@
+{
+  "name": "426final",
+  "version": "1.0.0",
+  "description": "Twitter, improved and revamped",
+  "main": "render.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandoonward/426Final.git"
+  },
+  "author": "Brandon Ward, Sophie Lucas, Raj Gandecha, Owen Zook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandoonward/426Final/issues"
+  },
+  "homepage": "https://github.com/brandoonward/426Final#readme",
+  "dependencies": {
+    "browser-sync": "^2.26.12",
+    "bulma": "^0.9.1"
+  }
+}
