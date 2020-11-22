@@ -7,6 +7,12 @@
         <title>Twitter</title>
 
         <link rel="stylesheet" href="node_modules/bulma/css/bulma.css">
+    
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/jquery-ui-dist/jquery-ui.js"></script>
+        <script src="data.js"></script>
+        <script src="render.js" type="module"></script>
+
     </head>
 
     <body>
@@ -36,7 +42,7 @@
             
             
             <div class="navbar-menu navbar-padding-horizontal">
-            <div class="navbar-start">
+                <div class="navbar-start">
                 <a class= "navbar-item">
                     How Does This Work?
                 </a>
@@ -73,8 +79,17 @@
     
                 </div>
             </div>
-        </nav>
 
+            <div class="navbar-item navbar-end">
+                <div class="ui-widget">
+                    <label for="tags">Tags: </label>
+                    <input id="tags" type="text">
+
+                  </div>
+            </div>
+
+        </nav>
+        <div class="results"></div>
 
 
 
@@ -155,8 +170,6 @@
         </div>
 
         
-        <script src="node_modules/jquery/dist/jquery.js"></script>
-        <script src="data.js"></script>
-        <script src="render.js" type="module"></script>
+        
     </body>
 </html>
