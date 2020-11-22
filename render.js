@@ -27,3 +27,11 @@ export const renderUserProfile = function(user) {
 export const renderNewTweet = function(user) {
 
 }
+
+$(function () {
+    let objects = [{name: "Owen", last: "Zook"}, {name:"Amy", last:"Pantano"}];
+    let array = ["Owen", "Zook"];
+    $('#tags').autocomplete({source: array},{});
+
+
+});
