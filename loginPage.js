@@ -73,8 +73,14 @@ function signIn() {
     </form>`);
     
         $(`#start`).on('click', async () => {
+
+            console.log($(`#id`).val());
+            console.log($(`#name`).val());
+            console.log($(`#pass`).val());
+            console.log($(`#avat`).val());           
+
             try {
-                let result = await register($(`#id`).val(), $(`#name`).val(), $(`#pass`).val(), $(`#avat`).val());
+                let result = await register(`${$(`#id`).val()}`, `${$(`#name`).val()}`, `${$(`#pass`).val()}`, `${$(`#avat`).val()}`);
             } catch (error) {
                 $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is not registered </p>`);
                 return false;
@@ -87,27 +93,20 @@ function signIn() {
 }
 
 async function register(id, name, pass, avat) {
-    const result = await axios({
-        method: 'post',
-        url: 'http://18.223.149.123:3030/register',
-        body: {
-            userId: id,
+    const result = await axios.post('https://18.223.149.123:3030/register',
+        {userId: id,
             displayName: name,
             password: pass,
-            avatar: avat
-        }
-    });
+            avatar: avat}, {withCredentials: true});
 }
 
 async function login(id, pass) {
-    const result = await axios({
-        method: 'post',
-        url: `18.223.149.123:3030/login`,
-        body: {
+    const result = await axios.post(`https://18.223.149.123:3030/login`,
+        {
             userId: id,
             password: pass
         }
-    });
+    );
 
     return result;
 
