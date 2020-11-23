@@ -10,7 +10,7 @@
     
         <script src="node_modules/jquery/dist/jquery.js"></script>
         <script src="node_modules/jquery-ui-dist/jquery-ui.js"></script>
-        <script src="data.js"></script>
+        <script src="node_modules/axios/dist/axios.js"></script>
         <script src="render.js" type="module"></script>
 
     </head>
@@ -31,78 +31,85 @@
         </Section>
 
 
-        <nav class="navbar is-info is-center level" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">    
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                  </a>
+        <nav class="navbar is-transparent">
+            <div class="navbar-brand">
+              <div class="navbar-burger burger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </div>
-            
-            
-            <div class="navbar-menu navbar-padding-horizontal">
-                <div class="navbar-start">
-                <a class= "navbar-item">
-                    How Does This Work?
+          
+            <div id="navbarExampleTransparentExample" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item">
+                  Home
                 </a>
-    
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Add Section
+                  <a class="navbar-link">
+                    Docs
+                  </a>
+                  <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item">
+                      Overview
                     </a>
-    
-                    <div class="navbar-dropdown">
-                        <a id="PP" class="navbar-item">
-                            Personal Page
-                        </a>
-                        <a id="recent" class="navbar-item">
-                            Most Recent
-                        </a>
-                    </div>
-                </div>
-    
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Settings
+                    <a class="navbar-item">
+                      Modifiers
                     </a>
-    
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            Dark Mode
-                        </a>
-                        <a class="navbar-item">
-    
-                        </a>
-                    </div>
-                    </div>
-    
-                </div>
-            </div>
-
-            <div class="navbar-item navbar-end">
-                <div class="ui-widget">
-                    <label for="tags">Tags: </label>
-                    <input id="tags" type="text">
-
+                    <a class="navbar-item">
+                      Columns
+                    </a>
+                    <a class="navbar-item">
+                      Layout
+                    </a>
+                    <a class="navbar-item">
+                      Form
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                      Elements
+                    </a>
+                    <a class="navbar-item is-active">
+                      Components
+                    </a>
                   </div>
+                </div>
+              </div>
+          
+              <div class="navbar-end">
+                <div class="navbar-item">
+                  <div class="field is-grouped">
+                    <p class="control">
+                      <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
+                        <span class="icon">
+                          <i class="fab fa-twitter"></i>
+                        </span>
+                        <span>
+                          Tweet
+                        </span>
+                      </a>
+                    </p>
+                    <p class="control">
+                      <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.9.1/bulma-0.9.1.zip">
+                        <span class="icon">
+                          <i class="fas fa-download"></i>
+                        </span>
+                        <span>Download</span>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-
-        </nav>
+          </nav>
         <div class="results"></div>
-
-
-
-
-
-
         <div id="root">
             <section class="section">
                 <div class="container">
                     <div class="columns">
                         <div class="column 1">
-                            <div class="title">
-                                Example Tweet body
+                            <div class="title has-text-centered">
+                                Whats Happening!
                             </div>
                             <div class="feed-body">
                                 <div class="box">
@@ -124,39 +131,6 @@
                                     <div class="numbers has-text-centered"> 
                                         Likes: ${data.likeCount} 
                                         Retweets: ${data.retweetCount} 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column 2">
-                            <div class="title">
-                                Example Profile body
-                            </div>
-
-                            <div class="box">
-                                <div class="media-content">
-                                    
-                                </div>
-                                <div class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div>
-                                            <p class="heading">
-                                                Tweets
-                                            </p>
-                                            <p class="title">
-                                                40000
-                                            </p>
-                                        </div>    
-                                    </div>
-                                    <div class="level-item has-text-centered is-small">
-                                        <div>
-                                            <p class="heading">
-                                                Likes
-                                            </p>
-                                            <p class="title">
-                                                -28
-                                            </p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
