@@ -1,4 +1,5 @@
 
+
 //Javascript function to render someone's profile. Needs all their information passed in to view.
 function renderProfile(profile) {
     
@@ -20,9 +21,9 @@ async function renderNewTweet() {
     }
 }
 
-function renderTweetBody(data) {
+async function renderTweetBody(data) {
 
-    let user = getUser(data.userId);
+    let user = await getUser(data.userId);
 
     if(data.type == "tweet") {
         $(`.feed`).append(`
@@ -37,7 +38,7 @@ function renderTweetBody(data) {
                 </figure>
                 <div class="media-content">
                   <div class="content type-${data.userId}">
-                    <p>
+                    <p class>
                       <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                       <br>
                       ${data.body}
@@ -61,19 +62,90 @@ function renderTweetBody(data) {
         `);
     } else if (data.type == "retweet") {
 
-    } else if (data.type == "reply") {
+        let parent = await getTweet(data.parentId);
+        let userParent = await getUser(parent.userId);
 
+
+        $(`.feed`).append(`
+        <br>
+            <article class="media tweet-${data.id}">
+              <div class="media-left"></div>
+              <div class="box media-content">
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-64x64">
+                      <img class="is-rounded" src="${user.avatar}">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content type-${data.userId}">
+                      <p class>
+                        <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                        ${data.body}
+                        <br>
+                        <article class="media">
+                          <figure class="media-left">
+                            <p class="image is-64x64">
+                              <img class="is-rounded" src="${userParent.avatar}">
+                            </p>
+                          </figure>
+                          <div class="media-content">
+                            <div class="content type-${parent.userId}">
+                              <p class>
+                                <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                <br>
+                                ${parent.body}
+                              </p>
+                            </div>
+                          </div>
+                        </article>
+                      </p>
+                    </div>
+                    <div class="buttons">
+                      <button class="button edit-${data.id} is-info is-small">Edit</button>
+                      <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                      <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                      <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                  </div>
+                  </div>
+                </article>
+                
+              </div>
+              <div class="media-right">
+                <button class="delete"></button>
+              </div>
+            </article>
+        `);
     }
 }
 
-$( async function () {
-    renderNewTweet();
-});
+async function renderMainFeed() {
+    $(`.columns`).append(`
+        <div class="column mainfeed">
+            <div class="title has-text-centered">
+              Whats Happening!
+            </div>
+            <div class="box has-background-info feed">
+            
+            </div>
+        </div>
+    `)
+    await renderNewTweet();
+}
 
 function buttonSteup(data) {
 
 }
 
+$( async function () {
+    await renderMainFeed();
+});
+
+
+async function getTweet(id) {
+    const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}`, {"id": id}, {withCredentials: true})
+    return result.data;
+}
 
 async function logout() {
     const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/logout`, {withCredentials: true});
@@ -83,7 +155,7 @@ async function getUser(id) {
     const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/users/${id}`,
     {}, {withCredentials: true});
 
-    return result;
+    return result.data;
 }
 
 async function deleteUser(id) {
@@ -127,5 +199,5 @@ async function deleteTweet(id) {
 
 async function recentTweets(){
     const result = await axios.get('https://comp426finalbackendactual2.herokuapp.com/tweets/recent', {limit: "75", skip: "0"}, {withCredentials: true});
-    return result;
+    return result.data;
 }
