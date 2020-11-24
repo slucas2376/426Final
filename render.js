@@ -480,9 +480,7 @@ $( async function () {
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
         withCredentials: true,
-    });
-
-    console.log(result);
+    }).then(console.log(result));
 
     //getting entire user object of current user
     const result2 = await axios({
@@ -494,7 +492,7 @@ $( async function () {
     console.log(result2);
 
     //calling renderProfile to render current user's profile
-    await renderUserProfile(result2.data);
+    //await renderUserProfile(result2.data);
 });
 
 
