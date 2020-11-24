@@ -481,21 +481,15 @@ function buttonSteup(data) {
 }
 
 $( async function () {
-    await renderMainFeed();
+    renderMainFeed();
 
     //getting current user but it's a user view
 
-    /*
     const result = await axios({
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
         withCredentials: true,
-    });
-    */
-   
-    const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/users/current`, {withCredentials: true});
-
-    console.log(result);
+    }).then(() => {console.log(result)});
 
     //getting entire user object of current user
     const result2 = await axios({
