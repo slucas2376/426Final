@@ -28,6 +28,7 @@ async function renderUserProfile(user) {
             <textarea id="editAvatar" form="editUserForm" placeholder="${user.avatar}"></textarea>
             <textarea id="editProfileDescription" form="editUserForm" placeholder="${user.profileDescription}"></textarea>
             <input type = "submit">
+            <button type= "submit", class="cancel_edit_button">Cancel</button>
         </form>`;
 
         $(`.user_profile`).replaceWith(form);
@@ -74,6 +75,20 @@ async function renderUserProfile(user) {
 
             renderUserProfile(user2.data);
         });
+
+        //click handler for cancel button
+        $(`.cancel_edit_button`).on('click', async(e) => {
+            $(`#editUserForm`).remove();
+
+            //get new user object
+            const user2 = await axios({
+                method: 'get',
+                url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + user.id,
+                withCredentials: true,
+            });
+
+            renderUserProfile(user2.data);
+        });
     });
 
     //click handler for delete button
@@ -82,6 +97,13 @@ async function renderUserProfile(user) {
         const result = await axios({
             method: 'delete',
             url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + user.id,
+            withCredentials: true,
+        });
+
+        //axios request again
+        const result2 = await axios({
+            method: 'get',
+            url: 'https://comp426finalbackendactual2.herokuapp.com//logout',
             withCredentials: true,
         });
 
