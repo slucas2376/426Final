@@ -10,24 +10,39 @@ function renderUserProfile(user) {
 
 }
 
+async function renderUserData(id, type, element) {
+    $(`.${element}`).append(`<div class="${element}"></div>`);
+    
+    let user = await getUser(id);
+    
+    if (type == "liked") {
+        await renderTweetBody(user.likedTweets, element);
+    } else if (type == "retweet") {
+        await renderTweetBody(user.hasRetweeted, element);
+    } else if (type == "posted") {
+        await renderTweetBody(user.postedTweets, element);
+    }
+}
+
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet() {
+async function renderNewTweet(element) {
     let data = await recentTweets();
     console.log(data.length);
 
     for (let i = 0; i < data.length; i++ ) {
         if (data[i] != {}) {
-            await renderTweetBody(data[i]);
+            await renderTweetBody(data[i], element);
         }
     }
 }
 
-async function renderTweetBody(data) {
+async function renderTweetBody(data, element) {
 
     let user = await getUser(data.userId);
 
     if(data.type == "tweet") {
-        $(`.feed`).append(`
+        $(`.${element}`).append(`
+        <br>
         <article class="media tweet-${data.id}">
             <div class="media-left"></div>
             <div class="box media-content">
@@ -67,7 +82,7 @@ async function renderTweetBody(data) {
         let userParent = await getUser(parent.userId);
 
 
-        $(`.feed`).append(`
+        $(`.${element}`).append(`
         <br>
             <article class="media tweet-${data.id}">
               <div class="media-left"></div>
@@ -127,15 +142,25 @@ async function renderMainFeed() {
               Whats Happening!
             </div>
             <div class="box has-background-info feed">
-                <nav class="level" id="newTweet">
-                    <div>
-                        <button class="button is-primary">Tweet</button>
-                    </div>
-                </nav>
+                <form class="level" id="newTweet">
+                    <button class="button is-primary tweet">Tweet</button>
+                </form>
             </div>
         </div>
     `)
-    await renderNewTweet();
+    await renderNewTweet("feed");
+
+}
+
+function tweetButton() {
+    $(`.tweet`).on('click', async () => {
+        $(`.tweet`).replaceWith(`
+        
+        <div class="field">
+            <label class="label"></label>
+        </div>
+        `);
+    });
 }
 
 function buttonSteup(data) {
