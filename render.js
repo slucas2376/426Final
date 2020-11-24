@@ -8,7 +8,7 @@ function renderProfile(profile) {
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
     $('.columns').append(`
-    <div class="column">
+    <div class="column" id="user_profile_outer">
         <div class="user_profile">
             <h2 class="subtitle">Username: ${user.id}</h2>
             <h2 class="subtitle">Display Name: ${user.displayName}</h2>
@@ -64,7 +64,7 @@ async function renderUserProfile(user) {
                 },
             });
 
-            $(`#editUserForm`).remove();
+            $(`#user_profile_outer`).remove();
 
             //get new user object
             const user2 = await axios({
@@ -78,7 +78,7 @@ async function renderUserProfile(user) {
 
         //click handler for cancel button
         $(`.cancel_edit_button`).on('click', async(e) => {
-            $(`#editUserForm`).remove();
+            $(`#user_profile_outer`).remove();
 
             //get new user object
             const user2 = await axios({
