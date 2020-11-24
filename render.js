@@ -67,6 +67,7 @@ function renderTweetBody(data) {
 }
 
 $( async function () {
+    console.log("in here");
     await renderNewTweet();
 });
 
