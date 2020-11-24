@@ -104,17 +104,17 @@ async function like(id) {
 }
 
 async function tweet(text) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweet`, {type: "tweet", body: text}, {withCredentials: true});
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
     return result;
 }
 
 async function retweet(id, text) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweet`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweet`, {type: "reply", body: text, parentId: id}, {withCredentials: true});
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "reply", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
 
