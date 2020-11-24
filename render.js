@@ -144,7 +144,7 @@ $( async function () {
 
 
 async function getTweet(id) {
-    const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}`, {"id": id}, {withCredentials: true})
+    const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweet/${id}`, {withCredentials: true})
     return result.data;
 }
 
