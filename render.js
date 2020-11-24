@@ -128,5 +128,6 @@ async function deleteTweet(id) {
 
 async function recentTweets(){
     const result = await axios.get('https://comp426finalbackendactual2.herokuapp.com/tweets/recent', {limit: "75", skip: "0"}, {withCredentials: true});
-    return result.data.body;
+    console.log(result);
+    return result.data;
 }
