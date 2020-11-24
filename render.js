@@ -481,7 +481,7 @@ function buttonSteup(data) {
 }
 
 $( async function () {
-    renderMainFeed();
+    await renderMainFeed();
 
     //getting current user but it's a user view
 
