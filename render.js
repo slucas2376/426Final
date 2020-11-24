@@ -6,8 +6,87 @@ function renderProfile(profile) {
 }
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
-function renderUserProfile(user) {
+async function renderUserProfile(user) {
+    $('.columns').append(`
+    <div class="column">
+        <div class="user_profile">
+            <h2 class="subtitle">Username: ${user.id}</h2>
+            <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+            <h2 class="subtitle">Description: ${user.profileDescription}</h2>
+            <button type="submit" class="user_edit_button">Edit User</button>
+            <button type="submit" class="user_delete_button">Delete User</button>
+        </div>
+    </div>
+    `);
 
+    //click handler for edit button
+    $(`.user_edit_button`).on('click', async(e) => {
+        let form = `
+        <form id="editUserForm">
+            <textarea id="editDisplayName" form="editUserForm" placeholder="${user.displayName}"></textarea>
+            <textarea id="editPassword" form="editUserForm">New Password Here</textarea>
+            <textarea id="editAvatar" form="editUserForm" placeholder="${user.avatar}"></textarea>
+            <textarea id="editProfileDescription" form="editUserForm" placeholder="${user.profileDescription}"></textarea>
+            <input type = "submit">
+        </form>`;
+
+        $(`.user_profile`).replaceWith(form);
+
+        $(`#editUserForm`).on('submit', async(e) => {
+            let updatedDisplayName = $(`#editDisplayName`).val();
+            let updatedPassword = $(`#editPassword`).val();
+            let updatedAvatar = $(`#editAvatar`).val();
+            let updatedProfileDescription = $(`#editProfileDescription`).val();
+
+            if (updatedDisplayName == "") {
+                updatedDisplayName = user.displayName;
+            }
+
+            if (updatedPassword == "") {
+                updatedPassword = user.password;
+            }
+
+            if (updatedAvatar == "") {
+                updatedAvatar = user.avatar;
+            }
+
+            //axios request
+            const result = await axios({
+                method: 'put',
+                url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+                withCredentials: true,
+                data: {
+                    "displayName": updatedDisplayName,
+                    "password": updatedPassword,
+                    "avatar": updatedAvatar,
+                    "profileDescription": updatedProfileDescription
+                },
+            });
+
+            $(`#editUserForm`).remove();
+            
+            //get new user object
+            const user2 = await axios({
+                method: 'get',
+                url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+                withCredentials: true,
+            });
+
+            renderUserProfile(user2);
+        });
+    });
+
+    //click handler for delete button
+    $(`.user_delete_button`).on('click', async(e) => {
+        //axios request
+        const result = await axios({
+            method: 'delete',
+            url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+            withCredentials: true,
+        });
+
+        $(`.user_profile`).remove();
+    });
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
@@ -144,6 +223,23 @@ function buttonSteup(data) {
 
 $( async function () {
     await renderMainFeed();
+
+    //getting current user but it's a user view
+    const result = await axios({
+        method: 'get',
+        url: 'https://comp426finalbackendactual2.herokuapp.com//users/current',
+        withCredentials: true,
+    });
+
+    //getting entire user object of current user
+    const result2 = await axios({
+        method: 'get',
+        url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + result.data.id,
+        withCredentials: true,
+    });
+
+    //calling renderProfile to render current user's profile
+    await renderUserProfile(result2.body);
 });
 
 
