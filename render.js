@@ -207,6 +207,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
                           <br>
                           ${data.body}
                         </p>
@@ -247,12 +248,8 @@ async function renderTweetBody(data, element) {
                                     ${data.body}
                                     <br>
                                     <article class="media">
-                                      <figure class="media-left">
-                                        <p class="image is-64x64">
-                                          <img class="is-rounded" src="${userParent.avatar}">
-                                        </p>
-                                      </figure>
                                       <div class="media-content">
+                                      <div class="retweetBox-${data.userId}"></div>
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
                                     </article>
@@ -285,6 +282,7 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
@@ -335,6 +333,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
                           <br>
                           ${data.body}
                         </p>
@@ -371,14 +370,10 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
-                                      <figure class="media-left">
-                                        <p class="image is-64x64">
-                                          <img class="is-rounded" src="${userParent.avatar}">
-                                        </p>
-                                      </figure>
                                       <div class="media-content">
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
@@ -412,6 +407,7 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
@@ -448,11 +444,8 @@ async function renderTweetBody(data, element) {
         }
     }
 
-    if (data.isLiked) {
-        $(`.like-${data.id}`).replaceWith(`<button class="button like-${data.id} is-info is-small">Liked</button>`)
-    }
-
-
+    like(data.id, !(data.isLiked));
+    retweet(data.id)
 }
 
 async function renderMainFeed() {
@@ -540,9 +533,23 @@ async function editUser(id, name, pass, avat, descript) {
     profileDescription: descript}, {withCredentials: true});
 }
 
-async function like(id) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
-    return result;
+function like(id, liked) {
+
+    if(liked) {
+        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
+        
+        $(`.like-${id}`).on('click', async function() {
+            const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            like(id, !(liked)); 
+        });
+    } else {
+        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
+        
+        $(`.like-${id}`).on('click', async function() {
+            const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            like(id, !(liked));
+        });
+    }
 }
 
 async function tweet(text) {
@@ -550,7 +557,11 @@ async function tweet(text) {
     return result;
 }
 
-async function retweet(id, text) {
+async function retweet(id) {
+
+    $(`.rewteet-${id}`)
+
+
     const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
