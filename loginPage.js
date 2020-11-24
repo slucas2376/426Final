@@ -93,7 +93,7 @@ function signIn() {
 }
 
 async function register(id, name, pass, avat) {
-    const result = await axios.post('https://18.223.149.123:3030/register',
+    const result = await axios.post('https://18.223.149.123/register',
         {userId: id,
             displayName: name,
             password: pass,
@@ -101,7 +101,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.post(`https://18.223.149.123:3030/login`,
+    const result = await axios.post(`https://18.223.149.123/login`,
         {
             userId: id,
             password: pass
