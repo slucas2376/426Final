@@ -16,134 +16,94 @@
     </head>
 
     <body>
-        
-        <Section class="hero is-bold is-link">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        Welcome to your Personalized Twitter
-                    </h1>
-                    <h2 class="subtitle">
-                        Made by Owen and Sophia
-                    </h2>
-                </div>
-            </div>
-        </Section>
 
-
-        <nav class="navbar is-transparent">
-            <div class="navbar-brand">
-              <div class="navbar-burger burger">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          
-            <div id="navbarExampleTransparentExample" class="navbar-menu">
-              <div class="navbar-start">
-                <a class="navbar-item">
-                  Home
-                </a>
-                <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link">
-                    Docs
-                  </a>
-                  <div class="navbar-dropdown is-boxed">
-                    <a class="navbar-item">
-                      Overview
-                    </a>
-                    <a class="navbar-item">
-                      Modifiers
-                    </a>
-                    <a class="navbar-item">
-                      Columns
-                    </a>
-                    <a class="navbar-item">
-                      Layout
-                    </a>
-                    <a class="navbar-item">
-                      Form
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item">
-                      Elements
-                    </a>
-                    <a class="navbar-item is-active">
-                      Components
-                    </a>
-                  </div>
-                </div>
-              </div>
-          
-              <div class="navbar-end">
-                <div class="navbar-item">
-                  <div class="field is-grouped">
-                    <p class="control">
-                      <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
-                        <span class="icon">
-                          <i class="fab fa-twitter"></i>
-                        </span>
-                        <span>
-                          Tweet
-                        </span>
-                      </a>
-                    </p>
-                    <p class="control">
-                      <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.9.1/bulma-0.9.1.zip">
-                        <span class="icon">
-                          <i class="fas fa-download"></i>
-                        </span>
-                        <span>Download</span>
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        <div class="results"></div>
-        <div id="root">
-            <section class="section">
-                <div class="container">
-                    <div class="columns">
-                        <div class="column 1">
-                            <div class="title has-text-centered">
-                                Whats Happening!
-                            </div>
-                            <div class="feed-body">
-                                <div class="box">
-                                    <div class="media-content"> 
-                                        <strong class="name"> ${data.author} </strong>
-                                        <h3 class="replace-${data.id}"> ${data.body} </h3>
-                                        <br>
-                                    </div>
-                        
-                                    <div class="replyWith-${data.id}"></div>
-                                    
-                                    <div class="buttons">
-                                        <button class="edit-${data.id} is-info button is-small">Edit</button>
-                                        <button class="retweet-${data.id} is-info button is-small">  Retweet </button>
-                                        <button class="reply-${data.id} is-info button is-small">  Reply </button>
-                                        <button class="delete-${data.id} is-danger button is-small"> Delete </button>
-                                    </div>            
-                        
-                                    <div class="numbers has-text-centered"> 
-                                        Likes: ${data.likeCount} 
-                                        Retweets: ${data.retweetCount} 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>            
-
-
-
+      <Section class="hero is-bold is-link">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Welcome to your Personalized Twitter
+            </h1>
+            <h2 class="subtitle">
+              Made by Owen and Sophia
+            </h2>
+          </div>
         </div>
-
-        
-        
+      </Section>
+    
+    
+      <nav class="navbar is-transparent is-info">
+        <div class="navbar-brand">
+          <div class="navbar-burger burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+    
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Home
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Docs
+              </a>
+              <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item">
+                  Overview
+                </a>
+                <a class="navbar-item">
+                  Modifiers
+                </a>
+                <a class="navbar-item">
+                  Columns
+                </a>
+                <a class="navbar-item">
+                  Layout
+                </a>
+                <a class="navbar-item">
+                  Form
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                  Elements
+                </a>
+                <a class="navbar-item is-active">
+                  Components
+                </a>
+              </div>
+            </div>
+          </div>
+    
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-primary">
+                    <span>Logout</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="results"></div>
+      <div id="root">
+        <section class="section">
+          <div class="container is-fluid">
+            <div class="columns">
+              <div class="column mainfeed">
+                <div class="title has-text-centered">
+                  Whats Happening!
+                </div>
+              <div class="box has-background-info feed">
+                
+              </div>
+          </div>
+        </div>
+      </section>
+      </div>
     </body>
-</html>
+    </html>
