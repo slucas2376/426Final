@@ -482,10 +482,8 @@ function buttonSteup(data) {
 }
 
 $( async function () {
-    //await renderMainFeed();
 
     //getting current user but it's a user view
-
     const result = await axios({
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
@@ -504,8 +502,11 @@ $( async function () {
 
     console.log(result2);
 
+    await renderMainFeed();
+
     //calling renderProfile to render current user's profile
-    //await renderUserProfile(result2.data);
+    
+    await renderUserProfile(result2.data);
 });
 
 
