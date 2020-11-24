@@ -72,7 +72,7 @@ async function renderUserProfile(user) {
                 withCredentials: true,
             });
 
-            renderUserProfile(user2);
+            renderUserProfile(user2.data);
         });
     });
 
@@ -459,8 +459,6 @@ $( async function () {
         withCredentials: true,
     });
 
-    console.log(result);
-
     //getting entire user object of current user
     const result2 = await axios({
         method: 'get',
@@ -468,10 +466,8 @@ $( async function () {
         withCredentials: true,
     });
 
-    console.log(result2);
-    
     //calling renderProfile to render current user's profile
-    await renderUserProfile(result2.body);
+    await renderUserProfile(result2.data);
 });
 
 
