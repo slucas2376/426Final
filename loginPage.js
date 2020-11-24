@@ -1,3 +1,5 @@
+axios.defaults.withCredentials = true;
+
 $( function() {
     signIn();
 });
@@ -95,9 +97,9 @@ function signIn() {
 async function register(id, name, pass, avat) {
     const result = await axios.post('https://comp426finalbackendactual2.herokuapp.com/register',
         {userId: id,
-            displayName: name,
-            password: pass,
-            avatar: avat}, {withCredentials: true});
+        displayName: name,
+        password: pass,
+        avatar: avat}, {withCredentials: true});
 }
 
 async function login(id, pass) {

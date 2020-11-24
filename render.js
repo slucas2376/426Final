@@ -1,3 +1,4 @@
+axios.defaults.withCredentials = true;
 
 
 //Javascript function to render someone's profile. Needs all their information passed in to view.
@@ -10,12 +11,14 @@ async function renderUserProfile(user) {
     console.log(user);
     $('.columns').append(`
     <div class="column edit-${user.id}">
-        <div class="user_profile">
+        <div class="box">
+            <div class="user_profile">
             <h2 class="subtitle">Username: ${user.id}</h2>
             <h2 class="subtitle">Display Name: ${user.displayName}</h2>
             <h2 class="subtitle">Description: ${user.profileDescription}</h2>
             <button type="submit" class="user_edit_button is-button is-info">Edit User</button>
             <button type="submit" class="user_delete_button is-button is-danger">Delete User</button>
+            </div>
         </div>
     </div>
     `);
@@ -28,26 +31,26 @@ async function renderUserProfile(user) {
                     <label class="label  has-text-centered">Edit your profile!</label>
                     <label class="label">Display Name</label>
                     <div class="control">
-                      <textarea class="textarea display-name small"></textarea>
+                      <textarea class="textarea display-name small" placeholder="${user.displayName}"></textarea>
                     </div>
                 </div>
     
                 <div class="field">
                     <div class="control">
                         <label class="label">Password</label>
-                        <textarea class="textarea new-password small"></textarea>
+                        <textarea class="textarea new-password small" placeholder="${user.password}"></textarea>
                     </div>
                 </div>
                 <div class="field">
                   <div class="control">
                       <label class="label">Profile Avatar</label>
-                      <textarea class="textarea new-avatar small"></textarea>
+                      <textarea class="textarea new-avatar small" placeholder="${user.avatar}"></textarea>
                   </div>
                 </div>
                 <div class="field">
                   <div class="control">
                     <label class="label">Profile Description</label>
-                    <textarea class="textarea new-description small"></textarea>
+                    <textarea class="textarea new-description small" placeholder="${user.profileDescription}"></textarea>
                   </div>
                 </div>
                 <div class="field is-grouped is-grouped-centered">
@@ -71,7 +74,7 @@ async function renderUserProfile(user) {
 
         $(`.user_profile`).replaceWith(form);
 
-        $(`#editUserForm`).on('submit', async(e) => {
+        $(`.fillout box`).on('submit', async(e) => {
             let updatedDisplayName = $(`.display-name`).val();
             let updatedPassword = $(`.new-password`).val();
             let updatedAvatar = $(`.new-avatar`).val();
@@ -517,7 +520,6 @@ function buttonSteup(data) {
 }
 
 $( async function () {
-    await renderMainFeed();
 
     //getting current user but it's a user view
     const result = await axios({
@@ -529,6 +531,7 @@ $( async function () {
     console.log(result);
 
     //getting entire user object of current user
+    
     const result2 = await axios({
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
@@ -537,7 +540,10 @@ $( async function () {
 
     console.log(result2);
 
+    await renderMainFeed();
+
     //calling renderProfile to render current user's profile
+
     await renderUserProfile(result2.data);
 });
 
