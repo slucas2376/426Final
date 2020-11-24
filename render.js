@@ -16,11 +16,23 @@ async function renderUserData(id, type, element) {
     let user = await getUser(id);
     
     if (type == "liked") {
-        await renderTweetBody(user.likedTweets, element);
+
+        for ( let i = 0; i < user.likedTweets.length; i++ ) {
+            await renderTweetBody(user.likedTweets, element);
+        }
+
     } else if (type == "retweet") {
-        await renderTweetBody(user.hasRetweeted, element);
+
+        for( let i = 0; i < user.hasRetweeted.length; i++) {
+            await renderTweetBody(user.hasRetweeted, element);
+        }
+
     } else if (type == "posted") {
-        await renderTweetBody(user.postedTweets, element);
+
+        for ( let i = 0; i < user.postedTweets.length; i++ ) {
+            await renderTweetBody(user.postedTweets, element);
+        }
+
     }
 }
 
@@ -40,99 +52,290 @@ async function renderTweetBody(data, element) {
 
     let user = await getUser(data.userId);
 
-    if(data.type == "tweet") {
-        $(`.${element}`).append(`
-        <br>
-        <article class="media tweet-${data.id}">
-            <div class="media-left"></div>
-            <div class="box media-content">
-              <article class="media">
-                <figure class="media-left">
-                  <p class="image is-64x64">
-                    <img class="is-rounded" src="${user.avatar}">
-                  </p>
-                </figure>
-                <div class="media-content">
-                  <div class="content type-${data.userId}">
-                    <p class>
-                      <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                      <br>
-                      ${data.body}
-                    </p>
-                  </div>
-                  <div class="buttons">
-                    <button class="button edit-${data.id} is-info is-small">Edit</button>
-                    <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-                    <button class="button reply-${data.id} is-info is-small">  Reply </button>
-                    <button class="button delete-${data.id} is-danger is-small"> Delete </button>
-                </div>
-                </div>
-              </article>
-              
-            </div>
-            <div class="media-right">
-              <button class="delete"></button>
-            </div>
-        </article>
-        
-        `);
-    } else if (data.type == "retweet") {
-
-        let parent = await getTweet(data.parentId);
-        let userParent = await getUser(parent.userId);
-
-
-        $(`.${element}`).append(`
-        <br>
+    if (data.isMine) {
+        if(data.type == "tweet") {
+            $(`.${element}`).append(`
+            <br>
             <article class="media tweet-${data.id}">
-              <div class="media-left"></div>
-              <div class="box media-content">
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-64x64">
-                      <img class="is-rounded" src="${user.avatar}">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content type-${data.userId}">
-                      <p class>
-                        <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                        ${data.body}
-                        <br>
-                        <article class="media">
-                          <figure class="media-left">
-                            <p class="image is-64x64">
-                              <img class="is-rounded" src="${userParent.avatar}">
-                            </p>
-                          </figure>
-                          <div class="media-content">
-                            <div class="content type-${parent.userId}">
-                              <p class>
-                                <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
-                                <br>
-                                ${parent.body}
-                              </p>
-                            </div>
+                <div class="media-left"></div>
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${data.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <br>
+                          ${data.body}
+                        </p>
+                      </div>
+                      <div class="buttons">
+                        <button class="button edit-${data.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                    </div>
+                    </div>
+                  </article>
+                  
+                </div>
+                <div class="media-right">
+                  <button class="delete"></button>
+                </div>
+            </article>
+            
+            `);
+        } else if (data.type == "retweet") {
+    
+            let parent = await getTweet(data.parentId);
+            let userParent = await getUser(parent.userId);
+    
+                if (userParent == "Tweet has been deleted.") {
+                    $(`.${element}`).append(`
+                    <br>
+                        <article class="media tweet-${data.id}">
+                          <div class="media-left"></div>
+                          <div class="box media-content">
+                            <article class="media">
+                              <figure class="media-left">
+                                <p class="image is-64x64">
+                                  <img class="is-rounded" src="${user.avatar}">
+                                </p>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${data.userId}">
+                                  <p class>
+                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    ${data.body}
+                                    <br>
+                                    <article class="media">
+                                      <figure class="media-left">
+                                        <p class="image is-64x64">
+                                          <img class="is-rounded" src="${userParent.avatar}">
+                                        </p>
+                                      </figure>
+                                      <div class="media-content">
+                                        <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                                      </div>
+                                    </article>
+                                  </p>
+                                </div>
+                                <div class="buttons">
+                                  <button class="button edit-${data.id} is-info is-small">Edit</button>
+                                  <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                  <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                                  <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                              </div>
+                              </div>
+                            </article>
+                            
+                          </div>
+                          <div class="media-right">
+                            <button class="delete"></button>
                           </div>
                         </article>
+                    `);
+                } else {
+                    $(`.${element}`).append(`
+                    <br>
+                        <article class="media tweet-${data.id}">
+                          <div class="media-left"></div>
+                          <div class="box media-content">
+                            <article class="media">
+                              <figure class="media-left">
+                                <p class="image is-64x64">
+                                  <img class="is-rounded" src="${user.avatar}">
+                                </p>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${data.userId}">
+                                  <p class>
+                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    ${data.body}
+                                    <br>
+                                    <article class="media">
+                                      <figure class="media-left">
+                                        <p class="image is-64x64">
+                                          <img class="is-rounded" src="${userParent.avatar}">
+                                        </p>
+                                      </figure>
+                                      <div class="media-content">
+                                        <div class="content type-${parent.userId}">
+                                          <p class>
+                                            <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                            <br>
+                                            ${parent.body}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </article>
+                                  </p>
+                                </div>
+                                <div class="buttons">
+                                  <button class="button edit-${data.id} is-info is-small">Edit</button>
+                                  <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                  <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                                  <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                              </div>
+                              </div>
+                            </article>
+                            
+                          </div>
+                          <div class="media-right">
+                            <button class="delete"></button>
+                          </div>
+                        </article>
+                    `);
+                }        
+        }
+    } else {
+        if(data.type == "tweet") {
+            $(`.${element}`).append(`
+            <br>
+            <article class="media tweet-${data.id}">
+                <div class="media-left"></div>
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
                       </p>
-                    </div>
-                    <div class="buttons">
-                      <button class="button edit-${data.id} is-info is-small">Edit</button>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${data.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <br>
+                          ${data.body}
+                        </p>
+                      </div>
+                      <div class="buttons">
+                      <button class="button like-${data.id} is-info is-small">Like</button>
                       <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
                       <button class="button reply-${data.id} is-info is-small">  Reply </button>
-                      <button class="button delete-${data.id} is-danger is-small"> Delete </button>
-                  </div>
-                  </div>
-                </article>
-                
-              </div>
-              <div class="media-right">
-                <button class="delete"></button>
-              </div>
+                    </div>
+                    </div>
+                  </article>
+                  
+                </div>
+                <div class="media-right">
+                  <button class="delete"></button>
+                </div>
             </article>
-        `);
+            
+            `);
+        } else if (data.type == "retweet") {
+    
+            let parent = await getTweet(data.parentId);
+            let userParent = await getUser(parent.userId);
+    
+                if (userParent == "Tweet has been deleted.") {
+                    $(`.${element}`).append(`
+                    <br>
+                        <article class="media tweet-${data.id}">
+                          <div class="media-left"></div>
+                          <div class="box media-content">
+                            <article class="media">
+                              <figure class="media-left">
+                                <p class="image is-64x64">
+                                  <img class="is-rounded" src="${user.avatar}">
+                                </p>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${data.userId}">
+                                  <p class>
+                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    ${data.body}
+                                    <br>
+                                    <article class="media">
+                                      <figure class="media-left">
+                                        <p class="image is-64x64">
+                                          <img class="is-rounded" src="${userParent.avatar}">
+                                        </p>
+                                      </figure>
+                                      <div class="media-content">
+                                        <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                                      </div>
+                                    </article>
+                                  </p>
+                                </div>
+                                <div class="buttons">
+                                <button class="button like-${data.id} is-info is-small">Like</button>
+                                <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                              </div>
+                              </div>
+                            </article>
+                            
+                          </div>
+                          <div class="media-right">
+                            <button class="delete"></button>
+                          </div>
+                        </article>
+                    `);
+                } else {
+                    $(`.${element}`).append(`
+                    <br>
+                        <article class="media tweet-${data.id}">
+                          <div class="media-left"></div>
+                          <div class="box media-content">
+                            <article class="media">
+                              <figure class="media-left">
+                                <p class="image is-64x64">
+                                  <img class="is-rounded" src="${user.avatar}">
+                                </p>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${data.userId}">
+                                  <p class>
+                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    ${data.body}
+                                    <br>
+                                    <article class="media">
+                                      <figure class="media-left">
+                                        <p class="image is-64x64">
+                                          <img class="is-rounded" src="${userParent.avatar}">
+                                        </p>
+                                      </figure>
+                                      <div class="media-content">
+                                        <div class="content type-${parent.userId}">
+                                          <p class>
+                                            <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                            <br>
+                                            ${parent.body}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </article>
+                                  </p>
+                                </div>
+                                <div class="buttons">
+                                <button class="button like-${data.id} is-info is-small">Like</button>
+                                <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                              </div>
+                              </div>
+                            </article>
+                            
+                          </div>
+                          <div class="media-right">
+                            <button class="delete"></button>
+                          </div>
+                        </article>
+                    `);
+                }        
+        }
     }
+
+    if (data.isLiked) {
+        $(`.like-${data.id}`).replaceWith(`<button class="button like-${data.id} is-info is-small">Liked</button>`)
+    }
+
+
 }
 
 async function renderMainFeed() {
