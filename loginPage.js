@@ -1,3 +1,5 @@
+axios.defaults.withCredentials = true;
+
 $( function() {
     signIn();
 });

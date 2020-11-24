@@ -1,3 +1,4 @@
+axios.defaults.withCredentials = true;
 
 
 //Javascript function to render someone's profile. Needs all their information passed in to view.
@@ -489,7 +490,9 @@ $( async function () {
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
         withCredentials: true,
-    }).then((result) => {console.log(result)});
+    });
+
+    console.log(result);
 
     //getting entire user object of current user
     const result2 = await axios({
