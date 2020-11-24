@@ -53,7 +53,7 @@ async function renderUserProfile(user) {
             //axios request
             const result = await axios({
                 method: 'put',
-                url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+                url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + user.id,
                 withCredentials: true,
                 data: {
                     "displayName": updatedDisplayName,
@@ -64,11 +64,11 @@ async function renderUserProfile(user) {
             });
 
             $(`#editUserForm`).remove();
-            
+
             //get new user object
             const user2 = await axios({
                 method: 'get',
-                url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+                url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + user.id,
                 withCredentials: true,
             });
 
@@ -81,7 +81,7 @@ async function renderUserProfile(user) {
         //axios request
         const result = await axios({
             method: 'delete',
-            url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + user.id,
+            url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + user.id,
             withCredentials: true,
         });
 
@@ -455,14 +455,14 @@ $( async function () {
     //getting current user but it's a user view
     const result = await axios({
         method: 'get',
-        url: 'https://comp426finalbackendactual2.herokuapp.com//users/current',
+        url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
         withCredentials: true,
     });
 
     //getting entire user object of current user
     const result2 = await axios({
         method: 'get',
-        url: 'https://comp426finalbackendactual2.herokuapp.com//users/' + result.data.id,
+        url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
         withCredentials: true,
     });
 
