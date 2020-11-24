@@ -10,6 +10,7 @@ function signIn() {
 
         try {
             let result = await login(userName, password);
+            console.log(getJoke());
         } catch (error) {
             $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is not registered </p>`);
             return false;
@@ -110,4 +111,14 @@ async function login(id, pass) {
 
     return result;
 
+}
+
+async function getJoke() {
+    const result = await axios({
+        method: 'get',
+        url: 'https://geek-jokes.sameerkumar.website/api?format=json',
+        withCredentials: true,
+    });
+
+    return result.data;
 }
