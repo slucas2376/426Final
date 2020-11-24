@@ -67,7 +67,7 @@ function renderTweetBody(data) {
 }
 
 $( async function () {
-    renderNewTweet();
+    await renderNewTweet();
 });
 
 function buttonSteup(data) {
