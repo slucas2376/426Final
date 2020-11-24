@@ -7,6 +7,7 @@ function renderProfile(profile) {
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
+    console.log(user);
     $('.columns').append(`
     <div class="column edit-${user.id}">
         <div class="user_profile">
@@ -496,12 +497,16 @@ $( async function () {
         withCredentials: true,
     });
 
+    console.log(result);
+
     //getting entire user object of current user
     const result2 = await axios({
         method: 'get',
         url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
         withCredentials: true,
     });
+
+    console.log(result2);
 
     //calling renderProfile to render current user's profile
     await renderUserProfile(result2.data);
