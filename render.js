@@ -213,7 +213,7 @@ async function renderTweetBody(data, element) {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${data.userId}">
-                        <p class>
+                        <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <div class="retweetBox-${data.userId}"></div>
                           <br>
@@ -251,7 +251,7 @@ async function renderTweetBody(data, element) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
-                                  <p class>
+                                  <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                     ${data.body}
                                     <br>
@@ -288,7 +288,7 @@ async function renderTweetBody(data, element) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
-                                  <p class>
+                                  <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                     <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
@@ -376,7 +376,7 @@ async function renderTweetBody(data, element) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
-                                  <p class>
+                                  <p>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                     <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
@@ -387,6 +387,7 @@ async function renderTweetBody(data, element) {
                                       </div>
                                     </article>
                                   </p>
+                                  <textarea class="input-bodies-${data.id}"></textarea>
                                 </div>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
@@ -435,6 +436,7 @@ async function renderTweetBody(data, element) {
                                       </div>
                                     </article>
                                   </p>
+                                  <textarea class="input-bodies-${data.id}"></textarea>
                                 </div>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
@@ -454,6 +456,7 @@ async function renderTweetBody(data, element) {
 
     like(data.id, !(data.isLiked));
     retweet(data.id)
+    editButton(data)
 }
 
 async function renderMainFeed() {
@@ -471,6 +474,39 @@ async function renderMainFeed() {
     `)
     await renderNewTweet("feed");
 
+}
+
+function editButton(data) {
+
+  $(`.edit-${data.id}`).on('click', () => {
+    $(`.columns`).append(`
+    <div class="column edita-${data.id}">
+      <div class="box is-info">
+        <artice class="media">
+          <div class="box">
+            <textarea class="textarea final-${data.id}"> ${data.body} </textarea>
+          </div>
+          <button class="button is-info submit-${data.id}>Submit Edit</button>
+        </article>
+      </div>
+    </div>
+    `);
+
+    $(`.edit-${data.id}`).replaceWith(`
+      <button class="button edit-${data.id} is-info is-small">Edit</button>
+    `);
+
+    $(`.submit-${data.id}`).on('click', async () => {
+      let final = $(`final-${data.id}`).val();
+
+      await edit(data.id, final);
+
+      $(`edits-${data.id}`).remove();
+      editButton(data);
+    });
+  })
+
+  
 }
 
 function tweetButton() {
