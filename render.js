@@ -17,7 +17,7 @@ async function renderNewTweet() {
 
     for (let i = 0; i < data.length; i++ ) {
         if (data[i] != {}) {
-            renderTweetBody(data[i]);
+            await renderTweetBody(data[i]);
         }
     }
 }
