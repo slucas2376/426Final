@@ -127,7 +127,11 @@ async function renderMainFeed() {
               Whats Happening!
             </div>
             <div class="box has-background-info feed">
-            
+                <nav class="level" id="newTweet">
+                    <div>
+                        <button class="button is-primary">Tweet</button>
+                    </div>
+                </nav>
             </div>
         </div>
     `)
