@@ -9,13 +9,13 @@ function renderProfile(profile) {
 async function renderUserProfile(user) {
     console.log(user);
     $('.columns').append(`
-    <div class="column" id="user_profile_outer">
+    <div class="column edit-${user.id}">
         <div class="user_profile">
             <h2 class="subtitle">Username: ${user.id}</h2>
             <h2 class="subtitle">Display Name: ${user.displayName}</h2>
             <h2 class="subtitle">Description: ${user.profileDescription}</h2>
-            <button type="submit" class="user_edit_button">Edit User</button>
-            <button type="submit" class="user_delete_button">Delete User</button>
+            <button type="submit" class="user_edit_button is-button is-info">Edit User</button>
+            <button type="submit" class="user_delete_button is-button is-danger">Delete User</button>
         </div>
     </div>
     `);
@@ -23,22 +23,59 @@ async function renderUserProfile(user) {
     //click handler for edit button
     $(`.user_edit_button`).on('click', async(e) => {
         let form = `
-        <form id="editUserForm">
-            <textarea id="editDisplayName" form="editUserForm" placeholder="${user.displayName}"></textarea>
-            <textarea id="editPassword" form="editUserForm">New Password Here</textarea>
-            <textarea id="editAvatar" form="editUserForm" placeholder="${user.avatar}"></textarea>
-            <textarea id="editProfileDescription" form="editUserForm" placeholder="${user.profileDescription}"></textarea>
-            <input type = "submit">
-            <button type= "submit", class="cancel_edit_button">Cancel</button>
-        </form>`;
+        <form class="fillout box">
+                <div class="field">
+                    <label class="label  has-text-centered">Edit your profile!</label>
+                    <label class="label">Display Name</label>
+                    <div class="control">
+                      <textarea class="textarea display-name small"></textarea>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Password</label>
+                        <textarea class="textarea new-password small"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                      <label class="label">Profile Avatar</label>
+                      <textarea class="textarea new-avatar small"></textarea>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <label class="label">Profile Description</label>
+                    <textarea class="textarea new-description small"></textarea>
+                  </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <a id="Save-Changes" class="button is-info">
+                            Save Changes
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a id="cancelled" class="button is-danger">
+                            Cancel
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a id="delete-profile" class="button is-info">
+                            Delete profile
+                        </a>
+                    </p>
+                </div>
+            </form>`;
 
         $(`.user_profile`).replaceWith(form);
 
         $(`#editUserForm`).on('submit', async(e) => {
-            let updatedDisplayName = $(`#editDisplayName`).val();
-            let updatedPassword = $(`#editPassword`).val();
-            let updatedAvatar = $(`#editAvatar`).val();
-            let updatedProfileDescription = $(`#editProfileDescription`).val();
+            let updatedDisplayName = $(`.display-name`).val();
+            let updatedPassword = $(`.new-password`).val();
+            let updatedAvatar = $(`.new-avatar`).val();
+            let updatedProfileDescription = $(`.new-description`).val();
 
             if (updatedDisplayName == "") {
                 updatedDisplayName = user.displayName;
@@ -65,7 +102,7 @@ async function renderUserProfile(user) {
                 },
             });
 
-            $(`#user_profile_outer`).remove();
+            $(`.edit-${user.id}`).remove();
 
             //get new user object
             const user2 = await axios({
@@ -78,8 +115,8 @@ async function renderUserProfile(user) {
         });
 
         //click handler for cancel button
-        $(`.cancel_edit_button`).on('click', async(e) => {
-            $(`#user_profile_outer`).remove();
+        $(`#cancelled`).on('click', async(e) => {
+            $(`.edit-${user.id}`).remove();
 
             //get new user object
             const user2 = await axios({
@@ -93,7 +130,7 @@ async function renderUserProfile(user) {
     });
 
     //click handler for delete button
-    $(`.user_delete_button`).on('click', async(e) => {
+    $(`#delete-profile`).on('click', async(e) => {
         //axios request
         const result = await axios({
             method: 'delete',
@@ -108,12 +145,12 @@ async function renderUserProfile(user) {
             withCredentials: true,
         });
 
-        $(`.user_profile`).remove();
+        $(`.edit-${user.id}`).remove();
     });
 }
 
 async function renderUserData(id, type, element) {
-    $(`.${element}`).append(`<div class="${element}"></div>`);
+    $(`.${element}`).replaceWith(`<div class="${element}"></div>`);
     
     let user = await getUser(id);
     
@@ -159,7 +196,6 @@ async function renderTweetBody(data, element) {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
-                <div class="media-left"></div>
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -171,6 +207,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
                           <br>
                           ${data.body}
                         </p>
@@ -185,9 +222,6 @@ async function renderTweetBody(data, element) {
                   </article>
                   
                 </div>
-                <div class="media-right">
-                  <button class="delete"></button>
-                </div>
             </article>
             
             `);
@@ -200,7 +234,6 @@ async function renderTweetBody(data, element) {
                     $(`.${element}`).append(`
                     <br>
                         <article class="media tweet-${data.id}">
-                          <div class="media-left"></div>
                           <div class="box media-content">
                             <article class="media">
                               <figure class="media-left">
@@ -215,12 +248,8 @@ async function renderTweetBody(data, element) {
                                     ${data.body}
                                     <br>
                                     <article class="media">
-                                      <figure class="media-left">
-                                        <p class="image is-64x64">
-                                          <img class="is-rounded" src="${userParent.avatar}">
-                                        </p>
-                                      </figure>
                                       <div class="media-content">
+                                      <div class="retweetBox-${data.userId}"></div>
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
                                     </article>
@@ -236,16 +265,12 @@ async function renderTweetBody(data, element) {
                             </article>
                             
                           </div>
-                          <div class="media-right">
-                            <button class="delete"></button>
-                          </div>
                         </article>
                     `);
                 } else {
                     $(`.${element}`).append(`
                     <br>
                         <article class="media tweet-${data.id}">
-                          <div class="media-left"></div>
                           <div class="box media-content">
                             <article class="media">
                               <figure class="media-left">
@@ -257,6 +282,7 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
@@ -287,9 +313,6 @@ async function renderTweetBody(data, element) {
                             </article>
                             
                           </div>
-                          <div class="media-right">
-                            <button class="delete"></button>
-                          </div>
                         </article>
                     `);
                 }        
@@ -299,7 +322,6 @@ async function renderTweetBody(data, element) {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
-                <div class="media-left"></div>
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -311,6 +333,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
                           <br>
                           ${data.body}
                         </p>
@@ -324,9 +347,6 @@ async function renderTweetBody(data, element) {
                   </article>
                   
                 </div>
-                <div class="media-right">
-                  <button class="delete"></button>
-                </div>
             </article>
             
             `);
@@ -339,7 +359,6 @@ async function renderTweetBody(data, element) {
                     $(`.${element}`).append(`
                     <br>
                         <article class="media tweet-${data.id}">
-                          <div class="media-left"></div>
                           <div class="box media-content">
                             <article class="media">
                               <figure class="media-left">
@@ -351,14 +370,10 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
-                                      <figure class="media-left">
-                                        <p class="image is-64x64">
-                                          <img class="is-rounded" src="${userParent.avatar}">
-                                        </p>
-                                      </figure>
                                       <div class="media-content">
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
@@ -374,16 +389,13 @@ async function renderTweetBody(data, element) {
                             </article>
                             
                           </div>
-                          <div class="media-right">
-                            <button class="delete"></button>
-                          </div>
                         </article>
                     `);
                 } else {
                     $(`.${element}`).append(`
                     <br>
                         <article class="media tweet-${data.id}">
-                          <div class="media-left"></div>
+
                           <div class="box media-content">
                             <article class="media">
                               <figure class="media-left">
@@ -395,6 +407,7 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="retweetBox-${data.userId}"></div>
                                     ${data.body}
                                     <br>
                                     <article class="media">
@@ -424,20 +437,15 @@ async function renderTweetBody(data, element) {
                             </article>
                             
                           </div>
-                          <div class="media-right">
-                            <button class="delete"></button>
-                          </div>
+
                         </article>
                     `);
                 }        
         }
     }
 
-    if (data.isLiked) {
-        $(`.like-${data.id}`).replaceWith(`<button class="button like-${data.id} is-info is-small">Liked</button>`)
-    }
-
-
+    like(data.id, !(data.isLiked));
+    retweet(data.id)
 }
 
 async function renderMainFeed() {
@@ -523,9 +531,23 @@ async function editUser(id, name, pass, avat, descript) {
     profileDescription: descript}, {withCredentials: true});
 }
 
-async function like(id) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
-    return result;
+function like(id, liked) {
+
+    if(liked) {
+        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
+        
+        $(`.like-${id}`).on('click', async function() {
+            const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            like(id, !(liked)); 
+        });
+    } else {
+        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
+        
+        $(`.like-${id}`).on('click', async function() {
+            const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            like(id, !(liked));
+        });
+    }
 }
 
 async function tweet(text) {
@@ -533,7 +555,11 @@ async function tweet(text) {
     return result;
 }
 
-async function retweet(id, text) {
+async function retweet(id) {
+
+    $(`.rewteet-${id}`)
+
+
     const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
