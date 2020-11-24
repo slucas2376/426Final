@@ -93,7 +93,7 @@ function signIn() {
 }
 
 async function register(id, name, pass, avat) {
-    const result = await axios.post('https://18.223.149.123/register',
+    const result = await axios.post('https://comp426finalbackendactual2.herokuapp.com/register',
         {userId: id,
             displayName: name,
             password: pass,
@@ -101,7 +101,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.post(`https://18.223.149.123/login`,
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/login`,
         {
             userId: id,
             password: pass
