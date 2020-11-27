@@ -31,26 +31,31 @@ async function renderUserProfile(user) {
                     <label class="label  has-text-centered">Edit your profile!</label>
                     <label class="label">Display Name</label>
                     <div class="control">
-                      <textarea class="textarea display-name small" placeholder="${user.displayName}"></textarea>
+                      <textarea class="textarea display-name small" placeholder="${user.displayName}" form=".fillout box"></textarea>
+                      <input type = "submit">
                     </div>
                 </div>
     
                 <div class="field">
                     <div class="control">
                         <label class="label">Password</label>
-                        <textarea class="textarea new-password small" placeholder="${user.password}"></textarea>
+                        <textarea class="textarea new-password small" placeholder="${user.password}" form=".fillout box"></textarea>
+                        <input type = "submit">
                     </div>
                 </div>
+
                 <div class="field">
                   <div class="control">
                       <label class="label">Profile Avatar</label>
-                      <textarea class="textarea new-avatar small" placeholder="${user.avatar}"></textarea>
+                      <textarea class="textarea new-avatar small" placeholder="${user.avatar}" form=".fillout box"></textarea>
+                      <input type = "submit">
                   </div>
                 </div>
                 <div class="field">
                   <div class="control">
                     <label class="label">Profile Description</label>
-                    <textarea class="textarea new-description small" placeholder="${user.profileDescription}"></textarea>
+                    <textarea class="textarea new-description small" placeholder="${user.profileDescription}" form=".fillout box"></textarea>
+                    <input type = "submit">
                   </div>
                 </div>
                 <div class="field is-grouped is-grouped-centered">
