@@ -450,8 +450,9 @@ async function renderTweetBody(data, element) {
     }
 
     like(data.id, !(data.isLiked));
-    retweet(data.id)
+    retweetButton(data.id)
     editButton(data)
+    deleteButton(data.id);
 }
 
 async function renderMainFeed() {
@@ -504,6 +505,41 @@ function editButton(data) {
   
 }
 
+function retweetButton(data) {
+
+  $(`.edit-${data.id}`).on('click', () => {
+    $(`.columns`).append(`
+    <div class="column edita-${data.id}">
+      <div class="box is-info">
+        <artice class="media">
+          <div class="box">
+            <textarea class="textarea final-${data.id}"> ${data.body} </textarea>
+          </div>
+          <button class="button is-info submit-${data.id}>Submit Edit</button>
+        </article>
+      </div>
+    </div>
+    `);
+
+    $(`.edit-${data.id}`).replaceWith(`
+      <button class="button edit-${data.id} is-info is-small">Edit</button>
+    `);
+
+    $(`.submit-${data.id}`).on('click', async () => {
+      let final = $(`final-${data.id}`).val();
+
+      await edit(data.id, final);
+
+      $(`edits-${data.id}`).remove();
+      editButton(data);
+    });
+  })
+
+  
+}
+
+
+
 function tweetButton() {
     $(`.tweet`).on('click', async () => {
         $(`.tweet`).replaceWith(`
@@ -513,10 +549,6 @@ function tweetButton() {
         </div>
         `);
     });
-}
-
-function buttonSteup(data) {
-
 }
 
 $( async function () {
@@ -600,10 +632,6 @@ async function tweet(text) {
 }
 
 async function retweet(id) {
-
-    $(`.rewteet-${id}`)
-
-
     const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
