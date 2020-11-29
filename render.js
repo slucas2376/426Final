@@ -1,10 +1,33 @@
 axios.defaults.withCredentials = true;
 
+$( async function () {
 
-//Javascript function to render someone's profile. Needs all their information passed in to view.
-function renderProfile(profile) {
-    
-}
+  //getting current user but it's a user view
+  const result = await axios({
+      method: 'get',
+      url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
+      withCredentials: true,
+  });
+
+  console.log(result);
+
+  //getting entire user object of current user
+  
+  const result2 = await axios({
+      method: 'get',
+      url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
+      withCredentials: true,
+  });
+
+  console.log(result2);
+
+  await renderMainFeed();
+
+  //calling renderProfile to render current user's profile
+
+  await renderUserProfile(result2.data);
+  tweetButton();
+});
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
@@ -546,43 +569,239 @@ function retweetButton(data) {
 
 
 function tweetButton() {
-    $(`.tweet`).on('click', async () => {
-        $(`.tweet`).replaceWith(`
-        
-        <div class="field">
-            <label class="label"></label>
-        </div>
+  $(`.tweet`).on('click', () => {
+      $(`.tweet`).replaceWith(`
+      
+      <form class="fillout box tweet">
+              <div class="field">
+                  <label class="label  has-text-centered">Make your own Tweet</label>
+                  <label class="label">Tweet Body</label>
+                  <div class="control">
+                      <input id="tweetCreation" class="input" type="text" placeholder="Say Something">
+                  </div>
+              </div>
+              <div class="field image-video">
+                  
+              </div>
+              <div class="field">
+                <div class="control checked">
+                  <label class="radio">
+                    <input id="#video" type="radio" name="answer">
+                    Youtube Video
+                  </label>
+                  <label class="radio">
+                    <input id="#image" type="radio" name="answer">
+                      Image
+                    </inpu>
+                  </label>
+                </div>
+              </div>
+              <div class="field is-grouped is-grouped-centered">
+                  <p class="control">
+                      <a id="enter" class="button is-info">
+                          Send It
+                      </a>
+                  </p>
+                  <p class="control">
+                      <a id="begon" class="button is-danger">
+                          Another Time
+                      </a>
+                  </p>
+              </div>
+          </form>
+      `);
+
+      $(`#video`).on(`click`, () => {
+        $(`.image-video`).replaceWith(`
+          <div class="field image-video">
+            <label class="label  has-text-centered">Make your own Tweet</label>
+            <label class="label">Tweet Body</label>
+            <div class="control">
+              <input id="link" class="input" type="text" placeholder="full, single video link">
+            </div>
+          </div>
         `);
-    });
+      })
+
+      $(`#image`).on('click', () => {
+      
+        $(`.image-video`).replaceWith(`
+          <div class="field image-video">
+            <label class="label  has-text-centered">Make your own Tweet</label>
+            <label class="label">Tweet Body</label>
+            <div class="control">
+              <input id="link" class="input" type="text" placeholder="image link">
+            </div>
+          </div>
+        `);
+      });
+
+
+      $(`#enter`).on(`click`, async () => {
+        if($(`#video`).is(`:checked`)) {
+          let link = $(`#link`).val().substring(32,43);
+
+          const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, 
+          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link }, {withCredentials: true});
+
+          $(`.tweet`).remove();
+
+          let user = await getUser(result.userId);
+
+          $(`.feed`).prepend(`
+          <br>
+            <article class="media tweet-${result.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${result.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
+                          <div class="retweetBox-${result.userId}"></div>
+                          <br>
+                          ${result.body}
+                          <br>
+                        </p>
+                        <figure class="image is-16by9">
+                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                        </figure>
+                      </div>
+                      <div class="buttons">
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                      </div>
+                    </div>
+                  </article>
+                  
+                </div>
+            </article>
+          `);
+
+          $(`.feed`).prepend(`
+            <form class="level" id="newTweet">
+              <button class="button is-primary tweet">Tweet</button>
+            </form>
+          `);
+
+        } else if ($(`#image`).is(`:checked`)) {
+          
+          const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, 
+          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val() }, 
+          {withCredentials: true});
+        
+          $(`.tweet`).remove();
+
+          let user = await getUser(result.userId);
+
+          $(`.feed`).prepend(`
+          <br>
+            <article class="media tweet-${result.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${result.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
+                          <div class="retweetBox-${result.userId}"></div>
+                          <br>
+                          ${result.body}
+                          <br>
+                        </p>
+                        <figure class="image is-1by1">
+                          <img src="${result.imageLink}">
+                        </figure>
+                      </div>
+                      <div class="buttons">
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                      </div>
+                    </div>
+                  </article>
+                  
+                </div>
+            </article>
+          `);
+
+          $(`.feed`).prepend(`
+            <form class="level" id="newTweet">
+              <button class="button is-primary tweet">Tweet</button>
+            </form>
+          `);
+
+        } else { 
+          const result = await tweet($(`#tweetCreation`).val());
+
+          $(`.tweet`).remove();
+
+          let user = await getUser(result.userId);
+
+          $(`.feed`).prepend(`
+          <br>
+            <article class="media tweet-${result.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${result.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
+                          <div class="retweetBox-${result.userId}"></div>
+                          <br>
+                          ${result.body}
+                          <br>
+                        </p>
+                      </div>
+                      <div class="buttons">
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                      </div>
+                    </div>
+                  </article>
+                  
+                </div>
+            </article>
+          `);
+
+          $(`.feed`).prepend(`
+            <form class="level" id="newTweet">
+              <button class="button is-primary tweet">Tweet</button>
+            </form>
+          `);
+
+        tweetButton();
+      });
+
+      $(`.begon`).on('click', () => {
+        $(`.begon`).prepend(`
+        <form class="level" id="newTweet">
+          <button class="button is-primary tweet">Tweet</button>
+        </form>
+      `);
+        tweetButton();
+      });
+  });
 }
 
-$( async function () {
-
-    //getting current user but it's a user view
-    const result = await axios({
-        method: 'get',
-        url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
-        withCredentials: true,
-    });
-
-    console.log(result);
-
-    //getting entire user object of current user
-    
-    const result2 = await axios({
-        method: 'get',
-        url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
-        withCredentials: true,
-    });
-
-    console.log(result2);
-
-    await renderMainFeed();
-
-    //calling renderProfile to render current user's profile
-
-    await renderUserProfile(result2.data);
-});
 
 
 async function getTweet(id) {
