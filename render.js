@@ -570,14 +570,14 @@ function retweetButton(data) {
 
 function tweetButton() {
   $(`.tweet`).on('click', () => {
-      $(`.tweet`).replaceWith(`
+      $(`#newTweet`).replaceWith(`
       
-      <form class="fillout box tweet">
+      <form class="fillout box newTweet">
               <div class="field">
                   <label class="label  has-text-centered">Make your own Tweet</label>
                   <label class="label">Tweet Body</label>
                   <div class="control">
-                      <input id="tweetCreation" class="input" type="text" placeholder="Say Something">
+                      <textarea id="tweetCreation" rows="5" class="input" type="text" placeholder="Say Something"></textarea>
                   </div>
               </div>
               <div class="field image-video">
@@ -586,11 +586,11 @@ function tweetButton() {
               <div class="field">
                 <div class="control checked">
                   <label class="radio">
-                    <input id="#video" type="radio" name="answer">
+                    <input id="video" type="radio" name="answer">
                     Youtube Video
                   </label>
                   <label class="radio">
-                    <input id="#image" type="radio" name="answer">
+                    <input id="image" type="radio" name="answer">
                       Image
                     </inpu>
                   </label>
@@ -614,8 +614,7 @@ function tweetButton() {
       $(`#video`).on(`click`, () => {
         $(`.image-video`).replaceWith(`
           <div class="field image-video">
-            <label class="label  has-text-centered">Make your own Tweet</label>
-            <label class="label">Tweet Body</label>
+            <label class="label">Video Link</label>
             <div class="control">
               <input id="link" class="input" type="text" placeholder="full, single video link">
             </div>
@@ -627,8 +626,7 @@ function tweetButton() {
       
         $(`.image-video`).replaceWith(`
           <div class="field image-video">
-            <label class="label  has-text-centered">Make your own Tweet</label>
-            <label class="label">Tweet Body</label>
+            <label class="label">Image URL</label>
             <div class="control">
               <input id="link" class="input" type="text" placeholder="image link">
             </div>
