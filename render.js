@@ -621,7 +621,7 @@ function tweetButton() {
             </div>
           </div>
         `);
-      })
+      });
 
       $(`#image`).on('click', () => {
       
@@ -789,6 +789,7 @@ function tweetButton() {
           `);
 
         tweetButton();
+        }
       });
 
       $(`.begon`).on('click', () => {
