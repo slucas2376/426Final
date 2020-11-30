@@ -642,7 +642,7 @@ function tweetButton() {
           const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link }, {withCredentials: true});
 
-          $(`.tweet`).remove();
+          $(`.newTweet`).remove();
 
           let user = await getUser(result.userId);
 
@@ -694,7 +694,7 @@ function tweetButton() {
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val() }, 
           {withCredentials: true});
         
-          $(`.tweet`).remove();
+          $(`.newTweet`).remove();
 
           let user = await getUser(result.userId);
 
@@ -743,7 +743,7 @@ function tweetButton() {
         } else { 
           const result = await tweet($(`#tweetCreation`).val());
 
-          $(`.tweet`).remove();
+          $(`.newTweet`).remove();
 
           let user = await getUser(result.userId);
 
@@ -791,7 +791,7 @@ function tweetButton() {
       });
 
       $(`.begon`).on('click', () => {
-        $(`.begon`).prepend(`
+        $(`#newTweet`).replaceWith(`
         <form class="level" id="newTweet">
           <button class="button is-primary tweet">Tweet</button>
         </form>
