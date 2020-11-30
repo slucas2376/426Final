@@ -480,7 +480,7 @@ async function renderTweetBody(data, element) {
     like(data.id, !(data.isLiked));
     retweetButton(data.id)
     editButton(data)
-    deleteButton(data.id);
+    //deleteButton(data.id);
 }
 
 async function renderMainFeed() {
