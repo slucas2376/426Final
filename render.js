@@ -210,6 +210,8 @@ async function renderTweetBody(data, element) {
 
     let user = await getUser(data.userId);
 
+    console.log(data.type);
+
     if (data.isMine) {
 
         if(data.type == "tweet") {
@@ -563,7 +565,7 @@ async function renderTweetBody(data, element) {
                         <img src="${data.imageLink}">
                       </figure>
                     </div>
-                    <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                    <div id="retweet-reply-${data.id}" class=""></div>
                     <div class="buttons">
                     <button class="button like-${data.id} is-info is-small">Like</button>
                     <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
