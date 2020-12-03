@@ -3,30 +3,18 @@ axios.defaults.withCredentials = true;
 $( async function () {
 
   //getting current user but it's a user view
-  const result = await axios({
-      method: 'get',
-      url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
-      withCredentials: true,
-  });
-
+  const result = await currentUser();
   console.log(result);
 
   //getting entire user object of current user
-  
-  const result2 = await axios({
-      method: 'get',
-      url: 'https://comp426finalbackendactual2.herokuapp.com/users/' + result.data.id,
-      withCredentials: true,
-  });
-
+  const result2 = await getUser(result.data.id);
   console.log(result2);
 
   await renderMainFeed();
 
-  //calling renderProfile to render current user's profile
+  //calling renderProfile to render current user's profileS
 
   await renderUserProfile(result2.data);
-  tweetButton();
 });
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
@@ -223,7 +211,14 @@ async function renderTweetBody(data, element) {
     let user = await getUser(data.userId);
 
     if (data.isMine) {
+
         if(data.type == "tweet") {
+
+          if(data.mediaType == "image") {
+            
+          } else if (data.mediaType == "video") {
+
+          } else {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
@@ -240,9 +235,12 @@ async function renderTweetBody(data, element) {
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <div class="retweetBox-${data.userId}"></div>
                           <br>
-                          ${data.body}
+                          <div class="edit-area-${data.id}}">
+                            ${data.body}
+                          </div>
                         </p>
                       </div>
+                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
                       <div class="buttons">
                         <button class="button edit-${data.id} is-info is-small">Edit</button>
                         <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -256,6 +254,8 @@ async function renderTweetBody(data, element) {
             </article>
             
             `);
+          }
+            
         } else if (data.type == "retweet") {
     
             let parent = await getTweet(data.parentId);
@@ -276,7 +276,9 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <div class="edit-area-${data.id}}">
                                     ${data.body}
+                                    </div>
                                     <br>
                                     <article class="media">
                                       <div class="media-content">
@@ -286,6 +288,7 @@ async function renderTweetBody(data, element) {
                                     </article>
                                   </p>
                                 </div>
+                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
                                 <div class="buttons">
                                   <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -298,6 +301,117 @@ async function renderTweetBody(data, element) {
                           </div>
                         </article>
                     `);
+                } else if ( data.mediaType == "image" ) {
+                  $(`.${element}`).append(`
+                  <br>
+                      <article class="media tweet-${data.id}">
+
+                        <div class="box media-content">
+                          <article class="media">
+                            <figure class="media-left">
+                              <p class="image is-64x64">
+                                <img class="is-rounded" src="${user.avatar}">
+                              </p>
+                            </figure>
+                            <div class="media-content">
+                              <div class="content type-${data.userId}">
+                                <p class>
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <div class="retweetBox-${data.userId}"></div>
+                                  ${data.body}
+                                  <br>
+                                  <article class="media">
+                                    <figure class="media-left">
+                                      <p class="image is-64x64">
+                                        <img class="is-rounded" src="${userParent.avatar}">
+                                      </p>
+                                    </figure>
+                                    <div class="media-content">
+                                      <div class="content type-${parent.userId}">
+                                        <p class>
+                                          <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                          <br>
+                                          ${parent.body}
+                                          <br>
+                                          <figure class="image is-1by1">
+                                            <img src="${parent.imageLink}">
+                                          </figure>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                </p>
+                              </div>
+                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="buttons">
+                                <button class="button edit-${data.id} is-info is-small">Edit</button>
+                                  <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                  <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                                  <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                              </div>
+                            </div>
+                          </article>
+                          
+                        </div>
+
+                      </article>
+                  `);
+                
+                } else if( data.mediaType == "video" ) { 
+                  $(`.${element}`).append(`
+                  <br>
+                      <article class="media tweet-${data.id}">
+
+                        <div class="box media-content">
+                          <article class="media">
+                            <figure class="media-left">
+                              <p class="image is-64x64">
+                                <img class="is-rounded" src="${user.avatar}">
+                              </p>
+                            </figure>
+                            <div class="media-content">
+                              <div class="content type-${data.userId}">
+                                <p class>
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <div class="retweetBox-${data.userId}"></div>
+                                  ${data.body}
+                                  <br>
+                                  <article class="media">
+                                    <figure class="media-left">
+                                      <p class="image is-64x64">
+                                        <img class="is-rounded" src="${userParent.avatar}">
+                                      </p>
+                                    </figure>
+                                    <div class="media-content">
+                                      <div class="content type-${parent.userId}">
+                                        <p class>
+                                          <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                          <br>
+                                          ${parent.body}
+                                        </p>
+                                        <figure class="image is-16by9">
+                                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                        </figure>
+                                      </div>
+                                    </div>
+                                  </article>
+                                </p>
+                              </div>
+                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="buttons">
+                              <button class="button edit-${data.id} is-info is-small">Edit</button>
+                                  <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                  <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                                  <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                            </div>
+                            </div>
+                          </article>
+                          
+                        </div>
+
+                      </article>
+                  `);
+
                 } else {
                     $(`.${element}`).append(`
                     <br>
@@ -313,8 +427,9 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <div class="retweetBox-${data.userId}"></div>
+                                    <div class="edit-area-${data.id}}">
                                     ${data.body}
+                                    </div>
                                     <br>
                                     <article class="media">
                                       <figure class="media-left">
@@ -334,6 +449,7 @@ async function renderTweetBody(data, element) {
                                     </article>
                                   </p>
                                 </div>
+                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
                                 <div class="buttons">
                                   <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -369,6 +485,7 @@ async function renderTweetBody(data, element) {
                           ${data.body}
                         </p>
                       </div>
+                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
                       <div class="buttons">
                       <button class="button like-${data.id} is-info is-small">Like</button>
                       <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -381,6 +498,84 @@ async function renderTweetBody(data, element) {
             </article>
             
             `);
+
+        } else if (data.type == "tweet" && data.mediaType == "video") {
+
+          $(`.${element}`).append(`
+          <br>
+            <article class="media tweet-${data.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${data.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
+                          <br>
+                          ${data.body}
+                          <br>
+                        </p>
+                        <figure class="image is-16by9">
+                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                        </figure>
+                      </div>
+                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="buttons">
+                      <button class="button like-${data.id} is-info is-small">Like</button>
+                      <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                      <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                      </div>
+                    </div>
+                  </article>
+                  
+                </div>
+            </article>
+          
+          `);
+
+        } else if (data.type == "tweet" && data.mediaType == "image") {
+
+          $(`.${element}`).append(`
+          <br>
+            <article class="media tweet-${data.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${data.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
+                          <br>
+                          ${data.body}
+                        <br>
+                      </p>
+                      <figure class="image is-1by1">
+                        <img src="${data.imageLink}">
+                      </figure>
+                    </div>
+                    <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                    <div class="buttons">
+                    <button class="button like-${data.id} is-info is-small">Like</button>
+                    <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                    <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                    </div>
+                  </div>
+                </article>
+                
+              </div>
+          </article>
+          `)          
+
         } else if (data.type == "retweet") {
     
             let parent = await getTweet(data.parentId);
@@ -412,6 +607,7 @@ async function renderTweetBody(data, element) {
                                   </p>
                                   <textarea class="input-bodies-${data.id}"></textarea>
                                 </div>
+                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
                                 <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -423,8 +619,58 @@ async function renderTweetBody(data, element) {
                           </div>
                         </article>
                     `);
-                } else {
+                } else if (parent.mediaType != "video" && parent.mediaType != "image") {
                     $(`.${element}`).append(`
+                    <br>
+                        <article class="media tweet-${data.id}">
+
+                          <div class="box media-content">
+                            <article class="media">
+                              <figure class="media-left">
+                                <p class="image is-64x64">
+                                  <img class="is-rounded" src="${user.avatar}">
+                                </p>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${data.userId}">
+                                  <p class>
+                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    ${data.body}
+                                    <br>
+                                    <article class="media">
+                                      <figure class="media-left">
+                                        <p class="image is-64x64">
+                                          <img class="is-rounded" src="${userParent.avatar}">
+                                        </p>
+                                      </figure>
+                                      <div class="media-content">
+                                        <div class="content type-${parent.userId}">
+                                          <p class>
+                                            <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                            <br>
+                                            ${parent.body}
+                                            <br>
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </article>
+                                  </p>
+                                </div>
+                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="buttons">
+                                <button class="button like-${data.id} is-info is-small">Like</button>
+                                <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                              </div>
+                              </div>
+                            </article>
+                            
+                          </div>
+
+                        </article>
+                    `);
+                } else if ( parent.mediaType == "video" ) {
+                  $(`.${element}`).append(`
                     <br>
                         <article class="media tweet-${data.id}">
 
@@ -455,12 +701,16 @@ async function renderTweetBody(data, element) {
                                             <br>
                                             ${parent.body}
                                           </p>
+                                          <figure class="image is-16by9">
+                                            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                          </figure>
                                         </div>
                                       </div>
                                     </article>
                                   </p>
                                   <textarea class="input-bodies-${data.id}"></textarea>
                                 </div>
+                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
                                 <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -473,14 +723,70 @@ async function renderTweetBody(data, element) {
 
                         </article>
                     `);
-                }        
+                  
+                } else if ( parent.mediaType == "image" ) {
+                  $(`.${element}`).append(`
+                  <br>
+                      <article class="media tweet-${data.id}">
+
+                        <div class="box media-content">
+                          <article class="media">
+                            <figure class="media-left">
+                              <p class="image is-64x64">
+                                <img class="is-rounded" src="${user.avatar}">
+                              </p>
+                            </figure>
+                            <div class="media-content">
+                              <div class="content type-${data.userId}">
+                                <p class>
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <div class="retweetBox-${data.userId}"></div>
+                                  ${data.body}
+                                  <br>
+                                  <article class="media">
+                                    <figure class="media-left">
+                                      <p class="image is-64x64">
+                                        <img class="is-rounded" src="${userParent.avatar}">
+                                      </p>
+                                    </figure>
+                                    <div class="media-content">
+                                      <div class="content type-${parent.userId}">
+                                        <p class>
+                                          <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                          <br>
+                                          ${parent.body}
+                                          <br>
+                                          <figure class="image is-1by1">
+                                            <img src="${parent.imageLink}">
+                                          </figure>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                </p>
+                              </div>
+                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="buttons">
+                              <button class="button like-${data.id} is-info is-small">Like</button>
+                              <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                              <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                            </div>
+                            </div>
+                          </article>
+                          
+                        </div>
+
+                      </article>
+                  `);
+                }
         }
     }
 
     like(data.id, !(data.isLiked));
-    retweetButton(data.id)
-    editButton(data)
-    //deleteButton(data.id);
+    editButton(data);
+    retweetButton(data);
+    replyButton(data);
+    deleteButton(data);
 }
 
 async function renderMainFeed() {
@@ -495,7 +801,10 @@ async function renderMainFeed() {
                 </form>
             </div>
         </div>
-    `)
+    `);
+
+    tweetButton();
+
     await renderNewTweet("feed");
 
 }
@@ -503,31 +812,41 @@ async function renderMainFeed() {
 function editButton(data) {
 
   $(`.edit-${data.id}`).on('click', () => {
-    $(`.columns`).append(`
-    <div class="column edita-${data.id}">
-      <div class="box is-info">
-        <artice class="media">
-          <div class="box">
-            <textarea class="textarea final-${data.id}"> ${data.body} </textarea>
-          </div>
-          <button class="button is-info submit-${data.id}>Submit Edit</button>
-        </article>
+    $(`.edit-area-${data.id}`).replaceWith(`
+    <div class="edit-area-${data.id}>
+      <textarea class="replace-${data.id}"> ${$(`.edit-area-${data.id}`).val()} </textarea>
+      <div class="edit-buttons-${data.id}">
+        <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
+        <button class="button cancel-edit-${data.id} is-danger" type="button"> Cancel </button>
       </div>
     </div>
     `);
 
     $(`.edit-${data.id}`).replaceWith(`
-      <button class="button edit-${data.id} is-info is-small">Edit</button>
+      <button class="button edit-${data.id} is-info is-small">edit</button>
     `);
 
-    $(`.submit-${data.id}`).on('click', async () => {
-      let final = $(`final-${data.id}`).val();
+    $(`.submit-edit-${data.id}`).on('click', async () => {
+      let final = $(`.replace-${data.id}`).val();
 
       await edit(data.id, final);
 
-      $(`edits-${data.id}`).remove();
+      $(`.edits-area-${data.id}`).replaecWith(`
+        <div class="edit-area-${data.id}>
+          ${final}
+        </div>
+      `);
       editButton(data);
     });
+
+    $(`.cancel-edit-${data.id}`).on('click', () => {
+      $(`edits-area-${data.id}`).replaecWith(`
+        <div class="edit-area-${data.id}>
+          ${final}
+        </div>
+      `);
+      editButton(data);
+    })
   })
 
   
@@ -535,37 +854,78 @@ function editButton(data) {
 
 function retweetButton(data) {
 
-  $(`.edit-${data.id}`).on('click', () => {
-    $(`.columns`).append(`
-    <div class="column edita-${data.id}">
-      <div class="box is-info">
-        <artice class="media">
-          <div class="box">
-            <textarea class="textarea final-${data.id}"> ${data.body} </textarea>
-          </div>
-          <button class="button is-info submit-${data.id}>Submit Edit</button>
-        </article>
+  $(`.retweet-${data.id}`).on('click', () => {
+    $(`.retweet-reply-${data.id}`).replaceWith(`
+      <div class="retweet-reply-${data.id}>
+      <textarea class="retweet-body-${data.id}"></textarea>
+      <div class="retweet-buttons-${data.id}">
+        <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
+        <button class="button retweet-cancel-${data.id} is-danger" type="button"> Cancel </button>
       </div>
     </div>
     `);
 
-    $(`.edit-${data.id}`).replaceWith(`
-      <button class="button edit-${data.id} is-info is-small">Edit</button>
+    $(`.retweet-${data.id}`).replaceWith(`
+      <button class="button retweet-${data.id} is-info is-small">retweet</button>
     `);
 
-    $(`.submit-${data.id}`).on('click', async () => {
-      let final = $(`final-${data.id}`).val();
+    $(`.retweet-submit-${data.id}`).on('click', async () => {
+      let final = $(`retweet-body-${data.id}`).val();
 
-      await edit(data.id, final);
+      await retweet(data.id, final);
 
-      $(`edits-${data.id}`).remove();
-      editButton(data);
+      $(`retweet-reply-${data.id}`).replaceWith(`
+      <div class="retweet-reply-${data.id}></div>
+      `);
+      retweetButton(data);
+    });
+
+
+    $(`.retweet-cancel-${data.id}`).on('click', () => {
+      $(`retweet-reply-${data.id}`).replaceWith(`
+        <div class="retweet-reply-${data.id}></div>
+      `);
     });
   })
 
   
 }
 
+function replyButton(data) {
+  $(`.reply-${data.id}`).on('click', () => {
+    $(`.retweet-reply-${data.id}`).replaceWith(`
+      <div class="retweet-reply-${data.id}>
+      <textarea class="reply-body-${data.id}"></textarea>
+      <div class="reply-buttons-${data.id}">
+        <button class="button reply-submit-${data.id} is-info is-small" type="button">Submit Reply</button>
+        <button class="button reply-cancel-${data.id} is-danger" type="button"> Cancel </button>
+      </div>
+    </div>
+    `);
+
+    $(`.reply-${data.id}`).replaceWith(`
+      <button class="button retweet-${data.id} is-info is-small">reply</button>
+    `);
+
+    $(`.reply-submit-${data.id}`).on('click', async () => {
+      let final = $(`reply-body-${data.id}`).val();
+
+      await reply(data.id, final);
+
+      $(`retweet-reply-${data.id}`).replaceWith(`
+      <div class="retweet-reply-${data.id}></div>
+      `);
+      retweetButton(data);
+    });
+
+
+    $(`.reply-cancel-${data.id}`).on('click', () => {
+      $(`retweet-reply-${data.id}`).replaceWith(`
+        <div class="retweet-reply-${data.id}></div>
+      `);
+    });
+  })
+}
 
 
 function tweetButton() {
@@ -644,11 +1004,11 @@ function tweetButton() {
 
           $(`.newTweet`).remove();
 
-          let user = await getUser(result.userId);
+          let user = await currentUser();
 
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${result.id}">
+            <article class="media tweet-${user.postedTweets[0].id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -657,23 +1017,22 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.userId}">
+                      <div class="content type-${user.postedTweets[0].userId}">
                         <p class>
-                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
-                          <div class="retweetBox-${result.userId}"></div>
+                          <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
-                          ${result.body}
+                          ${user.postedTweets[0].body}
                           <br>
                         </p>
                         <figure class="image is-16by9">
-                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${user.postedTweets[0].videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
+                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
+                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -696,11 +1055,11 @@ function tweetButton() {
         
           $(`.newTweet`).remove();
 
-          let user = await getUser(result.userId);
+          let user = await currentUser();
 
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${result.id}">
+            <article class="media tweet-${user.postedTweets[0].id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -709,23 +1068,23 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.userId}">
+                      <div class="content type-${user.postedTweets[0].userId}">
                         <p class>
-                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
+                          <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <div class="retweetBox-${result.userId}"></div>
                           <br>
-                          ${result.body}
+                          ${user.postedTweets[0].body}
                           <br>
                         </p>
                         <figure class="image is-1by1">
-                          <img src="${result.imageLink}">
+                          <img src="${user.postedTweets[0].imageLink}">
                         </figure>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
+                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
+                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -745,11 +1104,11 @@ function tweetButton() {
 
           $(`.newTweet`).remove();
 
-          let user = await getUser(result.userId);
-
+          let user = await currentUser();
+          
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${result.id}">
+            <article class="media tweet-${user.postedTweets[0].id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -758,20 +1117,19 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.userId}">
+                      <div class="content type-${user.postedTweets[0].id}">
                         <p class>
-                          <strong>${user.displayName}</strong> <small>@${result.userId}</small>
-                          <div class="retweetBox-${result.userId}"></div>
+                          <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
-                          ${result.body}
+                          ${user.postedTweets[0].body}
                           <br>
                         </p>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
+                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
+                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -785,12 +1143,16 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
+        }
 
         tweetButton();
-        }
+        retweetButton(user.postedTweets[0].id)
+        editButton(user.postedTweets[0])
+        deleteButton(user.postedTweets[0]);
+
       });
 
-      $(`.begon`).on('click', () => {
+      $(`#begon`).on('click', () => {
         $(`#newTweet`).replaceWith(`
         <form class="level" id="newTweet">
           <button class="button is-primary tweet">Tweet</button>
@@ -801,7 +1163,27 @@ function tweetButton() {
   });
 }
 
+function deleteButton(data) {
+  $(`delete-${data.id}`).on(`click`, async () => {
+    await deleteTweet(data.id);
+    $(`tweet-${data.id}`).remove();
+  });
+}
 
+function logoutButton() {
+  $(`.logout`).on(`click`, async () => {
+    await logout();
+    window.location.replace("loginPage.html");
+  });
+}
+
+function resetPage() {
+  $(`#reset-page`).on('click', async () => {
+    $(`.column`).remove();
+
+    await renderMainFeed();
+  });
+}
 
 async function getTweet(id) {
     const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweet/${id}`, {withCredentials: true})
@@ -854,7 +1236,7 @@ async function tweet(text) {
     return result;
 }
 
-async function retweet(id) {
+async function retweet(id, text) {
     const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
     return result;
 }
@@ -875,4 +1257,14 @@ async function deleteTweet(id) {
 async function recentTweets(){
     const result = await axios.get('https://comp426finalbackendactual2.herokuapp.com/tweets/recent', {withCredentials: true});
     return result.data;
+}
+
+async function currentUser() {
+  const result = await axios({
+    method: 'get',
+    url: 'https://comp426finalbackendactual2.herokuapp.com/users/current',
+    withCredentials: true,
+  });
+
+  return result;
 }
