@@ -869,13 +869,19 @@ async function renderMainFeed() {
 
 function editButton(data) {
 
+  let body = $(`.edit-area-${data.id}`).val();
+
   $(`.edit-${data.id}`).on('click', () => {
     $(`.edit-area-${data.id}`).replaceWith(`
     <div class="edit-area-${data.id}">
-      <textarea class="replace-${data.id}"> ${$(`.edit-area-${data.id}`).val()} </textarea>
+      <div class="field">
+        <div class="contianer">
+          <textarea class="replace-${data.id}"> ${body} </textarea>
+        </div>
+      </div>
       <div class="edit-buttons-${data.id}">
         <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
-        <button class="button cancel-edit-${data.id} is-danger" type="button"> Cancel </button>
+        <button class="button cancel-edit-${data.id} is-danger is-small" type="button"> Cancel </button>
       </div>
     </div>
     `);
