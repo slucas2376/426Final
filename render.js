@@ -231,7 +231,9 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                          ${data.body}
+                          <div class="edit-area-${data.id}">
+                            ${data.body}
+                          </div>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -263,7 +265,9 @@ async function renderTweetBody(data, element) {
                         <div class="content type-${data.userId}">
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                            ${data.body}
+                            <div class="edit-area-${data.id}">
+                              ${data.body}
+                            </div>
                             <br>
                           </p>
                           <figure class="image is-16by9">
