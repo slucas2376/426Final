@@ -217,9 +217,76 @@ async function renderTweetBody(data, element) {
         if(data.type == "tweet") {
 
           if(data.mediaType == "image") {
+            $(`.${element}`).append(`
+            <br>
+            <article class="media tweet-${data.id}">
+                <div class="box media-content">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="${user.avatar}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content type-${data.userId}">
+                        <p class>
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <div class="retweetBox-${data.userId}"></div>
+                          <br>
+                          ${data.body}
+                        </p>
+                      </div>
+                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="buttons">
+                        <button class="button edit-${data.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                    </div>
+                    </div>
+                  </article>
+                  
+                </div>
+            </article>
             
+            `);w
           } else if (data.mediaType == "video") {
-
+            $(`.${element}`).append(`
+            <br>
+              <article class="media tweet-${data.id}">
+                  <div class="box media-content">
+                    <article class="media">
+                      <figure class="media-left">
+                        <p class="image is-64x64">
+                          <img class="is-rounded" src="${user.avatar}">
+                        </p>
+                      </figure>
+                      <div class="media-content">
+                        <div class="content type-${data.userId}">
+                          <p class>
+                            <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                            <div class="retweetBox-${data.userId}"></div>
+                            <br>
+                            ${data.body}
+                            <br>
+                          </p>
+                          <figure class="image is-16by9">
+                            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                          </figure>
+                        </div>
+                        <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                        <div class="buttons">
+                        <button class="button like-${data.id} is-info is-small">Like</button>
+                        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                        </div>
+                      </div>
+                    </article>
+                    
+                  </div>
+              </article>
+            
+            `);
           } else {
             $(`.${element}`).append(`
             <br>
