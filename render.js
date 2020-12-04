@@ -15,6 +15,7 @@ $( async function () {
   //calling renderProfile to render current user's profileS
 
   await renderUserProfile(result2.data);
+  logoutButton()
 });
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
@@ -160,7 +161,7 @@ async function renderUserProfile(user) {
         //axios request again
         const result2 = await axios({
             method: 'get',
-            url: 'https://comp426finalbackendactual2.herokuapp.com//logout',
+            url: 'https://comp426finalbackendactual2.herokuapp.com/logout',
             withCredentials: true,
         });
 
@@ -904,6 +905,8 @@ function editButton(data) {
     });
 
     $(`.cancel-edit-${data.id}`).on('click', () => {
+      let final = $(`.replace-${data.id}`).val();
+
       $(`edits-area-${data.id}`).replaecWith(`
         <div class="edit-area-${data.id}>
           ${final}
@@ -921,12 +924,16 @@ function retweetButton(data) {
   $(`.retweet-${data.id}`).on('click', () => {
     $(`.retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}>
-      <textarea class="retweet-body-${data.id}"></textarea>
-      <div class="retweet-buttons-${data.id}">
-        <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
-        <button class="button retweet-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
+        <div class="field">
+          <div class="contianer">
+            <textarea class="retweet-body-${data.id}"></textarea>
+          </div>
+        </div>
+        <div class="retweet-buttons-${data.id}">
+          <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
+          <button class="button retweet-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
+        </div>
       </div>
-    </div>
     `);
 
     $(`.retweet-${data.id}`).replaceWith(`
@@ -1322,8 +1329,8 @@ async function reply(id, text) {
     return result;
 }
 
-async function edit(id, replacement) {
-    const result = await axios.put(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}`, {body: `${replacement}`}, {withCredentials: true});
+async function edit(id, replacement, type, IdMedia) {
+    const result = await axios.put(`https://comp426finalbackendactual2.herokuapp.com/tweets/${id}`, {body: `${replacement}`, mediaType: type, mediaId: IdMedia}, {withCredentials: true});
 }
 
 async function deleteTweet(id) {
