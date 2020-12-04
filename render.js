@@ -231,9 +231,9 @@ async function renderTweetBody(data, element) {
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
-                          <div class="edit-area-${data.id}">
+                          <h3 class="edit-area-${data.id}">
                             ${data.body}
-                          </div>
+                          </h3>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -266,9 +266,9 @@ async function renderTweetBody(data, element) {
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                             <br>
-                            <div class="edit-area-${data.id}">
+                            <<h3 class="edit-area-${data.id}">
                               ${data.body}
-                            </div>
+                            </h3>
                             <br>
                           </p>
                           <figure class="image is-16by9">
@@ -304,9 +304,9 @@ async function renderTweetBody(data, element) {
                         <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
-                          <div class="edit-area-${data.id}">
+                          <h3 class="edit-area-${data.id}">
                             ${data.body}
-                          </div>
+                          </h3>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -345,13 +345,12 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <div class="edit-area-${data.id}">
-                                    ${data.body}
-                                    </div>
+                                    <h3 class="edit-area-${data.id}">
+                                      ${data.body}
+                                    </h3>
                                     <br>
                                     <article class="media">
                                       <div class="media-content">
-                                      <div class="retweetBox-${data.userId}"></div>
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
                                     </article>
@@ -386,9 +385,9 @@ async function renderTweetBody(data, element) {
                               <div class="content type-${data.userId}">
                                 <p class>
                                   <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                  <div class="edit-area-${data.id}">
+                                  <h3 class="edit-area-${data.id}">
                                     ${data.body}
-                                  </div>
+                                  </h3>
                                   <br>
                                   <article class="media">
                                     <figure class="media-left">
@@ -443,9 +442,9 @@ async function renderTweetBody(data, element) {
                                 <p class>
                                   <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                   <div class="retweetBox-${data.userId}"></div>
-                                  <div class="edit-area-${data.id}">
+                                  <h3 class="edit-area-${data.id}">
                                     ${data.body}
-                                  </div>
+                                  </h3>
                                   <br>
                                   <article class="media">
                                     <figure class="media-left">
@@ -497,9 +496,9 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <div class="edit-area-${data.id}">
-                                    ${data.body}
-                                    </div>
+                                    <h3 class="edit-area-${data.id}">
+                                      ${data.body}
+                                    </h3>
                                     <br>
                                     <article class="media">
                                       <figure class="media-left">
@@ -915,7 +914,7 @@ function retweetButton(data) {
   $(`.retweet-${data.id}`).on('click', () => {
     $(`.retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}>
-      <textarea class="retweet-body-${data.id}">
+      <textarea class="retweet-body-${data.id}"></textarea>
       <div class="retweet-buttons-${data.id}">
         <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
         <button class="button retweet-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
@@ -1063,10 +1062,11 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
+          result = await getTweet(user.postedTweets[0]);
 
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${user.postedTweets[0].id}">
+            <article class="media tweet-${result.id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -1075,22 +1075,22 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${user.postedTweets[0].userId}">
+                      <div class="content type-${result.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
-                          ${user.postedTweets[0].body}
+                          ${result.body}
                           <br>
                         </p>
                         <figure class="image is-16by9">
-                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${user.postedTweets[0].videoId}" frameborder="0" allowfullscreen></iframe>
+                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
-                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
-                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -1104,6 +1104,11 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
+
+          tweetButton();
+          retweetButton(result)
+          editButton(result)
+          deleteButton(result);
 
         } else if ($(`#image`).is(`:checked`)) {
           
@@ -1114,10 +1119,12 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
+          result = await getTweet(user.postedTweets[0]);
+
 
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${user.postedTweets[0].id}">
+            <article class="media tweet-${result.id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -1126,23 +1133,22 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${user.postedTweets[0].userId}">
+                      <div class="content type-${result.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                          <div class="retweetBox-${result.userId}"></div>
                           <br>
-                          ${user.postedTweets[0].body}
+                          ${result.body}
                           <br>
                         </p>
                         <figure class="image is-1by1">
-                          <img src="${user.postedTweets[0].imageLink}">
+                          <img src="${result.imageLink}">
                         </figure>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
-                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
-                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -1156,6 +1162,11 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
+
+          tweetButton();
+          retweetButton(result)
+          editButton(result)
+          deleteButton(result);
 
         } else { 
           const result = await tweet($(`#tweetCreation`).val());
@@ -1163,10 +1174,11 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
+          result = await getTweet(user.postedTweets[0]);
           
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${user.postedTweets[0].id}">
+            <article class="media tweet-${result.id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
@@ -1175,19 +1187,19 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${user.postedTweets[0].id}">
+                      <div class="content type-${result.id}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
-                          ${user.postedTweets[0].body}
+                          ${result.body}
                           <br>
                         </p>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${user.postedTweets[0].id} is-info is-small">Edit</button>
-                        <button class="button retweet-${user.postedTweets[0].id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${user.postedTweets[0].id} is-info is-small">  Reply </button>
-                        <button class="button delete-${user.postedTweets[0].id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -1201,13 +1213,12 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
+
+          tweetButton();
+          retweetButton(result)
+          editButton(result)
+          deleteButton(result);
         }
-
-        tweetButton();
-        retweetButton(user.postedTweets[0].id)
-        editButton(user.postedTweets[0])
-        deleteButton(user.postedTweets[0]);
-
       });
 
       $(`#begon`).on('click', () => {
