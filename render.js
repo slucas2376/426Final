@@ -215,7 +215,6 @@ async function renderTweetBody(data, element) {
     if (data.isMine) {
 
         if(data.type == "tweet") {
-
           if(data.mediaType == "image") {
             $(`.${element}`).append(`
             <br>
@@ -231,6 +230,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <br>
                           <div class="edit-area-${data.id}">
                             ${data.body}
                           </div>
@@ -265,6 +265,7 @@ async function renderTweetBody(data, element) {
                         <div class="content type-${data.userId}">
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                            <br>
                             <div class="edit-area-${data.id}">
                               ${data.body}
                             </div>
@@ -302,7 +303,7 @@ async function renderTweetBody(data, element) {
                       <div class="content type-${data.userId}">
                         <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                          <div class="retweetBox-${data.userId}"></div>
+                          <br>
                           <div class="edit-area-${data.id}">
                             ${data.body}
                           </div>
