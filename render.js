@@ -231,9 +231,9 @@ async function renderTweetBody(data, element) {
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
-                          <h3 class="edit-area-${data.id}">
+                          <div class="edit-area-${data.id}">
                             ${data.body}
-                          </h3>
+                          </div>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -266,9 +266,9 @@ async function renderTweetBody(data, element) {
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                             <br>
-                            <<h3 class="edit-area-${data.id}">
+                            <div class="edit-area-${data.id}">
                               ${data.body}
-                            </h3>
+                            </div>
                             <br>
                           </p>
                           <figure class="image is-16by9">
@@ -304,9 +304,9 @@ async function renderTweetBody(data, element) {
                         <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
-                          <h3 class="edit-area-${data.id}">
+                          <div class="edit-area-${data.id}">
                             ${data.body}
-                          </h3>
+                          </div>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -345,12 +345,13 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <h3 class="edit-area-${data.id}">
-                                      ${data.body}
-                                    </h3>
+                                    <div class="edit-area-${data.id}">
+                                    ${data.body}
+                                    </div>
                                     <br>
                                     <article class="media">
                                       <div class="media-content">
+                                      <div class="retweetBox-${data.userId}"></div>
                                         <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                       </div>
                                     </article>
@@ -385,9 +386,9 @@ async function renderTweetBody(data, element) {
                               <div class="content type-${data.userId}">
                                 <p class>
                                   <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                  <h3 class="edit-area-${data.id}">
+                                  <div class="edit-area-${data.id}">
                                     ${data.body}
-                                  </h3>
+                                  </div>
                                   <br>
                                   <article class="media">
                                     <figure class="media-left">
@@ -442,9 +443,9 @@ async function renderTweetBody(data, element) {
                                 <p class>
                                   <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                   <div class="retweetBox-${data.userId}"></div>
-                                  <h3 class="edit-area-${data.id}">
+                                  <div class="edit-area-${data.id}">
                                     ${data.body}
-                                  </h3>
+                                  </div>
                                   <br>
                                   <article class="media">
                                     <figure class="media-left">
@@ -496,9 +497,9 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-body-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <h3 class="edit-area-${data.id}">
-                                      ${data.body}
-                                    </h3>
+                                    <div class="edit-area-${data.id}">
+                                    ${data.body}
+                                    </div>
                                     <br>
                                     <article class="media">
                                       <figure class="media-left">
@@ -870,7 +871,7 @@ function editButton(data) {
 
   $(`.edit-${data.id}`).on('click', () => {
     $(`.edit-area-${data.id}`).replaceWith(`
-    <div class="edit-area-${data.id}>
+    <div class="edit-area-${data.id}">
       <textarea class="replace-${data.id}"> ${$(`.edit-area-${data.id}`).val()} </textarea>
       <div class="edit-buttons-${data.id}">
         <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
