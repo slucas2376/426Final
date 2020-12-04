@@ -236,7 +236,7 @@ async function renderTweetBody(data, element) {
                           ${data.body}
                         </p>
                       </div>
-                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="retweet-reply-${data.id}"></div>
                       <div class="buttons">
                         <button class="button edit-${data.id} is-info is-small">Edit</button>
                         <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -249,7 +249,7 @@ async function renderTweetBody(data, element) {
                 </div>
             </article>
             
-            `);w
+            `);
           } else if (data.mediaType == "video") {
             $(`.${element}`).append(`
             <br>
@@ -274,7 +274,7 @@ async function renderTweetBody(data, element) {
                             <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                           </figure>
                         </div>
-                        <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                        <div class="retweet-reply-${data.id}"></div>
                         <div class="buttons">
                         <button class="button like-${data.id} is-info is-small">Like</button>
                         <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -309,7 +309,7 @@ async function renderTweetBody(data, element) {
                           </div>
                         </p>
                       </div>
-                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="retweet-reply-${data.id}"></div>
                       <div class="buttons">
                         <button class="button edit-${data.id} is-info is-small">Edit</button>
                         <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -357,7 +357,7 @@ async function renderTweetBody(data, element) {
                                     </article>
                                   </p>
                                 </div>
-                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
                                   <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -411,7 +411,7 @@ async function renderTweetBody(data, element) {
                                   </article>
                                 </p>
                               </div>
-                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="retweet-reply-${data.id}"></div>
                               <div class="buttons">
                                 <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -466,7 +466,7 @@ async function renderTweetBody(data, element) {
                                   </article>
                                 </p>
                               </div>
-                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="retweet-reply-${data.id}"></div>
                               <div class="buttons">
                               <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -518,7 +518,7 @@ async function renderTweetBody(data, element) {
                                     </article>
                                   </p>
                                 </div>
-                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
                                   <button class="button edit-${data.id} is-info is-small">Edit</button>
                                   <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -554,7 +554,7 @@ async function renderTweetBody(data, element) {
                           ${data.body}
                         </p>
                       </div>
-                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="retweet-reply-${data.id}"></div>
                       <div class="buttons">
                       <button class="button like-${data.id} is-info is-small">Like</button>
                       <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -593,7 +593,7 @@ async function renderTweetBody(data, element) {
                           <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
-                      <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                      <div class="retweet-reply-${data.id}"></div>
                       <div class="buttons">
                       <button class="button like-${data.id} is-info is-small">Like</button>
                       <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -676,7 +676,7 @@ async function renderTweetBody(data, element) {
                                   </p>
                                   <textarea class="input-bodies-${data.id}"></textarea>
                                 </div>
-                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
                                 <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -725,7 +725,7 @@ async function renderTweetBody(data, element) {
                                     </article>
                                   </p>
                                 </div>
-                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
                                 <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -777,9 +777,9 @@ async function renderTweetBody(data, element) {
                                       </div>
                                     </article>
                                   </p>
-                                  <textarea class="input-bodies-${data.id}"></textarea>
+                                  
                                 </div>
-                                <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                                <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
                                 <button class="button like-${data.id} is-info is-small">Like</button>
                                 <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
@@ -834,7 +834,7 @@ async function renderTweetBody(data, element) {
                                   </article>
                                 </p>
                               </div>
-                              <textarea id="retweet-reply-${data.id}" class=""></textarea>
+                              <div class="retweet-reply-${data.id}"></div>
                               <div class="buttons">
                               <button class="button like-${data.id} is-info is-small">Like</button>
                               <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
