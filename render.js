@@ -266,9 +266,9 @@ async function renderTweetBody(data, element) {
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                             <br>
-                                                      <p class="edit-area-${data.id}">
-                            ${data.body}
-                          </p>
+                              <p class="edit-area-${data.id}">
+                              ${data.body}
+                              </p>
                             <br>
                           </p>
                           <figure class="image is-16by9">
@@ -304,9 +304,9 @@ async function renderTweetBody(data, element) {
                         <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
-                          <div class="edit-area-${data.id}">
+                          <p class="edit-area-${data.id}">
                             ${data.body}
-                          </div>
+                          </p>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -868,8 +868,6 @@ async function renderMainFeed() {
 }
 
 function editButton(data) {
-
-  const result = await
 
   $(`.edit-${data.id}`).on('click', () => {
     $(`.edit-area-${data.id}`).replaceWith(`
