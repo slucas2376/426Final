@@ -277,9 +277,10 @@ async function renderTweetBody(data, element) {
                         </div>
                         <div class="retweet-reply-${data.id}"></div>
                         <div class="buttons">
-                        <button class="button like-${data.id} is-info is-small">Like</button>
-                        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                          <button class="button edit-${data.id} is-info is-small">Edit</button>
+                          <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                          <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                          <button class="button delete-${data.id} is-danger is-small"> Delete </button>
                         </div>
                       </div>
                     </article>
@@ -398,6 +399,7 @@ async function renderTweetBody(data, element) {
                                       <div class="content type-${parent.userId}">
                                         <p class>
                                           <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                          <br>
                                           ${parent.body}
                                           <br>
                                           <figure class="image is-1by1">
@@ -455,9 +457,8 @@ async function renderTweetBody(data, element) {
                                       <div class="content type-${parent.userId}">
                                         <p>
                                           <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
-                                          <div>
+                                          <br>
                                           ${parent.body}
-                                          </div>
                                         </p>
                                         <figure class="image is-16by9">
                                           <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
@@ -469,10 +470,10 @@ async function renderTweetBody(data, element) {
                               </div>
                               <div class="retweet-reply-${data.id}"></div>
                               <div class="buttons">
-                              <button class="button edit-${data.id} is-info is-small">Edit</button>
-                                  <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-                                  <button class="button reply-${data.id} is-info is-small">  Reply </button>
-                                  <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+                                <button class="button edit-${data.id} is-info is-small">Edit</button>
+                                <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+                                <button class="button reply-${data.id} is-info is-small">  Reply </button>
+                                <button class="button delete-${data.id} is-danger is-small"> Delete </button>
                             </div>
                             </div>
                           </article>
@@ -511,6 +512,7 @@ async function renderTweetBody(data, element) {
                                         <div class="content type-${parent.userId}">
                                           <p>
                                             <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                            <br>
                                             ${parent.body}
                                           </p>
                                         </div>
@@ -712,6 +714,7 @@ async function renderTweetBody(data, element) {
                                         <div class="content type-${parent.userId}">
                                           <p class>
                                             <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                            <br>
                                             ${parent.body}
                                             <br>
                                           </p>
@@ -749,6 +752,7 @@ async function renderTweetBody(data, element) {
                                 <div class="content type-${data.userId}">
                                   <p class>
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                    <br>
                                     ${data.body}
                                     <br>
                                     <article class="media">
@@ -802,6 +806,7 @@ async function renderTweetBody(data, element) {
                               <div class="content type-${data.userId}">
                                 <p class>
                                   <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <br>
                                   ${data.body}
                                   <br>
                                   <article class="media">
