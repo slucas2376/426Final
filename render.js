@@ -233,6 +233,8 @@ async function renderTweetBody(data, element) {
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <div class="edit-area-${data.id}">
                             ${data.body}
+                            <br>
+                            <img src="${data.mediaId}">
                           </div>
                         </p>
                       </div>
@@ -268,12 +270,12 @@ async function renderTweetBody(data, element) {
                             <br>
                               <div class="edit-area-${data.id}">
                               ${data.body}
+                              <br>
+                              <figure class="image is-16by9">
+                                <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              </figure>
                               </div>
-                            <br>
                           </p>
-                          <figure class="image is-16by9">
-                            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
-                          </figure>
                         </div>
                         <div class="retweet-reply-${data.id}"></div>
                         <div class="buttons">
@@ -877,19 +879,57 @@ async function renderMainFeed() {
 function editButton(data) {
 
   $(`.edit-${data.id}`).on('click', () => {
-    $(`.edit-area-${data.id}`).replaceWith(`
-    <div class="edit-area-${data.id}">
-      <div class="field">
-        <div class="contianer">
-          <textarea class="replace-${data.id}"> ${data.body} </textarea>
+
+    if (data.mediaType == "video") {
+      $(`.edit-area-${data.id}`).replaceWith(`
+      <div class="edit-area-${data.id}">
+        <div class="field">
+          <div class="contianer">
+            <p> Main Body </p>
+            <textarea class="replace-${data.id}"> ${data.body} </textarea>
+            <p> Video Link </p>
+            <textarea class="replace-video-${data.id}"> https://www.youtube.com/watch?v=${data.videoId} </textarea>
+          </div>
+        </div>
+        <div class="edit-buttons-${data.id}">
+          <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
+          <button class="button cancel-edit-${data.id} is-danger is-small" type="button"> Cancel </button>
         </div>
       </div>
-      <div class="edit-buttons-${data.id}">
-        <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
-        <button class="button cancel-edit-${data.id} is-danger is-small" type="button"> Cancel </button>
+      `);
+    } else if (data.mediaType == "image") {
+      $(`.edit-area-${data.id}`).replaceWith(`
+      <div class="edit-area-${data.id}">
+        <div class="field">
+          <div class="contianer">
+            <p> Main Body </p>
+            <textarea class="replace-${data.id}"> ${data.body} </textarea>
+            <p> Image Link </p>
+            <textarea class="replace-image-${data.id}"> ${data.imageLink} </textarea>
+            </div>
+        </div>
+        <div class="edit-buttons-${data.id}">
+          <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
+          <button class="button cancel-edit-${data.id} is-danger is-small" type="button"> Cancel </button>
+        </div>
       </div>
-    </div>
+      `);
+    } else {
+      $(`.edit-area-${data.id}`).replaceWith(`
+      <div class="edit-area-${data.id}">
+        <div class="field">
+          <div class="contianer">
+            <textarea class="replace-${data.id}"> ${data.body} </textarea>
+          </div>
+        </div>
+        <div class="edit-buttons-${data.id}">
+          <button class="button submit-edit-${data.id} is-info is-small" type="button">Submit Edit</button>
+          <button class="button cancel-edit-${data.id} is-danger is-small" type="button"> Cancel </button>
+        </div>
+      </div>
     `);
+    }
+
 
     $(`.edit-${data.id}`).replaceWith(`
       <button class="button edit-${data.id} is-info is-small">edit</button>
@@ -898,13 +938,54 @@ function editButton(data) {
     $(`.submit-edit-${data.id}`).on('click', async () => {
       let final = $(`.replace-${data.id}`).val();
 
-      await edit(data.id, final);
+      if ( data.mediaType == "image") {
+        
+        let link = $(`.replace-image-${data.id}`).val();
+        
+        await edit(data.id, final, "image", link);
 
-      $(`.edits-area-${data.id}`).replaecWith(`
-        <div class="edit-area-${data.id}>
-          ${final}
-        </div>
-      `);
+        data.imageLink = link
+
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
+            ${final}
+            <br>
+            <img src="${link}">
+          </div>
+        `);
+
+      } else if ( data.mediaType == "video") {
+
+        let link = $(`.replace-video-${data.id}`).val().substring(32,42);
+        
+        await edit(data.id, final, "video", link);
+      
+        data.videoId = link;
+
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
+            ${data.body}
+            <br>
+            <img src="${link}">
+          </div>
+        `);
+      
+      } else {
+        await edit(data.id, final, "none", "");
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
+            ${final}
+            <br>
+            <figure class="image is-16by9">
+              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+            </figure>
+          </div>
+        `);
+        
+      }
+
+      data.body = final;
+
       editButton(data);
     });
 
@@ -930,7 +1011,7 @@ function retweetButton(data) {
       <div class="retweet-reply-${data.id}>
         <div class="field">
           <div class="contianer">
-            <textarea class="retweet-body-${data.id}"></textarea>
+            <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
           </div>
         </div>
         <div class="retweet-buttons-${data.id}">
