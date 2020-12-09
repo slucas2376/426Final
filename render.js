@@ -938,6 +938,8 @@ function editButton(data) {
     $(`.submit-edit-${data.id}`).on('click', async () => {
       let final = $(`.replace-${data.id}`).val();
 
+      data.body = final;
+
       if ( data.mediaType == "image") {
         
         let link = $(`.replace-image-${data.id}`).val();
@@ -948,7 +950,7 @@ function editButton(data) {
 
         $(`.edit-area-${data.id}`).replaecWith(`
           <div class="edit-area-${data.id}>
-            ${final}
+            ${data.body}
             <br>
             <img src="${link}">
           </div>
@@ -966,7 +968,9 @@ function editButton(data) {
           <div class="edit-area-${data.id}>
             ${data.body}
             <br>
-            <img src="${link}">
+            <figure class="image is-16by9">
+              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+            </figure>
           </div>
         `);
       
@@ -974,32 +978,50 @@ function editButton(data) {
         await edit(data.id, final, "none", "");
         $(`.edit-area-${data.id}`).replaecWith(`
           <div class="edit-area-${data.id}>
+            ${data.body}
+            <br>
+          </div>
+        `);
+        
+      }
+
+      editButton(data);
+    });
+
+    $(`.cancel-edit-${data.id}`).on('click', () => {
+
+      if ( data.mediaType == "image") {
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
             ${final}
+            <br>
+            <img src="${link}">
+          </div>
+        `);
+
+      } else if ( data.mediaType == "video") {
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
+            ${data.body}
             <br>
             <figure class="image is-16by9">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
         `);
-        
+      
+      } else {
+        $(`.edit-area-${data.id}`).replaecWith(`
+          <div class="edit-area-${data.id}>
+            ${final}
+            <br>
+          </div>
+        `);
       }
-
-      data.body = final;
-
-      editButton(data);
-    });
-
-    $(`.cancel-edit-${data.id}`).on('click', () => {
-      let final = $(`.replace-${data.id}`).val();
-
-      $(`edits-area-${data.id}`).replaecWith(`
-        <div class="edit-area-${data.id}>
-          ${final}
-        </div>
-      `);
-      editButton(data);
     })
-  })
+  });
+
+  editButton(data);
 
   
 }
