@@ -18,6 +18,96 @@ $( async function () {
   logoutButton()
 });
 
+// does this need to be async? idk really, if it doesn't have to be then probably best to make it sync
+async function renderProfile(id) {
+  // takes an input user ID and generates a new column with their profile and buttons to display their posted tweets, likes, and retweets
+  // needs to add a column remove button at some point; when you work out formatting the handler is in there, just needs a button to attach to
+  let user = getUser(id);
+  // user will be empty object if no such registered user exists
+  if (user = {}) {return;}
+  if (document.getElementById(`${user.id}-profile`) != null) {
+      // if there's already an element for that user's profile, remove it and make a new one I guess?
+      $(document.getElementById(`${user.id}-profile`)).remove();
+  }
+  $('.columns').append(`
+      <div class="column ${user.id}-profile" id="${user.id}-profile">
+          <div class="box">
+              <div class="user_profile">
+              <h2 class="subtitle">Username: ${user.id}</h2>
+              <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+              <h2 class="subtitle">Description: ${user.profileDescription}</h2>
+              <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
+              <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
+              <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
+              </div>
+          </div>
+          <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
+      </div>
+  `)
+  // view button handlers
+  $(document.getElementById(`${user.id}-posted`)).on('click', () => {
+      let tweetsToAdd = getUsersTweets(user.id, "posts")
+      $(document.getElementById(`${user.id}-tweets`)).empty();
+      for (let t in tweetsToAdd) {
+      renderTweetBody(t, `${user.id}-tweets`)
+      }
+  })
+  $(document.getElementById(`${user.id}-liked`)).on('click', () => {
+      let tweetsToAdd = getUsersTweets(user.id, "likes")
+      $(document.getElementById(`${user.id}-tweets`)).empty();
+      for (let t in tweetsToAdd) {
+          renderTweetBody(t, `${user.id}-tweets`)
+      }
+  })
+  $(document.getElementById(`${user.id}-retweeted`)).on('click', () => {
+      let tweetsToAdd = getUsersTweets(user.id, "retweets")// array of relevant tweets, most recent first, so just add by iterating through it
+      $(document.getElementById(`${user.id}-tweets`)).empty();
+      // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
+      for (let t of tweetsToAdd) {
+          renderTweetBody(t, `${user.id}-tweets`)
+      }
+  })
+  /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
+  // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
+  $(document.getElementById(`${user.id}-profile-remove`)).on('click', () => {
+      $(document.getElementById(`${user.id}-profile`)).remove();
+  })*/
+}
+
+// autocomplete user search code; if this messes up the on-document-loading code then probably port it up there with whatever syntax changes are necessary
+// I *think* the autocomplete db will dynamically update as the backend does? idk though
+$(document).ready(function() {
+  const backend = 'https://comp426finalbackendactual2.herokuapp.com'
+  let ac = new Autocomplete(document.getElementById('autocomplete'), {
+      search: input => {
+          const url = `${backend}/users/idnames/${input}`
+          return new Promise(resolve => {
+              if (input.length < 1) {
+                  return resolve([])
+              }
+              fetch(url)
+                  .then(response => response.json())
+                  .then(data => {
+                      resolve(data);
+                  })
+          })
+      },
+      getResultValue: result => (result.displayName + " @" + result.userId),
+      onSubmit: result => {
+          // whatever goes here will execute when the user presses enter or clicks the autocomplete option; if you don't want that, then add a submit button and handlers and stuff
+          renderProfile(id);
+      },
+      debounceTime: 300
+  });
+});
+
+
+async function getUsersTweets(userId, type) {
+  const result = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweets/user/${type}/${userId}`);
+  return result.data;
+}
+
+
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
     console.log(user);
