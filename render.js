@@ -14,7 +14,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderUserProfile(result2.data);
+  await renderUserProfile(result2.data.id);
   logoutButton()
 });
 
@@ -1108,12 +1108,11 @@ function editButton(data) {
           </div>
         `);
       }
+
+      editButton(data);
+
     })
   });
-
-  editButton(data);
-
-  
 }
 
 function retweetButton(data) {
