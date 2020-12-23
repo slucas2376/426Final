@@ -324,7 +324,7 @@ async function renderTweetBody(data, element) {
                           <div class="edit-area-${data.id}">
                             ${data.body}
                             <br>
-                            <img src="${data.mediaId}">
+                            <img src="${data.imageLink}">
                           </div>
                         </p>
                       </div>
