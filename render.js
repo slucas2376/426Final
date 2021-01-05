@@ -22,7 +22,7 @@ $( async function () {
 async function renderProfile(id) {
   // takes an input user ID and generates a new column with their profile and buttons to display their posted tweets, likes, and retweets
   // needs to add a column remove button at some point; when you work out formatting the handler is in there, just needs a button to attach to
-  let user = getUser(id);
+  let user = await getUser(id);
   // user will be empty object if no such registered user exists
   if (user = {}) {return;}
   if (document.getElementById(`${user.id}-profile`) != null) {
