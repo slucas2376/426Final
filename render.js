@@ -14,7 +14,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderProfile(result2.data.id);
+  await renderProfile(result2.id);
   logoutButton()
 });
 
@@ -1066,7 +1066,7 @@ function editButton(data) {
       
       } else {
         await edit(data.id, final, "none", "");
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}>
             ${data.body}
             <br>
@@ -1272,7 +1272,7 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          result = await getTweet(user.postedTweets[0]);
+          result = await getTweet(user.data.postedTweets[0]);
 
           $(`.feed`).prepend(`
           <br>
@@ -1329,7 +1329,7 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          result = await getTweet(user.postedTweets[0]);
+          result = await getTweet(user.data.postedTweets[0]);
 
 
           $(`.feed`).prepend(`
@@ -1384,32 +1384,36 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          result = await getTweet(user.postedTweets[0]);
-          
+          if (user.data.postedTweets[0] != undefined) {
+
+            result = await getTweet(user.data.postedTweets[0]);
+            
+          }
+
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${result.id}">
+            <article class="media tweet-${result.data.id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
+                        <img class="is-rounded" src="${user.data.avatar}">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.id}">
                         <p class>
-                          <strong>${user.displayName}</strong> <small>@${user.id}</small>
+                          <strong>${user.data.displayName}</strong> <small>@${user.data.id}</small>
                           <br>
-                          ${result.body}
+                          ${result.data.body}
                           <br>
                         </p>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${result.data.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.data.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.data.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.data.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
