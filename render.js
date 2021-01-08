@@ -24,7 +24,7 @@ async function renderProfile(id) {
   // needs to add a column remove button at some point; when you work out formatting the handler is in there, just needs a button to attach to
   let user = await getUser(id);
   // user will be empty object if no such registered user exists
-  if (user = {}) {return;}
+  if (user = {}) {console.log("profile retrieval failed"); return;}
   if (document.getElementById(`${user.id}-profile`) != null) {
       // if there's already an element for that user's profile, remove it and make a new one I guess?
       $(document.getElementById(`${user.id}-profile`)).remove();
