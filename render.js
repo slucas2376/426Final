@@ -43,7 +43,7 @@ async function renderProfile(id) {
           </div>
           <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
       </div>
-  `);
+  `)
 
   console.log("working as intended");
 
