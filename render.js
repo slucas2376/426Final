@@ -33,17 +33,20 @@ async function renderProfile(id) {
       <div class="column ${user.id}-profile" id="${user.id}-profile">
           <div class="box">
               <div class="user_profile">
-              <h2 class="subtitle">Username: ${user.id}</h2>
-              <h2 class="subtitle">Display Name: ${user.displayName}</h2>
-              <h2 class="subtitle">Description: ${user.profileDescription}</h2>
-              <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
-              <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
-              <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
+                <h2 class="subtitle">Username: ${user.id}</h2>
+                <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+                <h2 class="subtitle">Description: ${user.profileDescription}</h2>
+                <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
+                <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
+                <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
               </div>
           </div>
           <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
       </div>
-  `)
+  `);
+
+  console.log("working as intended");
+
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', () => {
       let tweetsToAdd = getUsersTweets(user.id, "posts")
