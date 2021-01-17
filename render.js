@@ -1155,6 +1155,7 @@ function retweetButton(data) {
       $(`retweet-reply-${data.id}`).replaceWith(`
         <div class="retweet-reply-${data.id}></div>
       `);
+      retweetButton(data);
     });
   })
 
@@ -1165,7 +1166,11 @@ function replyButton(data) {
   $(`.reply-${data.id}`).on('click', () => {
     $(`.retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}>
-      <textarea class="reply-body-${data.id}"></textarea>
+        <div class="field">
+          <div class="contianer">
+            <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
+          </div>
+        </div>
       <div class="reply-buttons-${data.id}">
         <button class="button reply-submit-${data.id} is-info is-small" type="button">Submit Reply</button>
         <button class="button reply-cancel-${data.id} is-danger" type="button"> Cancel </button>
@@ -1202,7 +1207,7 @@ function tweetButton() {
   $(`.tweet`).on('click', () => {
       $(`#newTweet`).replaceWith(`
       
-      <form class="fillout box newTweet">
+          <form class="fillout box newTweet">
               <div class="field">
                   <label class="label  has-text-centered">Make your own Tweet</label>
                   <label class="label">Tweet Body</label>
@@ -1450,7 +1455,7 @@ function tweetButton() {
 }
 
 function deleteButton(data) {
-  $(`delete-${data.id}`).on(`click`, async () => {
+  $(`.delete-${data.id}`).on(`click`, async () => {
     await deleteTweet(data.id);
     $(`tweet-${data.id}`).remove();
   });
@@ -1523,12 +1528,12 @@ async function tweet(text) {
 }
 
 async function retweet(id, text) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id}, {withCredentials: true});
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
     return result;
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "reply", body: text, parentId: id}, {withCredentials: true});
+    const result = await axios.post(`https://comp426finalbackendactual2.herokuapp.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
     return result;
 }
 
