@@ -1152,7 +1152,7 @@ function retweetButton(data) {
 
 
     $(`.retweet-cancel-${data.id}`).on('click', () => {
-      $(`retweet-reply-${data.id}`).replaceWith(`
+      $(`.retweet-reply-${data.id}`).replaceWith(`
         <div class="retweet-reply-${data.id}></div>
       `);
       retweetButton(data);
@@ -1173,7 +1173,7 @@ function replyButton(data) {
         </div>
       <div class="reply-buttons-${data.id}">
         <button class="button reply-submit-${data.id} is-info is-small" type="button">Submit Reply</button>
-        <button class="button reply-cancel-${data.id} is-danger" type="button"> Cancel </button>
+        <button class="button reply-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
       </div>
     </div>
     `);
@@ -1195,7 +1195,7 @@ function replyButton(data) {
 
 
     $(`.reply-cancel-${data.id}`).on('click', () => {
-      $(`retweet-reply-${data.id}`).replaceWith(`
+      $(`.retweet-reply-${data.id}`).replaceWith(`
         <div class="retweet-reply-${data.id}></div>
       `);
     });
