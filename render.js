@@ -14,7 +14,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderUserProfile(result.data);
+  await renderProfile(result.data.id);
   logoutButton()
 });
 
@@ -1464,7 +1464,7 @@ function deleteButton(data) {
 function logoutButton() {
   $(`.logout`).on(`click`, async () => {
     await logout();
-    window.location.replace("loginPage.html");
+    window.location.replace("index.html");
   });
 }
 
@@ -1546,7 +1546,7 @@ async function deleteTweet(id) {
 }
 
 async function recentTweets(){
-    const result = await axios.get('https://comp426fall2020cv.herokuapp.com/tweets/recent', {withCredentials: true});
+    const result = await axios.get('https://comp426fall2020cv.herokuapp.com/tweet/recent', {withCredentials: true});
     return result.data;
 }
 
