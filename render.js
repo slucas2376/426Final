@@ -1546,7 +1546,7 @@ async function deleteTweet(id) {
 }
 
 async function recentTweets(){
-    const result = await axios.get('https://comp426fall2020cv.herokuapp.com/tweet/recent', {withCredentials: true});
+    const result = await axios.get('https://comp426fall2020cv.herokuapp.com/tweets/recent', {withCredentials: true});
     return result.data;
 }
 
