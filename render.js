@@ -14,7 +14,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderProfile(result.data.id);
+  await renderUserProfile(result.data.id);
   logoutButton()
 });
 
