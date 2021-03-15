@@ -1542,7 +1542,7 @@ async function edit(id, replacement, type, IdMedia) {
 }
 
 async function deleteTweet(id) {
-    const result = await axios.delete(`https://comp426fall2020cv.herokuapp.com/tweets/recent/tweets/${id}`, {withCredentials: true});
+    const result = await axios.delete(`https://comp426fall2020cv.herokuapp.com/tweets/${id}`, {withCredentials: true});
 }
 
 async function recentTweets(){
