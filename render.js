@@ -111,6 +111,12 @@ async function getUsersTweets(userId, type) {
 }
 
 
+function viewUserProfile(user) {
+  ('.userProfile').on('click', async => {
+    await renderUserProfile(user);
+  });
+}
+
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
     console.log(user);
