@@ -42,7 +42,7 @@ function signIn() {
 
         <div class="field">
             <div class="control">
-                <label class="label">User Name</label>
+                <label class="label">UserId</label>
                 <input id="name" class="input" type="text" placeholder="People will see this one">
             </div>
         </div>
