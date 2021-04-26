@@ -1402,6 +1402,7 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
+          print(user.postedTweets[0]);
           if (user.postedTweets[0] != undefined) {
 
             result = await getTweet(user.postedTweets[0]);
