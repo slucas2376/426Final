@@ -112,7 +112,7 @@ async function getUsersTweets(userId, type) {
 
 
 async function viewUserProfile(user) {
-  ('.userProfile').on('click', async => {
+  ('.userProfile').on('click', async(e) => {
     await renderUserProfile(user);
   });
 }
