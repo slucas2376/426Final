@@ -99,50 +99,50 @@ function signIn() {
             return true;
         });
 
-        $('#cancel').on('click', async () => {
+        $('#cancel').on('click', () => {
             $(`#sign-in`).replaceWith(`
-            <div id="sign-in">
-            <h1 class="title">
-                Welcome to your Personalized Twitter
-            </h1>
-            <h2 class="subtitle">
-                Made by Owen, Sophia
-            </h2>
-            <hr class="login-hr">
-            <form class="fillout box">
-                <div class="field">
-                    <label class="label  has-text-centered">Welcome!</label>
-                    <label class="label">User</label>
-                    <div class="control">
-                        <input id="signup" class="input" type="text" placeholder="User Name">
+                    <div id="sign-in">
+                        <h1 class="title">
+                            Welcome to your Personalized Twitter
+                        </h1>
+                        <h2 class="subtitle">
+                            Made by Owen, Sophia
+                        </h2>
+                        <hr class="login-hr">
+                        <form class="fillout box">
+                            <div class="field">
+                                <label class="label  has-text-centered">Welcome!</label>
+                                <label class="label">User</label>
+                                <div class="control">
+                                    <input id="signup" class="input" type="text" placeholder="User Name">
+                                </div>
+                            </div>
+                
+                            <div class="field">
+                                <div class="control">
+                                    <label class="label">Password</label>
+                                    <input id="pass" class="input" type="text" placeholder="password">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <p id="warning" class="has-text-centered has-text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="field is-grouped is-grouped-centered">
+                                <p class="control">
+                                    <a id="enter" class="button is-info">
+                                        Sign in
+                                    </a>
+                                </p>
+                                <p class="control">
+                                    <a id="new-guy" class="button is-danger">
+                                        New Account
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
                     </div>
-                </div>
-
-                <div class="field">
-                    <div class="control">
-                        <label class="label">Password</label>
-                        <input id="pass" class="input" type="text" placeholder="password">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <p id="warning" class="has-text-centered has-text-danger"></p>
-                    </div>
-                </div>
-                <div class="field is-grouped is-grouped-centered">
-                    <p class="control">
-                        <a id="enter" class="button is-info">
-                            Sign in
-                        </a>
-                    </p>
-                    <p class="control">
-                        <a id="new-guy" class="button is-danger">
-                            New Account
-                        </a>
-                    </p>
-                </div>
-            </form>
-            </div>
             `);
 
             signIn();
