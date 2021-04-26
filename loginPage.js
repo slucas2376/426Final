@@ -148,7 +148,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.get(`https://comp426fall2020cv.herokuapp.com/login`,
+    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/login`,
         {
             userId: id,
             password: pass
