@@ -14,7 +14,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderProfile(result.data.id);
+  await renderProfile(result.id);
   logoutButton()
 });
 
@@ -1286,7 +1286,7 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          result = await getTweet(user.data.postedTweets[0]);
+          result = await getTweet(user.postedTweets[0]);
 
           $(`.feed`).prepend(`
           <br>
@@ -1343,7 +1343,7 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          result = await getTweet(user.data.postedTweets[0]);
+          result = await getTweet(user.postedTweets[0]);
 
 
           $(`.feed`).prepend(`
@@ -1398,9 +1398,9 @@ function tweetButton() {
           $(`.newTweet`).remove();
 
           let user = await currentUser();
-          if (user.data.postedTweets[0] != undefined) {
+          if (user.postedTweets[0] != undefined) {
 
-            result = await getTweet(user.data.postedTweets[0]);
+            result = await getTweet(user.postedTweets[0]);
             
           }
 
