@@ -1,5 +1,7 @@
 axios.defaults.withCredentials = true;
 
+
+
 $( function() {
     signIn();
 });
@@ -9,7 +11,6 @@ function signIn() {
 
         let userName = $('#signup').val();
         let password = $('#pass').val();
-
         try {
             let result = await login(userName, password);
         } catch (error) {
@@ -151,7 +152,8 @@ async function login(id, pass) {
         {
             userId: id,
             password: pass
-        }
+        },
+        {withCredentials: true}
     );
 
     return result;
