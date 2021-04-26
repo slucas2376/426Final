@@ -25,7 +25,7 @@ function signIn() {
 
     $(`#new-guy`).on('click', () => {
         $(`#sign-in`).replaceWith(`
-    
+        <div id="sign-in">
         <h1 class="title has-texted-centered">
         Account Creation
     </h1>
@@ -78,7 +78,8 @@ function signIn() {
                 </a>
             </p>
         </div>
-    </form>`);
+    </form>
+    </div>`);
     
         $(`#start`).on('click', async () => {
 
@@ -100,7 +101,7 @@ function signIn() {
 
         $('#cancel').on('click', async () => {
             $(`#sign-in`).replaceWith(`
-            
+            <div id="sign-in">
             <h1 class="title">
                 Welcome to your Personalized Twitter
             </h1>
@@ -141,6 +142,7 @@ function signIn() {
                     </p>
                 </div>
             </form>
+            </div>
             `);
 
             signIn();
