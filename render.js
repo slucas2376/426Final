@@ -7,7 +7,7 @@ $( async function () {
   console.log(result);
 
   //getting entire user object of current user
-  const result2 = await getUser(result.data.id);
+  const result2 = await getUser(result.id);
   console.log(result2);
 
   await renderMainFeed();
