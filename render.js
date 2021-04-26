@@ -1283,7 +1283,11 @@ function tweetButton() {
           const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link }, {withCredentials: true});
 
-          $(`.newTweet`).remove();
+          $(`.newTweet`).replaceWith(`
+            <form class="level" id="newTweet">
+              <button class="button is-primary tweet">Tweet</button>
+            </form>
+          `);
 
           let user = await currentUser();
           result = await getTweet(user.postedTweets[0]);
