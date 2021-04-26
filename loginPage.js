@@ -72,6 +72,11 @@ function signIn() {
                     Get Started
                 </a>
             </p>
+            <p class="control">
+                <a id="cancel" class="button is-info">
+                    Back to Login
+                </a>
+            </p>
         </div>
     </form>`);
     
@@ -89,6 +94,11 @@ function signIn() {
                 return false;
             }
 
+            window.location.replace("mainpage.html");
+            return true;
+        });
+
+        $('#cancel').on('click', async () => {
             $(`#sign-in`).replaceWith(`
             
             <h1 class="title">
