@@ -1563,5 +1563,5 @@ async function currentUser() {
     withCredentials: true,
   });
 
-  return result;
+  return result.data;
 }
