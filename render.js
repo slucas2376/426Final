@@ -1450,7 +1450,7 @@ function tweetButton() {
       });
 
       $(`#begon`).on('click', () => {
-        $(`#newTweet`).replaceWith(`
+        $(`.newTweet`).replaceWith(`
         <form class="level" id="newTweet">
           <button class="button is-primary tweet">Tweet</button>
         </form>
