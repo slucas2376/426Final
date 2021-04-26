@@ -73,7 +73,7 @@ function signIn() {
                 </a>
             </p>
             <p class="control">
-                <a id="cancel" class="button is-info">
+                <a id="cancel" class="button is-danger">
                     Back to Login
                 </a>
             </p>
