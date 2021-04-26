@@ -1529,7 +1529,7 @@ function like(id, liked) {
 }
 
 async function tweet(text) {
-    const result = await axios.post(``, {type: "tweet", body: text}, {withCredentials: true});
+    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
     return result;
 }
 
