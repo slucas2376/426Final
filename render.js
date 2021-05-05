@@ -80,7 +80,7 @@ async function renderProfile(id) {
 // autocomplete user search code; if this messes up the on-document-loading code then probably port it up there with whatever syntax changes are necessary
 // I *think* the autocomplete db will dynamically update as the backend does? idk though
 $(document).ready(function() {
-  const backend = 'https://comp426fall2020cv.herokuapp.com'
+  const backend = 'https://api.426twitter20.com'
   let ac = new Autocomplete(document.getElementById('autocomplete'), {
       search: input => {
           const url = `${backend}/users/idnames/${input}`
@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 
 async function getUsersTweets(userId, type) {
-  const result = await axios.get(`https://comp426fall2020cv.herokuapp.com/tweets/user/${type}/${userId}`);
+  const result = await axios.get(`https://api.426twitter20.com/tweets/user/${type}/${userId}`);
   return result.data;
 }
 
@@ -211,7 +211,7 @@ async function renderUserProfile(user) {
             //axios request
             const result = await axios({
                 method: 'put',
-                url: 'https://comp426fall2020cv.herokuapp.com/users/' + user.id,
+                url: 'https://api.426twitter20.com/users/' + user.id,
                 withCredentials: true,
                 data: {
                     "displayName": updatedDisplayName,
@@ -226,7 +226,7 @@ async function renderUserProfile(user) {
             //get new user object
             const user2 = await axios({
                 method: 'get',
-                url: 'https://comp426fall2020cv.herokuapp.com/users/' + user.id,
+                url: 'https://api.426twitter20.com/users/' + user.id,
                 withCredentials: true,
             });
 
@@ -240,7 +240,7 @@ async function renderUserProfile(user) {
             //get new user object
             const user2 = await axios({
                 method: 'get',
-                url: 'https://comp426fall2020cv.herokuapp.com/users/' + user.id,
+                url: 'https://api.426twitter20.com/users/' + user.id,
                 withCredentials: true,
             });
 
@@ -253,14 +253,14 @@ async function renderUserProfile(user) {
         //axios request
         const result = await axios({
             method: 'delete',
-            url: 'https://comp426fall2020cv.herokuapp.com/users/' + user.id,
+            url: 'https://api.426twitter20.com/users/' + user.id,
             withCredentials: true,
         });
 
         //axios request again
         const result2 = await axios({
             method: 'get',
-            url: 'https://comp426fall2020cv.herokuapp.com/logout',
+            url: 'https://api.426twitter20.com/logout',
             withCredentials: true,
         });
 
@@ -1280,7 +1280,7 @@ function tweetButton() {
         if($(`#video`).is(`:checked`)) {
           let link = $(`#link`).val().substring(32,43);
 
-          const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, 
+          const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link }, {withCredentials: true});
 
           $(`.newTweet`).replaceWith(`
@@ -1340,7 +1340,7 @@ function tweetButton() {
 
         } else if ($(`#image`).is(`:checked`)) {
           
-          const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, 
+          const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val() }, 
           {withCredentials: true});
         
@@ -1488,27 +1488,27 @@ function resetPage() {
 }
 
 async function getTweet(id) {
-    const result = await axios.get(`https://comp426fall2020cv.herokuapp.com/tweet/${id}`, {withCredentials: true})
+    const result = await axios.get(`https://api.426twitter20.com/tweet/${id}`, {withCredentials: true})
     return result.data;
 }
 
 async function logout() {
-    const result = await axios.get(`https://comp426fall2020cv.herokuapp.com/logout`, {withCredentials: true});
+    const result = await axios.get(`https://api.426twitter20.com/logout`, {withCredentials: true});
 }
 
 async function getUser(id) {
-    const result = await axios.get(`https://comp426fall2020cv.herokuapp.com/users/${id}`,
+    const result = await axios.get(`https://api.426twitter20.com/users/${id}`,
     {}, {withCredentials: true});
 
     return result.data;
 }
 
 async function deleteUser(id) {
-    const result = await axios.delete(`https://comp426fall2020cv.herokuapp.com/users/${id}`, {withCredentials: true});
+    const result = await axios.delete(`https://api.426twitter20.com/users/${id}`, {withCredentials: true});
 }
 
 async function editUser(id, name, pass, avat, descript) {
-    const result = await axios.put(`https://comp426fall2020cv.herokuapp.com/users/${id}`, {displayName: name,
+    const result = await axios.put(`https://api.426twitter20.com/users/${id}`, {displayName: name,
     password: pass,
     avatar: avat,
     profileDescription: descript}, {withCredentials: true});
@@ -1520,51 +1520,51 @@ function like(id, liked) {
         $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
         
         $(`.like-${id}`).on('click', async function() {
-            const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
             like(id, !(liked)); 
         });
     } else {
         $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
         
         $(`.like-${id}`).on('click', async function() {
-            const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets/${id}/like`, {withCredentials: true});
+            const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
             like(id, !(liked));
         });
     }
 }
 
 async function tweet(text) {
-    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
     return result;
 }
 
 async function retweet(id, text) {
-    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
     return result;
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
     return result;
 }
 
 async function edit(id, replacement, type, IdMedia) {
-    const result = await axios.put(`https://comp426fall2020cv.herokuapp.com/tweets/${id}`, {body: `${replacement}`, mediaType: type, mediaId: IdMedia}, {withCredentials: true});
+    const result = await axios.put(`https://api.426twitter20.com/tweets/${id}`, {body: `${replacement}`, mediaType: type, mediaId: IdMedia}, {withCredentials: true});
 }
 
 async function deleteTweet(id) {
-    const result = await axios.delete(`https://comp426fall2020cv.herokuapp.com/tweets/${id}`, {withCredentials: true});
+    const result = await axios.delete(`https://api.426twitter20.com/tweets/${id}`, {withCredentials: true});
 }
 
 async function recentTweets(){
-    const result = await axios.get('https://comp426fall2020cv.herokuapp.com/tweets/recent', {withCredentials: true});
+    const result = await axios.get('https://api.426twitter20.com/tweets/recent', {withCredentials: true});
     return result.data;
 }
 
 async function currentUser() {
   const result = await axios({
     method: 'get',
-    url: 'https://comp426fall2020cv.herokuapp.com/users/current',
+    url: 'https://api.426twitter20.com/users/current',
     withCredentials: true,
   });
 

@@ -152,7 +152,7 @@ function signIn() {
 }
 
 async function register(id, name, pass, avat) {
-    const result = await axios.post('https://comp426fall2020cv.herokuapp.com/register',
+    const result = await axios.post('https://api.426twitter20.com/register',
         {userId: id,
         displayName: name,
         password: pass,
@@ -160,7 +160,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.post(`https://comp426fall2020cv.herokuapp.com/login`,
+    const result = await axios.post(`https://api.426twitter20.com/login`,
         {
             userId: id,
             password: pass
