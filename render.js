@@ -1562,11 +1562,6 @@ async function recentTweets(){
 }
 
 async function currentUser() {
-  const result = await axios({
-    method: 'get',
-    url: 'https://api.426twitter20.com/users/current',
-    withCredentials: true,
-  });
-
+  const result = await axios.get('https://api.426twitter20.com/users/current', {withCredentials: true});
   return result.data;
 }
