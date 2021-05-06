@@ -1,14 +1,13 @@
+import { uid } from "./loginPage"
 axios.defaults.withCredentials = true;
 
 $( async function () {
 
-  //getting current user but it's a user view
-  const result = await currentUser();
-  console.log(result);
+  sessionStorage.setItem("userid", id)
 
   //getting entire user object of current user
-  const result2 = await getUser(result.id);
-  console.log(result2);
+  const result = await getUser(uid);
+  console.log(result);
 
   await renderMainFeed();
 
@@ -312,7 +311,7 @@ async function renderTweetBody(data, element) {
 
     console.log(data.type);
 
-    if (data.isMine) {
+    if (user.id == uid) {
 
         if(data.type == "tweet") {
           if(data.mediaType == "image") {
@@ -1289,7 +1288,7 @@ function tweetButton() {
             </form>
           `);
 
-          let user = await currentUser();
+          let user = await getUser(uid)
           result = await getTweet(user.postedTweets[0]);
 
           $(`.feed`).prepend(`
@@ -1346,7 +1345,7 @@ function tweetButton() {
         
           $(`.newTweet`).remove();
 
-          let user = await currentUser();
+          let user = await getUser(uid)
           result = await getTweet(user.postedTweets[0]);
 
 
@@ -1401,7 +1400,7 @@ function tweetButton() {
 
           $(`.newTweet`).remove();
 
-          let user = await currentUser();
+          let user = await getUser(uid)
           print(user.postedTweets[0]);
           if (user.postedTweets[0] != undefined) {
 
@@ -1465,6 +1464,25 @@ function tweetButton() {
   });
 }
 
+function like(id, liked) {
+
+  if(liked) {
+      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
+      
+      $(`.like-${id}`).on('click', async function() {
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
+          like(id, !(liked)); 
+      });
+  } else {
+      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
+      
+      $(`.like-${id}`).on('click', async function() {
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
+          like(id, !(liked));
+      });
+  }
+}
+
 function deleteButton(data) {
   $(`.delete-${data.id}`).on(`click`, async () => {
     await deleteTweet(data.id);
@@ -1514,25 +1532,6 @@ async function editUser(id, name, pass, avat, descript) {
     profileDescription: descript}, {withCredentials: true});
 }
 
-function like(id, liked) {
-
-    if(liked) {
-        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
-        
-        $(`.like-${id}`).on('click', async function() {
-            const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
-            like(id, !(liked)); 
-        });
-    } else {
-        $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
-        
-        $(`.like-${id}`).on('click', async function() {
-            const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
-            like(id, !(liked));
-        });
-    }
-}
-
 async function tweet(text) {
     const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
     return result;
@@ -1559,9 +1558,4 @@ async function deleteTweet(id) {
 async function recentTweets(){
     const result = await axios.get('https://api.426twitter20.com/tweets/recent', {withCredentials: true});
     return result.data;
-}
-
-async function currentUser() {
-  const result = await axios.get('https://api.426twitter20.com/users/current', {withCredentials: true});
-  return result.data;
 }

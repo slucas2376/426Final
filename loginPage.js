@@ -1,6 +1,6 @@
 axios.defaults.withCredentials = true;
 
-
+uid = "";
 
 $( function() {
     signIn();
@@ -14,7 +14,7 @@ function signIn() {
         try {
             let result = await login(userName, password);
         } catch (error) {
-            $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is not registered </p>`);
+            $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is incorrect or not registered </p>`);
             return false;
         }
         
@@ -91,10 +91,10 @@ function signIn() {
             try {
                 let result = await register(`${$(`#id`).val()}`, `${$(`#name`).val()}`, `${$(`#pass`).val()}`, `${$(`#avat`).val()}`);
             } catch (error) {
-                $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is not registered </p>`);
+                $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Make sure your userid is not already in your use.</p>`);
                 return false;
             }
-
+            uid = $(`#id`).val();
             window.location.replace("mainpage.html");
             return true;
         });
@@ -160,7 +160,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.post(`https://api.426twitter20.com/login`,
+    const result = await axios.get(`https://api.426twitter20.com/login`,
         {
             userId: id,
             password: pass
