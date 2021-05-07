@@ -1,6 +1,6 @@
 axios.defaults.withCredentials = true;
 
-uid = "";
+let uid = "";
 
 $( function() {
     signIn();
