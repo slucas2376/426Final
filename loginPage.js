@@ -12,8 +12,9 @@ function signIn() {
 
         let userName = $('#signup').val();
         let password = $('#pass').val();
+        let result;
         try {
-            let result = await login(userName, password);
+            result = await login(userName, password);
         } catch (error) {
             $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is incorrect or not registered </p>`);
             return false;
