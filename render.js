@@ -1,9 +1,9 @@
-import { uid } from "./loginPage"
 axios.defaults.withCredentials = true;
 
 $( async function () {
 
-  sessionStorage.setItem("userid", id)
+  // retriving user id of logged in user
+  uid = localStorage.getItem('uid');
 
   //getting entire user object of current user
   const result = await getUser(uid);

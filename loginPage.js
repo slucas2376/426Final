@@ -1,8 +1,9 @@
 axios.defaults.withCredentials = true;
 
-let uid = "";
-
 $( function() {
+    localStorage.clear()
+    localStorage.setItem('yeet', "yeeticous beaticous please workicous")
+    console.log(localStorage.getItem('yeet'))
     signIn();
 });
 
@@ -94,7 +95,7 @@ function signIn() {
                 $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Make sure your userid is not already in your use.</p>`);
                 return false;
             }
-            uid = $(`#id`).val();
+            localStorage.setItem('uid', $(`#id`).val());
             window.location.replace("mainpage.html");
             return true;
         });
