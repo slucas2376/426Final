@@ -18,8 +18,8 @@ function signIn() {
             $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is incorrect or not registered </p>`);
             return false;
         }
-        
-        
+        console.log(result)
+        localStorage.setItem('uid', result)
         window.location.replace("mainpage.html");
         return true;
     });
@@ -96,6 +96,7 @@ function signIn() {
                 return false;
             }
             localStorage.setItem('uid', $(`#id`).val());
+            console.log(localStorage.getItem('uid'));
             window.location.replace("mainpage.html");
             return true;
         });

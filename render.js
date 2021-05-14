@@ -311,7 +311,7 @@ async function renderTweetBody(data, element) {
 
     console.log(data.type);
 
-    if (user.id == uid) {
+    if (user.id == localStorage.getItem('uid')) {
 
         if(data.type == "tweet") {
           if(data.mediaType == "image") {
@@ -1288,7 +1288,7 @@ function tweetButton() {
             </form>
           `);
 
-          let user = await getUser(uid)
+          let user = await getUser(localStorage.getItem('uid'))
           result = await getTweet(user.postedTweets[0]);
 
           $(`.feed`).prepend(`
@@ -1345,7 +1345,7 @@ function tweetButton() {
         
           $(`.newTweet`).remove();
 
-          let user = await getUser(uid)
+          let user = await getUser(localStorage.getItem('uid'))
           result = await getTweet(user.postedTweets[0]);
 
 
@@ -1400,7 +1400,7 @@ function tweetButton() {
 
           $(`.newTweet`).remove();
 
-          let user = await getUser(uid)
+          let user = await getUser(localStorage.getItem('uid'))
           print(user.postedTweets[0]);
           if (user.postedTweets[0] != undefined) {
 
