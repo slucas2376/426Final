@@ -3,7 +3,7 @@ axios.defaults.withCredentials = true;
 $( async function () {
 
   // retriving user id of logged in user
-  uid = localStorage.getItem('uid');
+  let uid = localStorage.getItem('uid');
 
   //getting entire user object of current user
   const result = await getUser(uid);
