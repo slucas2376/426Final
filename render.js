@@ -303,8 +303,7 @@ async function renderNewTweet(element) {
     console.log(data.length);
 
     let bool = false;
-    let compare = getUserLikes(localStorage.getItem('uid'));
-    console.log(compare);
+    let compare = await getUserLikes(localStorage.getItem('uid'));
 
     for (let i = 0; i < data.length; i++ ) {
 
