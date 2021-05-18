@@ -1116,7 +1116,7 @@ function editButton(data) {
 
       if ( data.mediaType == "image") {
         $(`.edit-area-${data.id}`).replaecWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${final}
             <br>
             <img src="${link}">
@@ -1125,7 +1125,7 @@ function editButton(data) {
 
       } else if ( data.mediaType == "video") {
         $(`.edit-area-${data.id}`).replaecWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${data.body}
             <br>
             <figure class="image is-16by9">
@@ -1136,7 +1136,7 @@ function editButton(data) {
       
       } else {
         $(`.edit-area-${data.id}`).replaecWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${final}
             <br>
           </div>
@@ -1153,7 +1153,7 @@ function retweetButton(data) {
 
   $(`.retweet-${data.id}`).on('click', () => {
     $(`.retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}>
+      <div class="retweet-reply-${data.id}">
         <div class="field">
           <div class="contianer">
             <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
@@ -1176,7 +1176,7 @@ function retweetButton(data) {
       await retweet(data.id, final);
 
       $(`retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}></div>
+      <div class="retweet-reply-${data.id}"></div>
       `);
       retweetButton(data);
     });
@@ -1184,7 +1184,7 @@ function retweetButton(data) {
 
     $(`.retweet-cancel-${data.id}`).on('click', () => {
       $(`.retweet-reply-${data.id}`).replaceWith(`
-        <div class="retweet-reply-${data.id}></div>
+        <div class="retweet-reply-${data.id}"></div>
       `);
       retweetButton(data);
     });
@@ -1219,7 +1219,7 @@ function replyButton(data) {
       await reply(data.id, final);
 
       $(`retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}></div>
+      <div class="retweet-reply-${data.id}"></div>
       `);
       retweetButton(data);
     });
@@ -1227,7 +1227,7 @@ function replyButton(data) {
 
     $(`.reply-cancel-${data.id}`).on('click', () => {
       $(`.retweet-reply-${data.id}`).replaceWith(`
-        <div class="retweet-reply-${data.id}></div>
+        <div class="retweet-reply-${data.id}"></div>
       `);
     });
   })
@@ -1238,7 +1238,7 @@ function tweetButton() {
   $(`.tweet`).on('click', () => {
       $(`#newTweet`).replaceWith(`
       
-          <form class="fillout box newTweet">
+          <form class="fillout box" id="#newTweet">
               <div class="field">
                   <label class="label  has-text-centered">Make your own Tweet</label>
                   <label class="label">Tweet Body</label>
@@ -1309,7 +1309,7 @@ function tweetButton() {
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
-          $(`.newTweet`).replaceWith(`
+          $(`#newTweet`).replaceWith(`
             <form class="level" id="newTweet">
               <button class="button is-primary tweet">Tweet</button>
             </form>
