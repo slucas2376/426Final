@@ -304,6 +304,7 @@ async function renderNewTweet(element) {
 
     let bool = false;
     let compare = getUserLikes(localStorage.getItem('uid'));
+    console.log(compare);
 
     for (let i = 0; i < data.length; i++ ) {
 
@@ -656,7 +657,7 @@ async function renderTweetBody(data, element, liked) {
                 }        
         }
     } else {
-        if(data.type == "tweet" && data.mediaType != "none") {
+        if(data.type == "tweet" && data.mediaType == "none") {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
