@@ -1306,11 +1306,11 @@ function tweetButton() {
           let position = $(`#link`).val().indexOf("watch?v=") + 8;
           let link = $(`#link`).val().substring(position,$(`#link`).val().length);
 
-          const result = await axios.post(`https://api.426twitter20.com/tweets`, 
+          let result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
-          let user = await getUser(localStorage.getItem('uid'))
-          result = await getTweet(user.postedTweets[0]);
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          result = posts[0];
 
           $(`.feed`).prepend(`
           <br>
@@ -1360,12 +1360,12 @@ function tweetButton() {
 
         } else if ($(`#image`).is(`:checked`)) {
           
-          const result = await axios.post(`https://api.426twitter20.com/tweets`, 
+          let result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
           {withCredentials: true});
 
-          let user = await getUser(localStorage.getItem('uid'))
-          result = await getTweet(user.postedTweets[0]);
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          result = posts[0];
 
 
           $(`.feed`).prepend(`
@@ -1415,7 +1415,7 @@ function tweetButton() {
           deleteButton(result);
 
         } else { 
-          const result = await tweet($(`#tweetCreation`).val());
+          let result = await tweet($(`#tweetCreation`).val());
 
           let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
           result = posts[0];
