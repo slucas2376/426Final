@@ -1417,13 +1417,8 @@ function tweetButton() {
         } else { 
           const result = await tweet($(`#tweetCreation`).val());
 
-          let user = await getUser(localStorage.getItem('uid'))
-
-          if (user.postedTweets[0] != undefined) {
-
-            result = await getTweet(user.postedTweets[0]);
-            
-          }
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          result = posts[0];
 
           $(`.feed`).prepend(`
           <br>
