@@ -310,9 +310,12 @@ async function renderNewTweet(element) {
         for (let j = 0; j < compare.length; j++) {
           if (data[i].id == compare[i].id) {
             bool = true;
+            console.log("ran");
             break;
           }
         }
+
+        console.log(bool);
 
         if (data[i] != {}) {
             await renderTweetBody(data[i], element, bool);
@@ -653,7 +656,7 @@ async function renderTweetBody(data, element, liked) {
                 }        
         }
     } else {
-        if(data.type == "tweet" && data.mediaType != "video" && data.mediaType != "image") {
+        if(data.type == "tweet" && data.mediaType != "none") {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
