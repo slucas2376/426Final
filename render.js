@@ -302,14 +302,27 @@ async function renderNewTweet(element) {
     let data = await recentTweets();
     console.log(data.length);
 
+    let bool = false;
+    let compare = getUserLikes(localStorage.getItem('uid'));
+
     for (let i = 0; i < data.length; i++ ) {
-        if (data[i] != {}) {
-            await renderTweetBody(data[i], element);
+
+        for (let j = 0; j < compare.length; j++) {
+          if (data[i].id == compare[i].id) {
+            bool = true;
+            break;
+          }
         }
+
+        if (data[i] != {}) {
+            await renderTweetBody(data[i], element, bool);
+        }
+
+        bool = false;
     }
 }
 
-async function renderTweetBody(data, element) {
+async function renderTweetBody(data, element, liked) {
 
     let user = await getUser(data.userId);
 
@@ -951,17 +964,7 @@ async function renderTweetBody(data, element) {
         }
     }
 
-    let compare = getUserLikes(localStorage.getItem('uid'));
-    let boolean = false;
-
-    for (let i = 0; i < compare.length; i++ ) {
-      if (data.id == compare.likedTweets[i]) {
-        boolean = true;
-        break;
-      }
-    }
-
-    like(data.id, boolean);
+    like(data.id, liked);
     editButton(data);
     retweetButton(data);
     replyButton(data);
