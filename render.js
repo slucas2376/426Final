@@ -1309,7 +1309,8 @@ function tweetButton() {
           let result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
-          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          let user = await getUser(localStorage.getItem('uid'));
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
 
           $(`.feed`).prepend(`
@@ -1346,7 +1347,7 @@ function tweetButton() {
                 </div>
             </article>
           `);
-
+          $('#newTweet').remove();
           $(`.feed`).prepend(`
             <form class="level" id="newTweet">
               <button class="button is-primary tweet">Tweet</button>
@@ -1365,7 +1366,8 @@ function tweetButton() {
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
           {withCredentials: true});
 
-          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          let user = await getUser(localStorage.getItem('uid'));
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
 
 
@@ -1403,7 +1405,7 @@ function tweetButton() {
                 </div>
             </article>
           `);
-
+          $('#newTweet').remove();
           $(`.feed`).prepend(`
             <form class="level" id="newTweet">
               <button class="button is-primary tweet">Tweet</button>
@@ -1454,6 +1456,8 @@ function tweetButton() {
             </article>
           `);
 
+          $('#newTweet').remove();
+
           $(`.feed`).prepend(`
             <form class="level" id="newTweet">
               <button class="button is-primary tweet">Tweet</button>
@@ -1466,14 +1470,6 @@ function tweetButton() {
           editButton(result);
           deleteButton(result);
         }
-
-        // re-instates tweet button after use
-        $(`#newTweet`).replaceWith(`
-        <form class="level" id="newTweet">
-          <button class="button is-primary tweet">Tweet</button>
-        </form>
-        `);
-
       
       });
 
