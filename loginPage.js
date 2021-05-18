@@ -17,10 +17,10 @@ function signIn() {
             $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or user id was incorrect or not registered </p>`);
             return false;
         }
-        console.log(result.id)
+        console.log(result)
         localStorage.setItem('uid', result.id)
-        window.location.replace("mainpage.html");
-        return true;
+        // window.location.replace("mainpage.html");
+        // return true;
     });
 
     $(`#new-guy`).on('click', () => {
