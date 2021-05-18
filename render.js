@@ -1238,7 +1238,7 @@ function tweetButton() {
   $(`.tweet`).on('click', () => {
       $(`#newTweet`).replaceWith(`
       
-          <form class="fillout box" id="#newTweet">
+          <form class="fillout box" id="newTweet">
               <div class="field">
                   <label class="label  has-text-centered">Make your own Tweet</label>
                   <label class="label">Tweet Body</label>
