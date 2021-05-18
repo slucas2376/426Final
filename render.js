@@ -111,7 +111,7 @@ async function getUsersTweets(userId, type) {
 
 async function getUserLikes(userId) {
   const result = await axios.get(`https://api.426twitter20.com/tweets/user/likes/${userId}`)
-  return result;
+  return result.data;
 }
 
 
