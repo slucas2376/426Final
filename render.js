@@ -1300,7 +1300,8 @@ function tweetButton() {
 
       $(`#enter`).on(`click`, async () => {
         if($(`#video`).is(`:checked`)) {
-          let link = $(`#link`).val().substring(32,43);
+          let position = $(`#link`).val().indexOf("watch?v=") + 8;
+          let link = $(`#link`).val().substring(position,$(`#link`).val().length);
 
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
