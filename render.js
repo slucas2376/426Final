@@ -300,12 +300,13 @@ async function renderUserData(id, type, element) {
 
 // still trying to figure out exactly how to provide the "tweet" object. 
 async function renderNewTweet(element) {
+    // awaiting all recent tweets and users personally like tweet ids
     let data = await recentTweets();
-    console.log(data.length);
-
-    let bool = false;
     let compare = await getUserLikes(localStorage.getItem('uid'));
-    console.log(compare)
+
+    // stored value for if tweet is liked or not
+    let bool = false;
+
     for (let i = 0; i < data.length; i++ ) {
 
       if (compare != undefined) {
@@ -427,9 +428,8 @@ async function renderTweetBody(data, element, liked) {
                       <div class="content type-${data.userId}">
                         <p class="edit-body-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                          <div class="edit-area-${data.id}">
+                          <br>
                             ${data.body}
-                          </div>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
