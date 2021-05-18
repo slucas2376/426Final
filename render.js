@@ -310,7 +310,7 @@ async function renderNewTweet(element) {
 
       if (compare != undefined) {
         for (let j = 0; j < compare.length; j++) {
-          if (data[i].id == compare[i].id) {
+          if (data[i].id == compare[j].id) {
             bool = true;
             console.log("ran");
             break;
