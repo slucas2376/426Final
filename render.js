@@ -1354,8 +1354,9 @@ function tweetButton() {
           `);
 
           tweetButton();
-          retweetButton(result)
-          editButton(result)
+          retweetButton(result);
+          replyButton(result);
+          editButton(result);
           deleteButton(result);
 
         } else if ($(`#image`).is(`:checked`)) {
@@ -1410,40 +1411,41 @@ function tweetButton() {
           `);
 
           tweetButton();
-          retweetButton(result)
-          editButton(result)
+          retweetButton(result);
+          replyButton(result);
+          editButton(result);
           deleteButton(result);
 
         } else { 
           let result = await tweet($(`#tweetCreation`).val());
-
-          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts")
+          let user = await getUser(localStorage.getItem('uid'));
+          let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
 
           $(`.feed`).prepend(`
           <br>
-            <article class="media tweet-${result.data.id}">
+            <article class="media tweet-${result.id}">
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.data.avatar}">
+                        <img class="is-rounded" src="${user.avatar}">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.id}">
                         <p class>
-                          <strong>${user.data.displayName}</strong> <small>@${user.data.id}</small>
+                          <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
-                          ${result.data.body}
+                          ${result.body}
                           <br>
                         </p>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.data.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.data.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.data.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.data.id} is-danger is-small"> Delete </button>
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
@@ -1459,8 +1461,9 @@ function tweetButton() {
           `);
 
           tweetButton();
-          retweetButton(result)
-          editButton(result)
+          retweetButton(result);
+          replyButton(result);
+          editButton(result);
           deleteButton(result);
         }
 
