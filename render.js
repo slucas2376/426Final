@@ -109,6 +109,10 @@ async function getUsersTweets(userId, type) {
   return result.data;
 }
 
+async function getUserLikes(userId) {
+  const result = await axios.get(`https://api.426twitter20.com/tweets/user/likes/${userId}`)
+}
+
 
 async function viewUserProfile(user) {
   ('.userProfile').on('click', async(e) => {
@@ -636,7 +640,7 @@ async function renderTweetBody(data, element) {
                 }        
         }
     } else {
-        if(data.type == "tweet") {
+        if(data.type == "tweet" && data.mediaType != "video" && data.mediaType != "image") {
             $(`.${element}`).append(`
             <br>
             <article class="media tweet-${data.id}">
@@ -743,7 +747,7 @@ async function renderTweetBody(data, element) {
           </article>
           `)          
 
-        } else if (data.type == "retweet") {
+        } else if (data.type == "retweet" && data.mediaType == "none") {
     
             let parent = await getTweet(data.parentId);
             let userParent = await getUser(parent.userId);
@@ -947,7 +951,17 @@ async function renderTweetBody(data, element) {
         }
     }
 
-    like(data.id, !(data.isLiked));
+    let compare = getUserLikes(localStorage.getItem('uid'));
+    let boolean = false;
+
+    for (let i = 0; i < compare.length; i++ ) {
+      if (data.id == compare.likedTweets[i]) {
+        boolean = true;
+        break;
+      }
+    }
+
+    like(data.id, boolean);
     editButton(data);
     retweetButton(data);
     replyButton(data);
@@ -1470,14 +1484,14 @@ function like(id, liked) {
       $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
       
       $(`.like-${id}`).on('click', async function() {
-          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
           like(id, !(liked)); 
       });
   } else {
       $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
       
       $(`.like-${id}`).on('click', async function() {
-          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {withCredentials: true});
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
           like(id, !(liked));
       });
   }
@@ -1533,22 +1547,22 @@ async function editUser(id, name, pass, avat, descript) {
 }
 
 async function tweet(text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "tweet", body: text}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "tweet", body: text, userId: localStorage.getItem('uid')}, {withCredentials: true});
     return result;
 }
 
 async function retweet(id, text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, {withCredentials: true});
     return result;
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: ""}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, {withCredentials: true});
     return result;
 }
 
 async function edit(id, replacement, type, IdMedia) {
-    const result = await axios.put(`https://api.426twitter20.com/tweets/${id}`, {body: `${replacement}`, mediaType: type, mediaId: IdMedia}, {withCredentials: true});
+    const result = await axios.put(`https://api.426twitter20.com/tweets/${id}`, {body: `${replacement}`, mediaType: type, mediaId: IdMedia, userId: localStorage.getItem('uid')}, {withCredentials: true});
 }
 
 async function deleteTweet(id) {
