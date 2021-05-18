@@ -746,13 +746,14 @@ async function renderTweetBody(data, element, liked) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                          <br>
                           ${data.body}
-                        <br>
-                      </p>
-                      <figure class="image is-1by1">
-                        <img src="${data.imageLink}">
-                      </figure>
-                    </div>
+                          <br>
+                        </p>
+                        <figure class="image is-1by1">
+                          <img src="${data.imageLink}">
+                        </figure>
+                      </div>
                     <div class="retweet-reply-${data.id}"></div>
                     <div class="buttons">
                     <button class="button like-${data.id} is-info is-small">Like</button>
@@ -942,6 +943,7 @@ async function renderTweetBody(data, element, liked) {
                                       <div class="content type-${parent.userId}">
                                         <p class>
                                           <strong>${userParent.displayName}</strong> <small>@${userParent.userId}</small>
+                                          <br>
                                           ${parent.body}
                                           <br>
                                           <figure class="image is-1by1">
@@ -1069,7 +1071,7 @@ function editButton(data) {
 
         data.imageLink = link
 
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}>
             ${data.body}
             <br>
@@ -1079,13 +1081,14 @@ function editButton(data) {
 
       } else if ( data.mediaType == "video") {
 
-        let link = $(`.replace-video-${data.id}`).val().substring(32,42);
-        
+        let position = $(`.replace-video-${data.id}`).val().indexOf("watch?v=") + 8;
+        let link = $(`.replace-video-${data.id}`).val().substring(position,$(`.replace-video-${data.id}`).val().length);
+
         await edit(data.id, final, "video", link);
       
         data.videoId = link;
 
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}>
             ${data.body}
             <br>
