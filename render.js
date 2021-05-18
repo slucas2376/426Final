@@ -1072,7 +1072,7 @@ function editButton(data) {
         data.imageLink = link
 
         $(`.edit-area-${data.id}`).replaceWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${data.body}
             <br>
             <img src="${link}">
@@ -1082,14 +1082,14 @@ function editButton(data) {
       } else if ( data.mediaType == "video") {
 
         let position = $(`.replace-video-${data.id}`).val().indexOf("watch?v=") + 8;
-        let link = $(`.replace-video-${data.id}`).val().substring(position,$(`.replace-video-${data.id}`).val().length);
+        let link = $(`.replace-video-${data.id}`).val().substring(position, $(`.replace-video-${data.id}`).val().length);
 
         await edit(data.id, final, "video", link);
       
         data.videoId = link;
 
         $(`.edit-area-${data.id}`).replaceWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${data.body}
             <br>
             <figure class="image is-16by9">
@@ -1101,7 +1101,7 @@ function editButton(data) {
       } else {
         await edit(data.id, final, "none", "");
         $(`.edit-area-${data.id}`).replaceWith(`
-          <div class="edit-area-${data.id}>
+          <div class="edit-area-${data.id}">
             ${data.body}
             <br>
           </div>
