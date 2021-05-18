@@ -1303,7 +1303,7 @@ function tweetButton() {
           let link = $(`#link`).val().substring(32,43);
 
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
-          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link }, {withCredentials: true});
+          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
           $(`.newTweet`).replaceWith(`
             <form class="level" id="newTweet">
@@ -1363,7 +1363,7 @@ function tweetButton() {
         } else if ($(`#image`).is(`:checked`)) {
           
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
-          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val() }, 
+          {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
           {withCredentials: true});
         
           $(`.newTweet`).remove();
