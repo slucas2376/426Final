@@ -2,8 +2,6 @@ axios.defaults.withCredentials = true;
 
 $( function() {
     localStorage.clear()
-    localStorage.setItem('yeet', "yeeticous beaticous please workicous")
-    console.log(localStorage.getItem('yeet'))
     signIn();
 });
 
@@ -16,7 +14,7 @@ function signIn() {
         try {
             result = await login(userName, password);
         } catch (error) {
-            $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or username is incorrect or not registered </p>`);
+            $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or user id was incorrect or not registered </p>`);
             return false;
         }
         console.log(result)
@@ -163,7 +161,7 @@ async function register(id, name, pass, avat) {
 }
 
 async function login(id, pass) {
-    const result = await axios.get(`https://api.426twitter20.com/login`,
+    const result = await axios.post(`https://api.426twitter20.com/login`,
         {
             userId: id,
             password: pass
