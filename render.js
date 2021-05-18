@@ -308,7 +308,7 @@ async function renderNewTweet(element) {
     for (let i = 0; i < data.length; i++ ) {
 
         for (let j = 0; j < compare.length; j++) {
-          if (data[i].id == compare[i].id) {
+          if (data[i].id == compare[i]) {
             bool = true;
             console.log("ran");
             break;
