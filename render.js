@@ -307,6 +307,7 @@ async function renderNewTweet(element) {
 
     for (let i = 0; i < data.length; i++ ) {
 
+      if (compare != undefined) {
         for (let j = 0; j < compare.length; j++) {
           if (data[i].id == compare[i]) {
             bool = true;
@@ -314,14 +315,15 @@ async function renderNewTweet(element) {
             break;
           }
         }
+      }
 
-        console.log(bool);
+      console.log(bool);
 
-        if (data[i] != {}) {
-            await renderTweetBody(data[i], element, bool);
-        }
+      if (data[i] != {}) {
+        await renderTweetBody(data[i], element, bool);
+      }
 
-        bool = false;
+      bool = false;
     }
 }
 
