@@ -1309,12 +1309,6 @@ function tweetButton() {
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
-          $(`#newTweet`).replaceWith(`
-            <form class="level" id="newTweet">
-              <button class="button is-primary tweet">Tweet</button>
-            </form>
-          `);
-
           let user = await getUser(localStorage.getItem('uid'))
           result = await getTweet(user.postedTweets[0]);
 
@@ -1369,8 +1363,6 @@ function tweetButton() {
           const result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
           {withCredentials: true});
-        
-          $(`.newTweet`).remove();
 
           let user = await getUser(localStorage.getItem('uid'))
           result = await getTweet(user.postedTweets[0]);
@@ -1425,10 +1417,8 @@ function tweetButton() {
         } else { 
           const result = await tweet($(`#tweetCreation`).val());
 
-          $(`.newTweet`).remove();
-
           let user = await getUser(localStorage.getItem('uid'))
-          print(user.postedTweets[0]);
+
           if (user.postedTweets[0] != undefined) {
 
             result = await getTweet(user.postedTweets[0]);
@@ -1478,14 +1468,24 @@ function tweetButton() {
           editButton(result)
           deleteButton(result);
         }
-      });
 
-      $(`#begon`).on('click', () => {
-        $(`.newTweet`).replaceWith(`
+        // re-instates tweet button after use
+        $(`#newTweet`).replaceWith(`
         <form class="level" id="newTweet">
           <button class="button is-primary tweet">Tweet</button>
         </form>
-      `);
+        `);
+
+      
+      });
+
+      // if user cancels tweet creation, tweet button is re-instated
+      $(`#begon`).on('click', () => {
+        $(`#newTweet`).replaceWith(`
+        <form class="level" id="newTweet">
+          <button class="button is-primary tweet">Tweet</button>
+        </form>`);
+        
         tweetButton();
       });
   });
