@@ -348,11 +348,11 @@ async function renderTweetBody(data, element, liked) {
                       <div class="content type-${data.userId}">
                         <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                          <div class="edit-area-${data.id}">
+                          <p class="edit-area-${data.id}">
                             ${data.body}
                             <br>
                             <img src="${data.imageLink}">
-                          </div>
+                          </p>
                         </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
@@ -385,13 +385,13 @@ async function renderTweetBody(data, element, liked) {
                           <p class>
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                             <br>
-                              <div class="edit-area-${data.id}">
+                              <p class="edit-area-${data.id}">
                               ${data.body}
                               <br>
                               <figure class="image is-16by9">
                                 <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
-                              </div>
+                              </p>
                           </p>
                         </div>
                         <div class="retweet-reply-${data.id}"></div>
@@ -970,7 +970,7 @@ async function renderTweetBody(data, element, liked) {
     retweetButton(data);
     replyButton(data);
     deleteButton(data);
-    renderTweetReplys(data);
+    //renderTweetReplys(data);
 }
 
 function renderTweetReplys(data) {
