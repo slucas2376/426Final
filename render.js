@@ -299,9 +299,9 @@ async function renderUserData(id, type, element) {
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet(element) {
+async function renderNewTweet(data, element) {
     // awaiting all recent tweets and users personally like tweet ids
-    let data = await recentTweets();
+
     let compare = await getUserLikes(localStorage.getItem('uid'));
 
     // stored value for if tweet is liked or not
@@ -423,7 +423,6 @@ async function renderTweetBody(data, element, liked) {
                       <div class="content type-${data.userId}">
                         <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                         <p class="edit-area-${data.id}">
-                          <br>
                             ${data.body}
                         </p>
                       </div>
@@ -913,7 +912,6 @@ async function renderTweetBody(data, element, liked) {
                   $(`.${element}`).append(`
                   <br>
                       <article class="media tweet-${data.id}">
-
                         <div class="box media-content">
                           <article class="media">
                             <figure class="media-left">
@@ -974,6 +972,38 @@ async function renderTweetBody(data, element, liked) {
     deleteButton(data);
 }
 
+function renderTweetReplys(data) {
+  $(`.tweet-${data.id}`).on('click', async () => {
+    let replys = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweets/${data.id}/replies`, {withCredentials: true})
+  
+    $('.columns').append(
+      `<div class="column replyfield-${data.id}">
+        <div class="box has-background-info tweetReply-${data.id}">
+        </div>
+      </div>`
+    )
+  
+    await renderNewTweet([data], `tweetReply-${data.id}`);
+
+    if (replys == undefined || replys == {}) {
+      $(`tweetReply-${data.id}`).append(`
+        <article class="media tweet-${data.id}">
+          <div class="box media-content">
+            <article class="media">
+              <figure class="media-left">
+                <h3> No replys </h3>
+              </figure>
+            </article>
+          </div>
+        </article>
+      `)
+    }   
+  
+    await renderNewTweet(replys, `tweetReply-${data.id}`)
+  
+  });
+}
+
 async function renderMainFeed() {
     $(`.columns`).append(`
         <div class="column mainfeed">
@@ -990,7 +1020,9 @@ async function renderMainFeed() {
 
     tweetButton();
 
-    await renderNewTweet("feed");
+    let data = await recentTweets();
+    
+    await renderNewTweet(data, "feed");
 
 }
 
