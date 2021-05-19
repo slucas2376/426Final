@@ -1115,7 +1115,7 @@ function editButton(data) {
     $(`.cancel-edit-${data.id}`).on('click', () => {
 
       if ( data.mediaType == "image") {
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
             ${final}
             <br>
@@ -1124,7 +1124,7 @@ function editButton(data) {
         `);
 
       } else if ( data.mediaType == "video") {
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
@@ -1135,7 +1135,7 @@ function editButton(data) {
         `);
       
       } else {
-        $(`.edit-area-${data.id}`).replaecWith(`
+        $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
             ${final}
             <br>
