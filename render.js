@@ -976,7 +976,8 @@ async function renderTweetBody(data, element, liked) {
 function renderTweetReplys(data) {
   $(`.tweet-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
-  
+    console.log(replys);
+
     $('.columns').append(
       `<div class="column replyfield-${data.id}">
         <div class="box has-background-info tweetReply-${data.id}">
@@ -987,7 +988,7 @@ function renderTweetReplys(data) {
     await renderNewTweet([data], `tweetReply-${data.id}`);
 
     if (replys == undefined || replys == {}) {
-      $(`tweetReply-${data.id}`).append(`
+      $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
           <div class="box media-content">
             <article class="media">
