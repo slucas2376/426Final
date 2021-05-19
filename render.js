@@ -7,8 +7,8 @@ $( async function () {
 
   //getting entire user object of current user
   const result = await getUser(uid);
-  console.log(result);
 
+  // rendering the main feed
   await renderMainFeed();
 
   //calling renderProfile to render current user's profileS
@@ -23,7 +23,7 @@ async function renderProfile(id) {
   // needs to add a column remove button at some point; when you work out formatting the handler is in there, just needs a button to attach to
   let user = await getUser(id);
   // user will be empty object if no such registered user exists
-  if (user = {}) {console.log("profile retrieval failed"); return;}
+  if (user == {}) {console.log("profile retrieval failed"); return;}
   if (document.getElementById(`${user.id}-profile`) != null) {
       // if there's already an element for that user's profile, remove it and make a new one I guess?
       $(document.getElementById(`${user.id}-profile`)).remove();
@@ -313,13 +313,10 @@ async function renderNewTweet(element) {
         for (let j = 0; j < compare.length; j++) {
           if (data[i].id == compare[j].id) {
             bool = true;
-            console.log("ran");
             break;
           }
         }
       }
-
-      console.log(bool);
 
       if (data[i] != {}) {
         await renderTweetBody(data[i], element, bool);
@@ -332,8 +329,6 @@ async function renderNewTweet(element) {
 async function renderTweetBody(data, element, liked) {
 
     let user = await getUser(data.userId);
-
-    console.log(data.type);
 
     if (user.id == localStorage.getItem('uid')) {
 
@@ -426,8 +421,9 @@ async function renderTweetBody(data, element, liked) {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${data.userId}">
+                        <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                        <br>
                         <p class="edit-area-${data.id}">
-                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
                             ${data.body}
                         </p>
@@ -1173,8 +1169,8 @@ function retweetButton(data) {
     $(`.retweet-submit-${data.id}`).on('click', async () => {
       let final = $(`retweet-body-${data.id}`).val();
 
-      await retweet(data.id, final);
-
+      let retwe = await retweet(data.id, final);
+      console.log(retwe);
       $(`retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}"></div>
       `);
@@ -1196,7 +1192,7 @@ function retweetButton(data) {
 function replyButton(data) {
   $(`.reply-${data.id}`).on('click', () => {
     $(`.retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}>
+      <div class="retweet-reply-${data.id}">
         <div class="field">
           <div class="contianer">
             <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
