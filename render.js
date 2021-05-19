@@ -975,7 +975,7 @@ async function renderTweetBody(data, element, liked) {
 
 function renderTweetReplys(data) {
   $(`.tweet-${data.id}`).on('click', async () => {
-    let replys = await axios.get(`https://comp426finalbackendactual2.herokuapp.com/tweets/${data.id}/replies`, {withCredentials: true})
+    let replys = await getReplies(data.id);
   
     $('.columns').append(
       `<div class="column replyfield-${data.id}">
@@ -1580,6 +1580,11 @@ async function editUser(id, name, pass, avat, descript) {
     password: pass,
     avatar: avat,
     profileDescription: descript}, {withCredentials: true});
+}
+
+async function getReplies(id) {
+  const result = await axios.get(`https://api.426twitter20.com/tweets/${id}/replies`, {withCredentials: true})
+  return result;
 }
 
 async function tweet(text) {
