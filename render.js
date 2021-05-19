@@ -426,7 +426,7 @@ async function renderTweetBody(data, element, liked) {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${data.userId}">
-                        <p class="edit-body-${data.id}">
+                        <p class="edit-area-${data.id}">
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <br>
                             ${data.body}
@@ -466,7 +466,7 @@ async function renderTweetBody(data, element, liked) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
-                                  <p class="edit-body-${data.id}">
+                                  <p class="edit-area-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                     <div class="edit-area-${data.id}">
                                     ${data.body}
@@ -619,7 +619,7 @@ async function renderTweetBody(data, element, liked) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
-                                  <p class="edit-body-${data.id}">
+                                  <p class="edit-area-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                     <div class="edit-area-${data.id}">
                                     ${data.body}
@@ -1117,9 +1117,9 @@ function editButton(data) {
       if ( data.mediaType == "image") {
         $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
-            ${final}
+            ${data.body}
             <br>
-            <img src="${link}">
+            <img src="${data.imageLink}">
           </div>
         `);
 
@@ -1137,7 +1137,7 @@ function editButton(data) {
       } else {
         $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
-            ${final}
+            ${data.body}
             <br>
           </div>
         `);
