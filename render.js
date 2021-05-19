@@ -982,7 +982,7 @@ function renderTweetReplys(data) {
         <div class="box has-background-info tweetReply-${data.id}">
         </div>
       </div>`
-    )
+    );
   
     await renderNewTweet([data], `tweetReply-${data.id}`);
 
