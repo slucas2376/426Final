@@ -422,7 +422,6 @@ async function renderTweetBody(data, element, liked) {
                     <div class="media-content">
                       <div class="content type-${data.userId}">
                         <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                        <br>
                         <p class="edit-area-${data.id}">
                           <br>
                             ${data.body}
@@ -1167,7 +1166,7 @@ function retweetButton(data) {
     `);
 
     $(`.retweet-submit-${data.id}`).on('click', async () => {
-      let final = $(`retweet-body-${data.id}`).val();
+      let final = $(`.retweet-body-${data.id}`).val();
 
       let retwe = await retweet(data.id, final);
       console.log(retwe);
