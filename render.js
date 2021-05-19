@@ -13,7 +13,7 @@ $( async function () {
 
   //calling renderProfile to render current user's profileS
 
-  await renderProfile(result.id);
+  // await renderProfile(result.id);
   logoutButton()
 });
 
