@@ -1167,9 +1167,10 @@ function retweetButton(data) {
 
     $(`.retweet-submit-${data.id}`).on('click', async () => {
       let final = $(`.retweet-body-${data.id}`).val();
+      console.log(final);
 
       let retwe = await retweet(data.id, final);
-      console.log(retwe);
+      
       $(`retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}"></div>
       `);
@@ -1209,7 +1210,7 @@ function replyButton(data) {
     `);
 
     $(`.reply-submit-${data.id}`).on('click', async () => {
-      let final = $(`reply-body-${data.id}`).val();
+      let final = $(`.reply-body-${data.id}`).val();
 
       await reply(data.id, final);
 
