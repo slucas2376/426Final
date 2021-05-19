@@ -970,6 +970,7 @@ async function renderTweetBody(data, element, liked) {
     retweetButton(data);
     replyButton(data);
     deleteButton(data);
+    renderTweetReplys(data);
 }
 
 function renderTweetReplys(data) {
