@@ -346,14 +346,12 @@ async function renderTweetBody(data, element, liked) {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${data.userId}">
-                        <p class>
                           <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                           <p class="edit-area-${data.id}">
                             ${data.body}
                             <br>
                             <img src="${data.imageLink}">
                           </p>
-                        </p>
                       </div>
                       <div class="retweet-reply-${data.id}"></div>
                       <div class="buttons">
@@ -382,17 +380,14 @@ async function renderTweetBody(data, element, liked) {
                       </figure>
                       <div class="media-content">
                         <div class="content type-${data.userId}">
-                          <p class>
-                            <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                            <br>
-                              <p class="edit-area-${data.id}">
+                          <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                            <p class="edit-area-${data.id}">
                               ${data.body}
                               <br>
                               <figure class="image is-16by9">
                                 <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
-                              </p>
-                          </p>
+                            </p>
                         </div>
                         <div class="retweet-reply-${data.id}"></div>
                         <div class="buttons">
@@ -460,18 +455,16 @@ async function renderTweetBody(data, element, liked) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${data.userId}">
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                   <p class="edit-area-${data.id}">
-                                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <div class="edit-area-${data.id}">
                                     ${data.body}
-                                    </div>
-                                    <br>
-                                    <article class="media">
-                                      <div class="media-content">
-                                        <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
-                                      </div>
-                                    </article>
                                   </p>
+                                  <br>
+                                  <article class="media">
+                                    <div class="media-content">
+                                      <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                                    </div>
+                                  </article>
                                 </div>
                                 <div class="retweet-reply-${data.id}"></div>
                                 <div class="buttons">
@@ -615,9 +608,9 @@ async function renderTweetBody(data, element, liked) {
                                 <div class="content type-${data.userId}">
                                   <p class="edit-area-${data.id}">
                                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                    <div class="edit-area-${data.id}">
+                                    <p class="edit-area-${data.id}">
                                     ${data.body}
-                                    </div>
+                                    </p>
                                     <br>
                                     <article class="media">
                                       <figure class="media-left">
