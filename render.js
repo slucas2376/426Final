@@ -1001,7 +1001,7 @@ function renderTweetReplys(data) {
       `)
     }   
   
-    await renderNewTweet(replys, `.tweetReply-${data.id}`)
+    await renderNewTweet(replys, `tweetReply-${data.id}`)
   
   });
 }
