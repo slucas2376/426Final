@@ -651,7 +651,6 @@ function renderTweetReplys(data) {
     await renderNewTweet([data], `.tweetReply-${data.id}`);
 
     // turns off click event listener for tweet body to avoid creating tons of reply columns
-    $(`.clickReply-${data.id}`).off();
 
     // no replys gives basic "no replies" message
     if (replys == undefined || replys.data == []) {
