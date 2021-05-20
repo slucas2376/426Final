@@ -654,7 +654,7 @@ function renderTweetReplys(data) {
     $(`.clickReply-${data.id}`).off();
 
     // no replys gives basic "no replies" message
-    if (replys == undefined || replys == []) {
+    if (replys == undefined || replys.data == []) {
       $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
           <div class="box media-content">
@@ -669,7 +669,7 @@ function renderTweetReplys(data) {
     }   
     // renders the new replies similar to the main twitter feed.
     // uses the abstraction of the renderNewTweet function to accomplish this
-    await renderNewTweet(replys, `.tweetReply-${data.id}`)
+    await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
   
   });
 }
