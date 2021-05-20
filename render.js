@@ -605,7 +605,7 @@ async function renderTweetBody(data, element, liked, reply) {
             }        
     } 
     
-    if(reply){
+    if(!reply){
       if (user.id == localStorage.getItem('uid')) {
         $(`.buttons-${data.id}`).replaceWith(`
           <div class="buttons-${data.id}">
