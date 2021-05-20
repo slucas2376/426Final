@@ -343,20 +343,16 @@ async function renderTweetBody(data, element, liked) {
                   </p>
                 </figure>
                 <div class="media-content">
-                  <div class="content type-${data.userId}">
-                    <p class>
-                      <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                      <div class="edit-area-${data.id}">
-                        ${data.body}
-                        <br>
-                        <img src="${data.imageLink}">
-                      </div>
-                    </p>
+                  <div class="content type-${data.userId} clickReply-${data.id}">
+                    <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                    <div class="edit-area-${data.id}">
+                      ${data.body}
+                      <br>
+                      <img src="${data.imageLink}">
+                    </div>
                   </div>
                   <div class="retweet-reply-${data.id}"></div>
-                  <div class="buttons-${data.id}">
-                              
-                  </div>
+                  <div class="buttons-${data.id}"></div>
                 </div>
               </article>
               
@@ -376,10 +372,8 @@ async function renderTweetBody(data, element, liked) {
                     </p>
                   </figure>
                   <div class="media-content">
-                    <div class="content type-${data.userId}">
-                      <p class>
+                    <div class="content type-${data.userId} clickReply-${data.id}>
                         <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                        <br>
                           <div class="edit-area-${data.id}">
                           ${data.body}
                           <br>
@@ -387,12 +381,9 @@ async function renderTweetBody(data, element, liked) {
                             <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                           </figure>
                           </div>
-                      </p>
                     </div>
                     <div class="retweet-reply-${data.id}"></div>
-                    <div class="buttons-${data.id}">
-                              
-                    </div>
+                    <div class="buttons-${data.id}"></div>
                   </div>
                 </article>
                 
@@ -412,16 +403,14 @@ async function renderTweetBody(data, element, liked) {
                   </p>
                 </figure>
                 <div class="media-content">
-                  <div class="content type-${data.userId}">
+                  <div class="content type-${data.userId} clickReply-${data.id}">
                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                     <p class="edit-area-${data.id}">
                         ${data.body}
                     </p>
                   </div>
                   <div class="retweet-reply-${data.id}"></div>
-                  <div class="buttons-${data.id}">
-                              
-                  </div>
+                  <div class="buttons-${data.id}"></div>
                 </div>
               </article>
               
@@ -436,7 +425,7 @@ async function renderTweetBody(data, element, liked) {
         let parent = await getTweet(data.parentId);
         let userParent = await getUser(parent.userId);
 
-            if (userParent == "Tweet has been deleted.") {
+            if (parent == "Tweet has been deleted.") {
                 $(`.${element}`).append(`
                 <br>
                     <article class="media tweet-${data.id}">
@@ -448,7 +437,7 @@ async function renderTweetBody(data, element, liked) {
                             </p>
                           </figure>
                           <div class="media-content">
-                            <div class="content type-${data.userId}">
+                            <div class="content type-${data.userId} clickReply-${data.id}">
                               <p class="edit-area-${data.id}">
                                 <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                 <div class="edit-area-${data.id}">
@@ -463,12 +452,9 @@ async function renderTweetBody(data, element, liked) {
                               </p>
                             </div>
                             <div class="retweet-reply-${data.id}"></div>
-                            <div class="buttons-${data.id}">
-                              
-                            </div>
+                            <div class="buttons-${data.id}"></div>
                           </div>
                         </article>
-                        
                       </div>
                     </article>
                 `);
@@ -485,8 +471,7 @@ async function renderTweetBody(data, element, liked) {
                           </p>
                         </figure>
                         <div class="media-content">
-                          <div class="content type-${data.userId}">
-                            <p class>
+                          <div class="content type-${data.userId} clickReply-${data.id}">
                               <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                               <div class="edit-area-${data.id}">
                                 ${data.body}
@@ -512,12 +497,9 @@ async function renderTweetBody(data, element, liked) {
                                   </div>
                                 </div>
                               </article>
-                            </p>
                           </div>
                           <div class="retweet-reply-${data.id}"></div>
-                          <div class="buttons-${data.id}">
-                              
-                          </div>
+                          <div class="buttons-${data.id}"></div>
                         </div>
                       </article>
                       
@@ -539,8 +521,7 @@ async function renderTweetBody(data, element, liked) {
                           </p>
                         </figure>
                         <div class="media-content">
-                          <div class="content type-${data.userId}">
-                            <p class>
+                          <div class="content type-${data.userId} clickReply-${data.id}">
                               <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                               <div class="retweetBox-${data.userId}"></div>
                               <div class="edit-area-${data.id}">
@@ -566,12 +547,9 @@ async function renderTweetBody(data, element, liked) {
                                   </div>
                                 </div>
                               </article>
-                            </p>
                           </div>
                           <div class="retweet-reply-${data.id}"></div>
-                          <div class="buttons-${data.id}">
-                              
-                          </div>
+                          <div class="buttons-${data.id}"></div>
                         </div>
                       </article>
                       
@@ -592,8 +570,7 @@ async function renderTweetBody(data, element, liked) {
                             </p>
                           </figure>
                           <div class="media-content">
-                            <div class="content type-${data.userId}">
-                              <p class="edit-area-${data.id}">
+                            <div class="content type-${data.userId} clickReply-${data.id}">
                                 <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                                 <div class="edit-area-${data.id}">
                                 ${data.body}
@@ -615,12 +592,9 @@ async function renderTweetBody(data, element, liked) {
                                     </div>
                                   </div>
                                 </article>
-                              </p>
                             </div>
                             <div class="retweet-reply-${data.id}"></div>
-                            <div class="buttons-${data.id}">
-                              
-                            </div>
+                            <div class="buttons-${data.id}"></div>
                           </div>
                         </article>
                         
@@ -629,8 +603,6 @@ async function renderTweetBody(data, element, liked) {
                 `);
             }        
     }
-
-
 
     if (user.id == localStorage.getItem('uid')) {
       $(`.buttons-${data.id}`).append(`
@@ -658,7 +630,7 @@ async function renderTweetBody(data, element, liked) {
 }
 
 function renderTweetReplys(data) {
-  $(`.tweet-${data.id}`).on('click', async () => {
+  $(`.clickReply-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
   
     $('.columns').append(
@@ -1220,7 +1192,7 @@ function like(id, liked) {
 function deleteButton(data) {
   $(`.delete-${data.id}`).on(`click`, async () => {
     await deleteTweet(data.id);
-    $(`tweet-${data.id}`).remove();
+    $(`.tweet-${data.id}`).remove();
   });
 }
 
