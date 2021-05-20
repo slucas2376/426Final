@@ -639,7 +639,6 @@ async function renderTweetBody(data, element, liked, reply) {
 function renderTweetReplys(data) {
   $(`.clickReply-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
-    console.log(replys.data);
     // initializing the new tweet and reply column
     // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
     $('.columns').append(
@@ -656,7 +655,7 @@ function renderTweetReplys(data) {
     );
   
     $(`.deleteReply-${data.id}`).on('click', async () => {
-      $(`replyfield-${data.id}`).remove();
+      $(`.replyfield-${data.id}`).remove();
       await renderTweetReplys(data);
     });
 
@@ -667,7 +666,6 @@ function renderTweetReplys(data) {
 
     // no replys gives basic "no replies" message
     if (replys.data.length == 0) {
-      console.log("should be appending");
       $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
           <div class="box media-content">
@@ -683,9 +681,6 @@ function renderTweetReplys(data) {
     // renders the new replies similar to the main twitter feed.
     // uses the abstraction of the renderNewTweet function to accomplish this
     await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
-  
-
-
   });
 }
 
