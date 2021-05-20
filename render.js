@@ -644,6 +644,12 @@ function renderTweetReplys(data) {
     $('.columns').append(
       `<div class="column replyfield-${data.id}">
         <div class="box has-background-info tweetReply-${data.id}">
+        <article class="message is-info">
+          <div class="message-header">
+            Replies to ${data.userId}
+            <button class="delete deleteReply-${data.id}"></button>
+          </div>
+        </article>
         </div>
       </div>`
     );
@@ -660,8 +666,8 @@ function renderTweetReplys(data) {
         <article class="media tweet-${data.id}">
           <div class="box media-content">
             <article class="media">
-              <figure class="media-left has-text-centered">
-                <h1> No replys </h1>
+              <figure class="media-left">
+                <h1 class="has-text-centered"> No replys </h1>
               </figure>
             </article>
           </div>
