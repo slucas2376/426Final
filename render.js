@@ -655,9 +655,9 @@ function renderTweetReplys(data) {
       </div>`
     );
   
-    $(`.deleteReply-${data.id}`).on('click', () => {
+    $(`.deleteReply-${data.id}`).on('click', async () => {
       $(`replyfield-${data.id}`).remove();
-      renderTweetReplys(data);
+      await renderTweetReplys(data);
     });
 
     await renderNewTweet([data], `.tweetReply-${data.id}`, true);
