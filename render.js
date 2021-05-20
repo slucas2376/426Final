@@ -606,18 +606,22 @@ async function renderTweetBody(data, element, liked) {
     }
 
     if (user.id == localStorage.getItem('uid')) {
-      $(`.buttons-${data.id}`).append(`
-        <button class="button edit-${data.id} is-info is-small">Edit</button>
-        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-        <button class="button reply-${data.id} is-info is-small">  Reply </button>
-        <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+      $(`.buttons-${data.id}`).replaceWith(`
+        <div class="buttons-${data.id}">
+          <button class="button edit-${data.id} is-info is-small">Edit</button>
+          <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+          <button class="button reply-${data.id} is-info is-small">  Reply </button>
+          <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+        </div>
       `);
         
     } else {
-      $(`.buttons-${data.id}`).append(`
-        <button class="button like-${data.id} is-info is-small">Like</button>
-        <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-        <button class="button reply-${data.id} is-info is-small">  Reply </button>
+      $(`.buttons-${data.id}`).replaceWith(`
+        <div class="buttons-${data.id}">
+          <button class="button like-${data.id} is-info is-small">Like</button>
+          <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+          <button class="button reply-${data.id} is-info is-small">  Reply </button>
+        </div>
       `);    
     
     }
@@ -634,7 +638,7 @@ async function renderTweetBody(data, element, liked) {
 function renderTweetReplys(data) {
   $(`.clickReply-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
-  
+    console.log(replys);
     // initializing the new tweet and reply column
     // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
     $('.columns').append(
