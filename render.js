@@ -447,9 +447,11 @@ async function renderTweetBody(data, element, liked) {
                               </div>
                               <br>
                               <article class="media">
+                                <br>
                                 <div class="media-content">
                                   <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                 </div>
+                                <br>
                               </article>
                             </div>
                             <div class="retweet-reply-${data.id}"></div>
@@ -524,7 +526,6 @@ async function renderTweetBody(data, element, liked) {
                         <div class="media-content">
                           <div class="content type-${data.userId} clickReply-${data.id}">
                               <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                              <div class="retweetBox-${data.userId}"></div>
                               <div class="edit-area-${data.id}">
                                 ${data.body}
                               </div>
