@@ -654,8 +654,8 @@ function renderTweetReplys(data) {
     $(`.clickReply-${data.id}`).off();
 
     // no replys gives basic "no replies" message
-    if (replys == undefined || replys == {}) {
-      $(`tweetReply-${data.id}`).append(`
+    if (replys == undefined || replys == []) {
+      $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
           <div class="box media-content">
             <article class="media">
