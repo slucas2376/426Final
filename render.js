@@ -539,6 +539,7 @@ async function renderTweetBody(data, element, liked) {
                                 <div class="media-content">
                                   <div class="content type-${parent.userId}">
                                       <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                      <br>
                                       ${parent.body}
                                       <br>
                                     <figure class="image is-16by9">
