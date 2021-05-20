@@ -638,7 +638,7 @@ async function renderTweetBody(data, element, liked) {
 function renderTweetReplys(data) {
   $(`.clickReply-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
-    console.log(replys);
+    console.log(replys.data);
     // initializing the new tweet and reply column
     // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
     $('.columns').append(
@@ -651,9 +651,10 @@ function renderTweetReplys(data) {
     await renderNewTweet([data], `.tweetReply-${data.id}`);
 
     // turns off click event listener for tweet body to avoid creating tons of reply columns
+    $(`.clickReply-${data.id}`).off();
 
     // no replys gives basic "no replies" message
-    if (replys == undefined || replys.data == []) {
+    if (replys.data == []) {
       $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
           <div class="box media-content">
