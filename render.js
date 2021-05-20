@@ -363,32 +363,36 @@ async function renderTweetBody(data, element, liked) {
       } else if (data.mediaType == "video") {
         $(`${element}`).append(`
         <br>
-          <article class="media tweet-${data.id}">
-              <div class="box media-content">
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-64x64">
-                      <img class="is-rounded" src="${user.avatar}">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content type-${data.userId} clickReply-${data.id}>
-                        <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                          <div class="edit-area-${data.id}">
-                          ${data.body}
-                          <br>
-                          <figure class="image is-16by9">
-                            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
-                          </figure>
-                          </div>
-                    </div>
-                    <div class="retweet-reply-${data.id}"></div>
-                    <div class="buttons-${data.id}"></div>
+              <article class="media tweet-${data.id}">
+                  <div class="box media-content">
+                    <article class="media">
+                      <figure class="media-left">
+                        <p class="image is-64x64">
+                          <img class="is-rounded" src="${user.avatar}">
+                        </p>
+                      </figure>
+                      <div class="media-content">
+                        <div class="content type-${data.userId}">
+                          <p class>
+                            <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                            <br>
+                              <div class="edit-area-${data.id}">
+                              ${data.body}
+                              <br>
+                              <figure class="image is-16by9">
+                                <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              </figure>
+                              </div>
+                          </p>
+                        </div>
+                        <div class="retweet-reply-${data.id}"></div>
+                        <div class="buttons-${data.id}"></div>
+                      </div>
+                    </article>
+                    
                   </div>
-                </article>
-                
-              </div>
-          </article>
+              </article>
+            
         
         `);
       } else {
@@ -626,6 +630,7 @@ async function renderTweetBody(data, element, liked) {
     retweetButton(data);
     replyButton(data);
     deleteButton(data);
+    renderTweetReplys(data);
 
 }
 
