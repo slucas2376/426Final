@@ -332,7 +332,7 @@ async function renderTweetBody(data, element, liked) {
 
     if(data.type == "tweet") {
       if(data.mediaType == "image") {
-        $(`.${element}`).append(`
+        $(`${element}`).append(`
         <br>
         <article class="media tweet-${data.id}">
             <div class="box media-content">
@@ -361,7 +361,7 @@ async function renderTweetBody(data, element, liked) {
         
         `);
       } else if (data.mediaType == "video") {
-        $(`.${element}`).append(`
+        $(`${element}`).append(`
         <br>
           <article class="media tweet-${data.id}">
               <div class="box media-content">
@@ -392,7 +392,7 @@ async function renderTweetBody(data, element, liked) {
         
         `);
       } else {
-        $(`.${element}`).append(`
+        $(`${element}`).append(`
         <br>
         <article class="media tweet-${data.id}">
             <div class="box media-content">
@@ -426,7 +426,7 @@ async function renderTweetBody(data, element, liked) {
         let userParent = await getUser(parent.userId);
 
             if (parent == "Tweet has been deleted.") {
-                $(`.${element}`).append(`
+                $(`${element}`).append(`
                 <br>
                     <article class="media tweet-${data.id}">
                       <div class="box media-content">
@@ -459,7 +459,7 @@ async function renderTweetBody(data, element, liked) {
                     </article>
                 `);
             } else if ( data.mediaType == "image" ) {
-              $(`.${element}`).append(`
+              $(`${element}`).append(`
               <br>
                   <article class="media tweet-${data.id}">
 
@@ -509,7 +509,7 @@ async function renderTweetBody(data, element, liked) {
               `);
             
             } else if( data.mediaType == "video" ) { 
-              $(`.${element}`).append(`
+              $(`${element}`).append(`
               <br>
                   <article class="media tweet-${data.id}">
 
@@ -559,7 +559,7 @@ async function renderTweetBody(data, element, liked) {
               `);
 
             } else {
-                $(`.${element}`).append(`
+                $(`${element}`).append(`
                 <br>
                     <article class="media tweet-${data.id}">
                       <div class="box media-content">
@@ -633,6 +633,8 @@ function renderTweetReplys(data) {
   $(`.clickReply-${data.id}`).on('click', async () => {
     let replys = await getReplies(data.id);
   
+    // initializing the new tweet and reply column
+    // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
     $('.columns').append(
       `<div class="column replyfield-${data.id}">
         <div class="box has-background-info tweetReply-${data.id}">
@@ -640,8 +642,12 @@ function renderTweetReplys(data) {
       </div>`
     );
   
-    await renderNewTweet([data], `tweetReply-${data.id}`);
+    await renderNewTweet([data], `.tweetReply-${data.id}`);
 
+    // turns off click event listener for tweet body to avoid creating tons of reply columns
+    $(`.clickReply-${data.id}`).off();
+
+    // no replys gives basic "no replies" message
     if (replys == undefined || replys == {}) {
       $(`tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
@@ -655,7 +661,8 @@ function renderTweetReplys(data) {
         </article>
       `)
     }   
-  
+    // renders the new replies similar to the main twitter feed.
+    // uses the abstraction of the renderNewTweet function to accomplish this
     await renderNewTweet(replys, `.tweetReply-${data.id}`)
   
   });
@@ -679,7 +686,7 @@ async function renderMainFeed() {
 
     let data = await recentTweets();
     
-    await renderNewTweet(data, "feed");
+    await renderNewTweet(data, ".feed");
 
 }
 
