@@ -299,7 +299,7 @@ async function renderUserData(id, type, element) {
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet(data, element) {
+async function renderNewTweet(data, element, reply) {
     // awaiting all recent tweets and users personally like tweet ids
 
     let compare = await getUserLikes(localStorage.getItem('uid'));
@@ -319,14 +319,14 @@ async function renderNewTweet(data, element) {
       }
 
       if (data[i] != {}) {
-        await renderTweetBody(data[i], element, bool);
+        await renderTweetBody(data[i], element, bool, reply);
       }
 
       bool = false;
     }
 }
 
-async function renderTweetBody(data, element, liked) {
+async function renderTweetBody(data, element, liked, reply) {
 
     let user = await getUser(data.userId);
 
@@ -603,27 +603,28 @@ async function renderTweetBody(data, element, liked) {
                     </article>
                 `);
             }        
-    }
-
-    if (user.id == localStorage.getItem('uid')) {
-      $(`.buttons-${data.id}`).replaceWith(`
-        <div class="buttons-${data.id}">
-          <button class="button edit-${data.id} is-info is-small">Edit</button>
-          <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-          <button class="button reply-${data.id} is-info is-small">  Reply </button>
-          <button class="button delete-${data.id} is-danger is-small"> Delete </button>
-        </div>
-      `);
-        
-    } else {
-      $(`.buttons-${data.id}`).replaceWith(`
-        <div class="buttons-${data.id}">
-          <button class="button like-${data.id} is-info is-small">Like</button>
-          <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-          <button class="button reply-${data.id} is-info is-small">  Reply </button>
-        </div>
-      `);    
+    } 
     
+    if(reply){
+      if (user.id == localStorage.getItem('uid')) {
+        $(`.buttons-${data.id}`).replaceWith(`
+          <div class="buttons-${data.id}">
+            <button class="button edit-${data.id} is-info is-small">Edit</button>
+            <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+            <button class="button reply-${data.id} is-info is-small">  Reply </button>
+           <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+          </div>
+       `);
+        
+      } else {
+        $(`.buttons-${data.id}`).replaceWith(`
+          <div class="buttons-${data.id}">
+            <button class="button like-${data.id} is-info is-small">Like</button>
+            <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
+           <button class="button reply-${data.id} is-info is-small">  Reply </button>
+         </div>
+       `);    
+      }
     }
 
     like(data.id, liked);
@@ -644,9 +645,9 @@ function renderTweetReplys(data) {
     $('.columns').append(
       `<div class="column replyfield-${data.id}">
         <div class="box has-background-info tweetReply-${data.id}">
-        <article class="message is-info">
+        <article class="message">
           <div class="message-header">
-            Replies to ${data.userId}
+            Replies to ${data.userId}'s Tweet
             <button class="delete deleteReply-${data.id}"></button>
           </div>
         </article>
@@ -654,7 +655,12 @@ function renderTweetReplys(data) {
       </div>`
     );
   
-    await renderNewTweet([data], `.tweetReply-${data.id}`);
+    $(`deleteReply=${data.id}`).on('click', () => {
+      $(`replyfield-${data.id}`).remove();
+      renderTweetReplys(data);
+    });
+
+    await renderNewTweet([data], `.tweetReply-${data.id}`, true);
 
     // turns off click event listener for tweet body to avoid creating tons of reply columns
     $(`.clickReply-${data.id}`).off();
@@ -676,8 +682,10 @@ function renderTweetReplys(data) {
     }   
     // renders the new replies similar to the main twitter feed.
     // uses the abstraction of the renderNewTweet function to accomplish this
-    await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
+    await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
   
+
+
   });
 }
 
@@ -699,7 +707,7 @@ async function renderMainFeed() {
 
     let data = await recentTweets();
     
-    await renderNewTweet(data, ".feed");
+    await renderNewTweet(data, ".feed", false);
 
 }
 
