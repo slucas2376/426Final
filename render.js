@@ -641,7 +641,7 @@ async function renderTweetBody(data, element, liked) {
       `);
         
     } else {
-      $(`.button-${data.id}`).append(`
+      $(`.buttons-${data.id}`).append(`
         <button class="button like-${data.id} is-info is-small">Like</button>
         <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
         <button class="button reply-${data.id} is-info is-small">  Reply </button>
