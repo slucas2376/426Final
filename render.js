@@ -654,7 +654,7 @@ function renderTweetReplys(data) {
     $(`.clickReply-${data.id}`).off();
 
     // no replys gives basic "no replies" message
-    if (replys.data == []) {
+    if (replys.data.length == 0) {
       console.log("should be appending");
       $(`.tweetReply-${data.id}`).append(`
         <article class="media tweet-${data.id}">
