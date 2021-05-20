@@ -655,7 +655,7 @@ function renderTweetReplys(data) {
       </div>`
     );
   
-    $(`deleteReply=${data.id}`).on('click', () => {
+    $(`.deleteReply-${data.id}`).on('click', () => {
       $(`replyfield-${data.id}`).remove();
       renderTweetReplys(data);
     });
