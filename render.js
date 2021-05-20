@@ -660,8 +660,8 @@ function renderTweetReplys(data) {
         <article class="media tweet-${data.id}">
           <div class="box media-content">
             <article class="media">
-              <figure class="media-left">
-                <h3> No replys </h3>
+              <figure class="media-left has-text-centered">
+                <h1> No replys </h1>
               </figure>
             </article>
           </div>
