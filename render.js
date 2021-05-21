@@ -665,7 +665,6 @@ function renderTweetReplys(data) {
         $(`.replyfield-${data.id}`).remove();
         $(`.clickReply-${data.id}`).off();
         await renderTweetReplys(data);
-        
       });
   
       await renderNewTweet([data], `.tweetReply-${data.id}`, true);
