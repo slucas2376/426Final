@@ -604,7 +604,8 @@ async function renderTweetBody(data, element, liked, reply) {
                       </div>
                     </article>
                 `);
-            }        
+            }
+          renderTweetReplys(parent);
     } 
     
     if(!reply){
