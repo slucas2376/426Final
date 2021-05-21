@@ -571,12 +571,14 @@ async function renderTweetBody(data, element, liked, reply) {
                             </p>
                           </figure>
                           <div class="media-content">
-                            <div class="content type-${data.userId} clickReply-${data.id}">
-                                <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                                <div class="edit-area-${data.id}">
-                                ${data.body}
+                            <div class="content type-${data.userId} ">
+                                <div class="clickReply-${data.id}">
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <div class="edit-area-${data.id}">
+                                    ${data.body}
+                                  </div>
+                                  <br>
                                 </div>
-                                <br>
                                 <article class="media">
                                   <figure class="media-left">
                                     <p class="image is-64x64">
@@ -656,7 +658,9 @@ function renderTweetReplys(data) {
   
     $(`.deleteReply-${data.id}`).on('click', async () => {
       $(`.replyfield-${data.id}`).remove();
-      await renderTweetReplys(data);
+      if($(`.clickReply-${data.id}`).length == 1) {
+        await renderTweetReplys(data);
+      }
     });
 
     await renderNewTweet([data], `.tweetReply-${data.id}`, true);
