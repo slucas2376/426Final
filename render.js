@@ -1042,12 +1042,12 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId}">
-                        <p class>
+                        <div class="edit-area-${result.id}">
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
                           ${result.body}
                           <br>
-                        </p>
+                        </div>
                         <figure class="image is-16by9">
                           <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
@@ -1100,12 +1100,12 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId}">
-                        <p class>
+                        <div class="edit-area-${result.id}">
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
                           ${result.body}
                           <br>
-                        </p>
+                        </div>
                         <figure class="image is-1by1">
                           <img src="${result.imageLink}">
                         </figure>
@@ -1153,17 +1153,17 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.id}">
-                        <p class>
+                        <div class="edit-area-${result.id}">
                           <strong>${user.displayName}</strong> <small>@${user.id}</small>
                           <br>
                           ${result.body}
                           <br>
-                        </p>
+                        </div>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
+                        <button class="button edit-${result.id} is-info is-small"> Edit </button>
+                        <button class="button retweet-${result.id} is-info is-small"> Retweet </button>
+                        <button class="button reply-${result.id} is-info is-small"> Reply </button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
