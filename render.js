@@ -692,7 +692,7 @@ function renderTweetReplys(data) {
     });
   }
 
-  if ($(`.clickReply-${data.id}`).length >= 2) {
+  if ($(`.clickReply-${data.id}`).length >= 3) {
     $(`.clickReply-${data.id}`).off();
   }
 }
