@@ -691,6 +691,10 @@ function renderTweetReplys(data) {
       await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
     });
   }
+
+  if ($(`.clickReply-${data.id}`).length >= 2) {
+    $(`.clickReply-${data.id}`).off();
+  }
 }
 
 async function renderMainFeed() {
