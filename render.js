@@ -959,7 +959,7 @@ function retweetButton(data) {
     `);
 
     $(`.retweet-${data.id}`).replaceWith(`
-      <button class="button retweet-${data.id} is-info is-small">retweet</button>
+      <button class="button retweet-${data.id} is-info is-small">Retweet</button>
     `);
 
     $(`.retweet-submit-${data.id}`).on('click', async () => {
@@ -1003,15 +1003,15 @@ function replyButton(data) {
     `);
 
     $(`.reply-${data.id}`).replaceWith(`
-      <button class="button retweet-${data.id} is-info is-small">reply</button>
+      <button class="button reply-${data.id} is-info is-small">Reply</button>
     `);
 
     $(`.reply-submit-${data.id}`).on('click', async () => {
       let final = $(`.reply-body-${data.id}`).val();
-
+      console.log(final);
       await reply(data.id, final);
 
-      $(`retweet-reply-${data.id}`).replaceWith(`
+      $(`.retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}"></div>
       `);
       retweetButton(data);
@@ -1297,7 +1297,9 @@ function like(id, liked) {
 function deleteButton(data) {
   $(`.delete-${data.id}`).on(`click`, async () => {
     await deleteTweet(data.id);
+    // removes base tweet and the associated tweetReply column with it
     $(`.tweet-${data.id}`).remove();
+    $(`.tweetReply-${data.id}`).remove();
   });
 }
 
