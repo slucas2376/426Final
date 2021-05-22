@@ -329,8 +329,7 @@ async function renderNewTweet(data, element, reply) {
 async function renderTweetBody(data, element, liked, reply) {
 
     let user = await getUser(data.userId);
-    let parent;
-
+ 
     if(data.type == "tweet") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
@@ -429,7 +428,7 @@ async function renderTweetBody(data, element, liked, reply) {
         parent = await getTweet(data.parentId);
         let userParent = await getUser(parent.userId);
 
-            if (parent == "Tweet has been deleted.") {
+        if (parent == "Tweet has been deleted.") {
                 $(`${element}`).append(`
                 <br>
                     <article class="media tweet-${data.id}">
@@ -610,6 +609,7 @@ async function renderTweetBody(data, element, liked, reply) {
                     </article>
                 `);
             }
+        renderTweetReplys(parent);
     } 
     
     if(!reply){
@@ -639,111 +639,51 @@ async function renderTweetBody(data, element, liked, reply) {
     retweetButton(data);
     replyButton(data);
     deleteButton(data);
-    renderTweetReplys(data, parent);
+    renderTweetReplys(data);
 
 }
 
-function renderTweetReplys(data, parent) {
-
-  if($(`.clickReply-${data.id}`).length < 3) {
-    // makes it so there won't be multiple of the same listener on the different/same tweets
-    $(`.clickReply-${data.id}`).off();
-
-    $(`.clickReply-${data.id}`).on('click', async () => {
-      let replys = await getReplies(data.id);
-      console.log(replys.data);
-      // initializing the new tweet and reply column
-      // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
-      $('.columns').append(
-        `<div class="column replyfield-${data.id}">
-          <div class="box has-background-info tweetReply-${data.id}">
-          <article class="message">
-            <div class="message-header">
-              Replies to ${data.userId}'s Tweet
-              <button class="delete deleteReply-${data.id}"></button>
-            </div>
-          </article>
-          </div>
-        </div>`
-      );
+function renderTweetReplys(data) {
+    // when new tweet bodies of the same id are created the listener is removed and re-applied to all intances
+    // avoids major error of placing multiple of the same event listeners
     
-      $(`.deleteReply-${data.id}`).on('click', async () => {
-        $(`.replyfield-${data.id}`).remove();
-        $(`.clickReply-${data.id}`).off();
-        await renderTweetReplys(data);
-      });
-  
-      await renderNewTweet([data], `.tweetReply-${data.id}`, true);
-  
-      // turns off click event listener for tweet body to avoid creating tons of reply columns
-      $(`.clickReply-${data.id}`).off();
-  
-      // no replys gives basic "no replies" message
-      if (replys.data.length == 0) {
-        $(`.tweetReply-${data.id}`).append(`
-          <article class="media tweet-${data.id}">
-            <div class="box media-content">
-              <article class="media">
-                <figure class="media-left">
-                  <h1 class="has-text-centered"> No replys </h1>
-                </figure>
-              </article>
-            </div>
-          </article>
-        `)
-      }   
-      // renders the new replies similar to the main twitter feed.
-      // uses the abstraction of the renderNewTweet function to accomplish this
-      await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
-    });
-  }
-
-  if ($(`.clickReply-${data.id}`).length >= 3) {
+    $(`.clickReply-${data.id}`).off();
+    // makes it so there won't be multiple of the same listener on the different/same tweets
     $(`.clickReply-${data.id}`).on('click', async () => {
-      console.log("is this working");
-      if ($(`.clickReply-${data.id}`).length < 3) {
-        await renderTweetReplys(data);
-      }
-    })
-  }
 
-  if (parent != undefined) {
-    if($(`.clickReply-${parent.id}`).length < 3) {
-      // makes it so there won't be multiple of the same listener on the different/same tweets
-      $(`.clickReply-${parent.id}`).off();
-  
-      $(`.clickReply-${parent.id}`).on('click', async () => {
-        let replys = await getReplies(parent.id);
+      // a replyfield means no creation of a repliefield can happen
+      if ($(`.replyfield-${data.id}`).length == 0) {
+      
+        let replys = await getReplies(data.id);
         // initializing the new tweet and reply column
         // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
         $('.columns').append(
-          `<div class="column replyfield-${parent.id}">
-            <div class="box has-background-info tweetReply-${parent.id}">
+          `<div class="column replyfield-${data.id}">
+            <div class="box has-background-info tweetReply-${data.id}">
             <article class="message">
               <div class="message-header">
-                Replies to ${parent.userId}'s Tweet
-                <button class="delete deleteReply-${parent.id}"></button>
+                Replies to ${data.userId}'s Tweet
+                <button class="delete deleteReply-${data.id}"></button>
               </div>
             </article>
             </div>
-          </div>`        
+          </div>`
         );
-        
-        $(`.deleteReply-${parent.id}`).on('click', async () => {
-          $(`.replyfield-${parent.id}`).remove();
-          $(`.clickReply-${parent.id}`).off();
-          await renderTweetReplys(parent);
-        });
-      
-        await renderNewTweet([parent], `.tweetReply-${parent.id}`, true);
     
+        $(`.deleteReply-${data.id}`).on('click', async () => {
+          $(`.replyfield-${data.id}`).remove();
+          await renderTweetReplys(data);
+        });
+  
+        await renderNewTweet([data], `.tweetReply-${data.id}`, true);
+  
         // turns off click event listener for tweet body to avoid creating tons of reply columns
-        $(`.clickReply-${parent.id}`).off();
+        $(`.clickReply-${data.id}`).off();
   
         // no replys gives basic "no replies" message
         if (replys.data.length == 0) {
-          $(`.tweetReply-${parent.id}`).append(`
-            <article class="media tweet-${parent.id}">
+          $(`.tweetReply-${data.id}`).append(`
+            <article class="media tweet-${data.id}">
               <div class="box media-content">
                 <article class="media">
                   <figure class="media-left">
@@ -756,18 +696,9 @@ function renderTweetReplys(data, parent) {
         }   
         // renders the new replies similar to the main twitter feed.
         // uses the abstraction of the renderNewTweet function to accomplish this
-        await renderNewTweet(replys.data, `.tweetReply-${parent.id}`, false)
-      });
-      
-    } else {
-      $(`.clickReply-${data.id}`).on('click', async () => {
-        console.log("is this working");
-        if ($(`.clickReply-${data.id}`).length < 3) {
-          await renderTweetReplys(data);
-        }
-      })
-    }
-  }
+        await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
+      }
+    }); 
 }
 
 async function renderMainFeed() {
