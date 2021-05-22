@@ -640,6 +640,8 @@ async function renderTweetBody(data, element, liked, reply) {
 }
 
 function renderTweetReplys(data) {
+  $(`.clickReply-${data.id}`).off();
+
   if($(`.clickReply-${data.id}`).length < 3) {
     // makes it so there won't be multiple of the same listener on the different/same tweets
     $(`.clickReply-${data.id}`).off();
@@ -693,8 +695,6 @@ function renderTweetReplys(data) {
   }
 
   if ($(`.clickReply-${data.id}`).length >= 3) {
-    $(`.clickReply-${data.id}`).off();
-
     $(`.clickReply-${data.id}`).on('click', async () => {
       if ($(`.clickReply-${data.id}`).length < 3) {
         await renderTweetReplys(data);
