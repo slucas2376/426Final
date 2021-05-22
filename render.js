@@ -4,10 +4,10 @@ $( async function () {
 
   // retriving user id of logged in user
   let uid = localStorage.getItem('uid');
-
+  
   //getting entire user object of current user
   const result = await getUser(uid);
-
+  $(`.title`).append(`Welcome ${result.displayName}`)
   // rendering the main feed
   await renderMainFeed();
 
@@ -1210,7 +1210,7 @@ function tweetButton() {
 function like(id, liked) {
 
   if(liked) {
-      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Liked</button>`)
+      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-success is-small">Liked</button>`)
       
       $(`.like-${id}`).on('click', async function() {
           const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
