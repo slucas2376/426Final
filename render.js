@@ -7,7 +7,7 @@ $( async function () {
   
   //getting entire user object of current user
   const result = await getUser(uid);
-  $(`.title`).append(`Welcome ${result.displayName}`)
+  $(`.name-here`).append(`Welcome ${result.displayName}`)
   // rendering the main feed
   await renderMainFeed();
 
