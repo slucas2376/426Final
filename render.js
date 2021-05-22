@@ -992,7 +992,7 @@ function replyButton(data) {
       <div class="retweet-reply-${data.id}">
         <div class="field">
           <div class="contianer">
-            <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
+            <textarea class="reply-body-${data.id}" placeholder="reply away"></textarea>
           </div>
         </div>
       <div class="reply-buttons-${data.id}">
@@ -1359,7 +1359,8 @@ async function retweet(id, text) {
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, 
+    {withCredentials: true});
     return result;
 }
 
