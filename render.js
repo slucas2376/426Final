@@ -491,7 +491,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId}">
-                                    <p class>
+                                    <div class="clickReply-${parent.id}">
                                       <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
                                       <br>
                                       ${parent.body}
@@ -499,7 +499,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <figure class="image is-1by1">
                                         <img src="${parent.imageLink}">
                                       </figure>
-                                    </p>
+                                    </div>
                                   </div>
                                 </div>
                               </article>
@@ -528,11 +528,13 @@ async function renderTweetBody(data, element, liked, reply) {
                         </figure>
                         <div class="media-content">
                           <div class="content type-${data.userId} clickReply-${data.id}">
+                            <div class="clickReply-${data.id}">
                               <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                               <div class="edit-area-${data.id}">
                                 ${data.body}
                               </div>
                               <br>
+                              </div>
                               <article class="media">
                                 <figure class="media-left">
                                   <p class="image is-64x64">
@@ -540,7 +542,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                   </p>
                                 </figure>
                                 <div class="media-content">
-                                  <div class="content type-${parent.userId}">
+                                  <div class="content type-${parent.userId} clickReply-${parent.id}">
                                       <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
                                       <br>
                                       ${parent.body}
