@@ -1356,12 +1356,12 @@ async function tweet(text) {
 }
 
 async function retweet(id, text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweet`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, {withCredentials: true});
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "retweet", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, {withCredentials: true});
     return result;
 }
 
 async function reply(id, text) {
-    const result = await axios.post(`https://api.426twitter20.com/tweet`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, 
+    const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, 
     {withCredentials: true});
     return result;
 }
