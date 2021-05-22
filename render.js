@@ -475,12 +475,14 @@ async function renderTweetBody(data, element, liked, reply) {
                           </p>
                         </figure>
                         <div class="media-content">
-                          <div class="content type-${data.userId} clickReply-${data.id}">
-                              <strong>${user.displayName}</strong> <small>@${data.userId}</small>
-                              <div class="edit-area-${data.id}">
-                                ${data.body}
+                          <div class="content type-${data.userId}">
+                              <div class="clickReply-${data.id}">
+                                <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                <div class="edit-area-${data.id}">
+                                  ${data.body}
+                                </div>
+                                <br>
                               </div>
-                              <br>
                               <article class="media">
                                 <figure class="media-left">
                                   <p class="image is-64x64">
