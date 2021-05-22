@@ -696,6 +696,7 @@ function renderTweetReplys(data) {
 
   if ($(`.clickReply-${data.id}`).length >= 3) {
     $(`.clickReply-${data.id}`).on('click', async () => {
+      console.log("is this working");
       if ($(`.clickReply-${data.id}`).length < 3) {
         await renderTweetReplys(data);
       }
