@@ -694,6 +694,7 @@ function renderTweetReplys(data) {
 
   if ($(`.clickReply-${data.id}`).length >= 3) {
     $(`.clickReply-${data.id}`).off();
+    await renderTweetReplys(data);
   }
 }
 
