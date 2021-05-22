@@ -382,7 +382,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                 <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
                               </div>
-                          </p>
+                          </div>
                         </div>
                         <div class="retweet-reply-${data.id}"></div>
                         <div class="buttons-${data.id}"></div>
@@ -640,7 +640,7 @@ async function renderTweetBody(data, element, liked, reply) {
 }
 
 function renderTweetReplys(data) {
-  if($(`.clickReply-${data.id}`).length >= 1) {
+  if($(`.clickReply-${data.id}`).length < 3) {
     // makes it so there won't be multiple of the same listener on the different/same tweets
     $(`.clickReply-${data.id}`).off();
 
@@ -693,10 +693,13 @@ function renderTweetReplys(data) {
   }
 
   if ($(`.clickReply-${data.id}`).length >= 3) {
-    $(`.deleteReply-${data.id}`).on('click', async () => {
-      $(`.clickReply-${data.id}`).off();
-      await renderTweetReplys(data);
-    });
+    $(`.clickReply-${data.id}`).off();
+
+    $(`.clickReply-${data.id}`).on('click', async () => {
+      if ($(`.clickReply-${data.id}`).length < 3) {
+        await renderTweetReplys(data);
+      }
+    })
   }
 }
 
