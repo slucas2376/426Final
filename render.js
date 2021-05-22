@@ -651,6 +651,7 @@ function renderTweetReplys(data, parent) {
 
     $(`.clickReply-${data.id}`).on('click', async () => {
       let replys = await getReplies(data.id);
+      console.log(replys.data);
       // initializing the new tweet and reply column
       // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
       $('.columns').append(
@@ -1361,6 +1362,8 @@ async function retweet(id, text) {
 }
 
 async function reply(id, text) {
+    console.log(id);
+    console.log(text);
     const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, 
     {withCredentials: true});
     return result;
