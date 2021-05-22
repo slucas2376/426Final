@@ -693,8 +693,10 @@ function renderTweetReplys(data) {
   }
 
   if ($(`.clickReply-${data.id}`).length >= 3) {
-    $(`.clickReply-${data.id}`).off();
-    await renderTweetReplys(data);
+    $(`.deleteReply-${data.id}`).on('click', async () => {
+      $(`.clickReply-${data.id}`).off();
+      await renderTweetReplys(data);
+    });
   }
 }
 
