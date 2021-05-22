@@ -373,7 +373,7 @@ async function renderTweetBody(data, element, liked, reply) {
                       </figure>
                       <div class="media-content">
                         <div class="content type-${data.userId}">
-                          <p class>
+                          <div class="clickReply-${data.id}">
                             <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                               <div class="edit-area-${data.id}">
                               ${data.body}
