@@ -327,7 +327,7 @@ async function renderNewTweet(data, element, reply) {
 }
 
 async function renderTweetBody(data, element, liked, reply) {
-
+   console.log(data);
     let user = await getUser(data.userId);
  
     if(data.type == "tweet") {
