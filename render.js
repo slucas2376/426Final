@@ -375,7 +375,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               <div class="edit-area-${data.id}">
                               ${data.body}
                               <br>
-                              <figure class="image is-16by9">
+                              <figure class="image">
                                 <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
                               </div>
