@@ -1027,7 +1027,7 @@ function tweetButton() {
 
 
       $(`#enter`).on(`click`, async () => {
-        if($(`#video`).is(`:checked`)) {
+        if($(`#video`).is(`:checked`) && ($(`#link`).val() != "")) {
           let position = $(`#link`).val().indexOf("watch?v=") + 8;
           let link = $(`#link`).val().substring(position,$(`#link`).val().length);
 
@@ -1084,7 +1084,7 @@ function tweetButton() {
           editButton(result);
           deleteButton(result);
 
-        } else if ($(`#image`).is(`:checked`)) {
+        } else if ($(`#image`).is(`:checked`) ($(`#link`).val() != "")) {
           
           let result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
