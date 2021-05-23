@@ -1,5 +1,5 @@
 axios.defaults.withCredentials = true;
-columnNum = 5;
+let columnNum = 0;
 
 $( async function () {
 
@@ -647,8 +647,8 @@ function renderTweetReplys(data) {
     $(`.clickReply-${data.id}`).on('click', async () => {
 
       // a replyfield means no creation of a repliefield can happen
-      if (($(`.replyfield-${data.id}`).length == 0) && ($(`.column`).length < columnNum)) {
-      
+      if (($(`.replyfield-${data.id}`).length == 0) && (columnNum < 5)) {
+        columnNum += 1;
         let replys = await getReplies(data.id);
         console.log(replys.data);
         // initializing the new tweet and reply column
@@ -668,6 +668,7 @@ function renderTweetReplys(data) {
     
         $(`.deleteReply-${data.id}`).on('click', async () => {
           $(`.replyfield-${data.id}`).remove();
+          columnNum -= 1;
           await renderTweetReplys(data);
         });
   
