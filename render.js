@@ -378,7 +378,9 @@ async function renderTweetBody(data, element, liked, reply) {
                               <div class="edit-area-${data.id}">
                               ${data.body}
                               <br>
-                              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              <figure class="image is-4by3">
+                                <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              </figure>
                               </div>
                           </div>
                         </div>
@@ -540,7 +542,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                    <figure class="image is-16by9">
+                                    <figure class="image is-4by3">
                                       <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
                                     </figure>
                                   </div>
