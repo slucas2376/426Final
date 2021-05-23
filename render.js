@@ -306,7 +306,7 @@ async function renderNewTweet(data, element, reply) {
     let bool = false;
 
     for (let i = 0; i < data.length; i++ ) {
-
+      console.log(data[i]);
       if (compare != undefined) {
         for (let j = 0; j < compare.length; j++) {
           if (data[i].id == compare[j].id) {
