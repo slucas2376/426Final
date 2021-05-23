@@ -378,7 +378,9 @@ async function renderTweetBody(data, element, liked, reply) {
                               <div class="edit-area-${data.id}">
                               ${data.body}
                               <br>
-                              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              <figure class="image">
+                                <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                              </figure>
                               </div>
                           </div>
                         </div>
@@ -540,9 +542,9 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                    <figure class="image is-4by3">
-                                      <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
-                                    </figure>
+                                      <figure class="image">
+                                        <iframe class="has-ratio" width="512" height="288" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                      </figure>    
                                   </div>
                                 </div>
                               </article>
@@ -811,7 +813,9 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+            <figure class="image">
+              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+            </figure>
           </div>
         `);
       
@@ -845,7 +849,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image is-16by9">
+            <figure class="image">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
@@ -1058,7 +1062,9 @@ function tweetButton() {
                           ${result.body}
                           <br>
                         </div>
-                        <iframe src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                        <figure class="image">
+                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                        </figure>
                       </div>
                       <div class="buttons">
                         <button class="button edit-${result.id} is-info is-small">Edit</button>
