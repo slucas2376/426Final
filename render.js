@@ -44,8 +44,6 @@ async function renderProfile(id) {
       </div>
   `)
 
-  console.log("working as intended");
-
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', () => {
       let tweetsToAdd = getUsersTweets(user.id, "posts")
@@ -327,7 +325,6 @@ async function renderNewTweet(data, element, reply) {
 }
 
 async function renderTweetBody(data, element, liked, reply) {
-   console.log(data);
     let user = await getUser(data.userId);
  
     if(data.type == "tweet") {
@@ -379,7 +376,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               ${data.body}
                               <br>
                               <figure class="image is-16by9">
-                                <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                                <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
                               </div>
                           </div>
@@ -543,7 +540,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       ${parent.body}
                                       <br>
                                       <figure class="image is-16by9">
-                                        <iframe class="has-ratio" width="512" height="288" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
                                       </figure>    
                                   </div>
                                 </div>
@@ -814,7 +811,7 @@ function editButton(data) {
             ${data.body}
             <br>
             <figure class="image is-16by9">
-              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+              <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
         `);
@@ -850,7 +847,7 @@ function editButton(data) {
             ${data.body}
             <br>
             <figure class="image is-16by9">
-              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+              <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
         `);
@@ -894,7 +891,6 @@ function retweetButton(data) {
     $(`.retweet-submit-${data.id}`).on('click', async () => {
       data.retweetCount += 1;
       let final = $(`.retweet-body-${data.id}`).val();
-      console.log(final);
 
       let retwe = await retweet(data.id, final);
       await renderTweetBody(retwe);
@@ -1063,7 +1059,7 @@ function tweetButton() {
                           <br>
                         </div>
                         <figure class="image is-16by9">
-                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                          <iframe class="has-ratio" width="50%" height="50%" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
                       <div class="buttons">
@@ -1302,8 +1298,6 @@ async function retweet(id, text) {
 }
 
 async function reply(id, text) {
-    console.log(id);
-    console.log(text);
     const result = await axios.post(`https://api.426twitter20.com/tweets`, {type: "reply", body: text, parentId: id, mediaType: "none", mediaId: "", userId: localStorage.getItem('uid')}, 
     {withCredentials: true});
     return result;
