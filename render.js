@@ -335,9 +335,9 @@ async function renderTweetBody(data, element, liked, reply) {
           <div class="box media-content">
               <article class="media">
                 <figure class="media-left">
-                  <p class="image is-64x64">
+                  <div class="image is-64x64">
                     <img class="is-rounded" src="${user.avatar}">
-                  </p>
+                  </div>
                 </figure>
                 <div class="media-content">
                   <div class="content type-${data.userId} clickReply-${data.id}">
@@ -345,7 +345,7 @@ async function renderTweetBody(data, element, liked, reply) {
                     <div class="edit-area-${data.id}">
                       ${data.body}
                       <br>
-                      <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
+                      <img width="50%" height="50%" src="${data.imageLink}">
                     </div>
                   </div>
                   <div class="retweet-reply-${data.id}"></div>
@@ -364,9 +364,9 @@ async function renderTweetBody(data, element, liked, reply) {
                 <div class="box media-content">
                     <article class="media">
                       <figure class="media-left">
-                        <p class="image is-64x64">
+                        <div class="image is-64x64">
                           <img class="is-rounded" src="${user.avatar}">
-                        </p>
+                        </div>
                       </figure>
                       <div class="media-content">
                         <div class="content type-${data.userId}">
@@ -398,9 +398,9 @@ async function renderTweetBody(data, element, liked, reply) {
           <div class="box media-content">
               <article class="media">
                 <figure class="media-left">
-                  <p class="image is-64x64">
+                  <div class="image is-64x64">
                     <img class="is-rounded" src="${user.avatar}">
-                  </p>
+                  </div>
                 </figure>
                 <div class="media-content">
                   <div class="content type-${data.userId} clickReply-${data.id}">
@@ -432,9 +432,9 @@ async function renderTweetBody(data, element, liked, reply) {
                       <div class="box media-content">
                         <article class="media">
                           <figure class="media-left">
-                            <p class="image is-64x64">
+                            <div class="image is-64x64">
                               <img class="is-rounded" src="${user.avatar}">
-                            </p>
+                            </div>
                           </figure>
                           <div class="media-content">
                             <div class="content type-${data.userId} clickReply-${data.id}">
@@ -465,9 +465,9 @@ async function renderTweetBody(data, element, liked, reply) {
                     <div class="box media-content">
                       <article class="media">
                         <figure class="media-left">
-                          <p class="image is-64x64">
+                          <div class="image is-64x64">
                             <img class="is-rounded" src="${user.avatar}">
-                          </p>
+                          </div>
                         </figure>
                         <div class="media-content">
                           <div class="content type-${data.userId}">
@@ -480,9 +480,9 @@ async function renderTweetBody(data, element, liked, reply) {
                               </div>
                               <article class="media">
                                 <figure class="media-left">
-                                  <p class="image is-64x64">
+                                  <div class="image is-64x64">
                                     <img class="is-rounded" src="${userParent.avatar}">
-                                  </p>
+                                  </div>
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId}">
@@ -514,9 +514,9 @@ async function renderTweetBody(data, element, liked, reply) {
                     <div class="box media-content">
                       <article class="media">
                         <figure class="media-left">
-                          <p class="image is-64x64">
+                          <div class="image is-64x64">
                             <img class="is-rounded" src="${user.avatar}">
-                          </p>
+                          </div>
                         </figure>
                         <div class="media-content">
                           <div class="content type-${data.userId} clickReply-${data.id}">
@@ -529,9 +529,9 @@ async function renderTweetBody(data, element, liked, reply) {
                               </div>
                               <article class="media">
                                 <figure class="media-left">
-                                  <p class="image is-64x64">
+                                  <div class="image is-64x64">
                                     <img class="is-rounded" src="${userParent.avatar}">
-                                  </p>
+                                  </div>
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId} clickReply-${parent.id}">
@@ -563,9 +563,9 @@ async function renderTweetBody(data, element, liked, reply) {
                       <div class="box media-content">
                         <article class="media">
                           <figure class="media-left">
-                            <p class="image is-64x64">
+                            <div class="image is-64x64">
                               <img class="is-rounded" src="${user.avatar}">
-                            </p>
+                            </div>
                           </figure>
                           <div class="media-content">
                             <div class="content type-${data.userId} ">
@@ -578,9 +578,9 @@ async function renderTweetBody(data, element, liked, reply) {
                                 </div>
                                 <article class="media">
                                   <figure class="media-left">
-                                    <p class="image is-64x64">
+                                    <div class="image is-64x64">
                                       <img class="is-rounded" src="${userParent.avatar}">
-                                    </p>
+                                    </div>
                                   </figure>
                                   <div class="media-content">
                                     <div class="content type-${parent.userId} clickReply-${parent.id}">
