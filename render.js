@@ -492,7 +492,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                      <img src="${parent.imageLink}">
+                                      <img class="has-ratio" width="50%" height="50%" src="${parent.imageLink}">
                                     </div>
                                   </div>
                                 </div>
@@ -794,7 +794,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <img src="${link}">
+            <img class="has-ratio" width="50%" height="50%" src="${link}">
           </div>
         `);
 
@@ -811,9 +811,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image is-16by9">
-              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
-            </figure>
+            <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
           </div>
         `);
       
@@ -1060,9 +1058,7 @@ function tweetButton() {
                           ${result.body}
                           <br>
                         </div>
-                        <figure class="image is-16by9">
-                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
-                        </figure>
+                        <iframe src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
                       </div>
                       <div class="buttons">
                         <button class="button edit-${result.id} is-info is-small">Edit</button>
@@ -1118,7 +1114,7 @@ function tweetButton() {
                           <br>
                         </div>
                         <figure class="image is-1by1">
-                          <img src="${result.imageLink}">
+                          <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                         </figure>
                       </div>
                       <div class="buttons">
