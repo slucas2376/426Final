@@ -617,6 +617,7 @@ async function renderTweetBody(data, element, liked, reply) {
         $(`.buttons-${data.id}`).replaceWith(`
           <div class="buttons-${data.id}">
             <button class="button edit-${data.id} is-info is-small">Edit</button>
+            <button class="button like-${data.id} is-info is-small">Like</button>
             <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
             <button class="button reply-${data.id} is-info is-small">  Reply </button>
            <button class="button delete-${data.id} is-danger is-small"> Delete </button>
@@ -885,7 +886,7 @@ function retweetButton(data) {
         </div>
         <div class="retweet-buttons-${data.id}">
           <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
-          <button class="button retweet-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
+          <button class="button retweet-cancel-${data.id} is-danger is-small" type="button">Cancel</button>
         </div>
       </div>
     `);
@@ -899,7 +900,8 @@ function retweetButton(data) {
       console.log(final);
 
       let retwe = await retweet(data.id, final);
-      
+      await renderTweetBody(retwe);
+
       $(`retweet-reply-${data.id}`).replaceWith(`
       <div class="retweet-reply-${data.id}"></div>
       `);
