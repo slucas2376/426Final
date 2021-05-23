@@ -349,7 +349,7 @@ async function renderTweetBody(data, element, liked, reply) {
                       ${data.body}
                       <br>
                       <figure class="is-fullwidth">
-                        <img src="${data.imageLink}">
+                        <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
                       </figure>
                     </div>
                   </div>
