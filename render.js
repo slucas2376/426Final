@@ -1086,7 +1086,7 @@ function tweetButton() {
           editButton(result);
           deleteButton(result);
 
-        } else if ($(`#image`).is(`:checked`) ($(`#link`).val() != "")) {
+        } else if ($(`#image`).is(`:checked`) && ($(`#link`).val() != "")) {
           
           let result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
