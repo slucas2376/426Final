@@ -327,7 +327,7 @@ async function renderNewTweet(data, element, reply) {
 async function renderTweetBody(data, element, liked, reply) {
     let user = await getUser(data.userId);
  
-    if(data.type == "tweet" || data.type == "reply") {
+    if(data.type == "tweet") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
