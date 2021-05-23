@@ -333,9 +333,9 @@ async function renderTweetBody(data, element, liked, reply) {
     if(data.type == "tweet") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
-        <br>
         <article class="media tweet-${data.id}">
-            <div class="box media-content">
+          <br>    
+          <div class="box media-content">
               <article class="media">
                 <figure class="media-left">
                   <p class="image is-64x64">
@@ -362,9 +362,9 @@ async function renderTweetBody(data, element, liked, reply) {
         `);
       } else if (data.mediaType == "video") {
         $(`${element}`).append(`
-        <br>
               <article class="media tweet-${data.id}">
-                  <div class="box media-content">
+                <br>  
+                <div class="box media-content">
                     <article class="media">
                       <figure class="media-left">
                         <p class="image is-64x64">
@@ -396,9 +396,9 @@ async function renderTweetBody(data, element, liked, reply) {
         `);
       } else {
         $(`${element}`).append(`
-        <br>
         <article class="media tweet-${data.id}">
-            <div class="box media-content">
+          <br>    
+          <div class="box media-content">
               <article class="media">
                 <figure class="media-left">
                   <p class="image is-64x64">
@@ -430,8 +430,8 @@ async function renderTweetBody(data, element, liked, reply) {
 
         if (parent == "Tweet has been deleted.") {
                 $(`${element}`).append(`
-                <br>
                     <article class="media tweet-${data.id}">
+                      <br>  
                       <div class="box media-content">
                         <article class="media">
                           <figure class="media-left">
@@ -463,9 +463,8 @@ async function renderTweetBody(data, element, liked, reply) {
                 `);
             } else if ( parent.mediaType == "image" ) {
               $(`${element}`).append(`
-              <br>
                   <article class="media tweet-${data.id}">
-
+                  <br>
                     <div class="box media-content">
                       <article class="media">
                         <figure class="media-left">
@@ -495,9 +494,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                      <figure class="image is-1by1">
-                                        <img src="${parent.imageLink}">
-                                      </figure>
+                                      <img src="${parent.imageLink}">
                                     </div>
                                   </div>
                                 </div>
@@ -515,9 +512,8 @@ async function renderTweetBody(data, element, liked, reply) {
             
             } else if( parent.mediaType == "video" ) { 
               $(`${element}`).append(`
-              <br>
                   <article class="media tweet-${data.id}">
-
+                    <br>
                     <div class="box media-content">
                       <article class="media">
                         <figure class="media-left">
@@ -565,8 +561,8 @@ async function renderTweetBody(data, element, liked, reply) {
 
             } else {
                 $(`${element}`).append(`
-                <br>
                     <article class="media tweet-${data.id}">
+                      <br>  
                       <div class="box media-content">
                         <article class="media">
                           <figure class="media-left">
