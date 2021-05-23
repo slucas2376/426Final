@@ -649,6 +649,7 @@ function renderTweetReplys(data) {
       if ($(`.replyfield-${data.id}`).length == 0) {
       
         let replys = await getReplies(data.id);
+        console.log(replys.data);
         // initializing the new tweet and reply column
         // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
         $('.columns').append(
@@ -941,7 +942,7 @@ function replyButton(data) {
       let final = $(`.reply-body-${data.id}`).val();
       await reply(data.id, final);
 
-      $(`.retweet-${data.id}`).replaceWith(`
+      $(`.reply-${data.id}`).replaceWith(`
         <button class="button reply-${data.id} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
