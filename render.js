@@ -378,7 +378,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               <div class="edit-area-${data.id}">
                               ${data.body}
                               <br>
-                              <figure class="image">
+                              <figure class="image is-16by9">
                                 <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
                               </div>
@@ -542,7 +542,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                      <figure class="image">
+                                      <figure class="image is-16by9">
                                         <iframe class="has-ratio" width="512" height="288" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
                                       </figure>    
                                   </div>
@@ -813,7 +813,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image">
+            <figure class="image is-16by9">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
@@ -849,7 +849,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image">
+            <figure class="image is-16by9">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
@@ -1062,7 +1062,7 @@ function tweetButton() {
                           ${result.body}
                           <br>
                         </div>
-                        <figure class="image">
+                        <figure class="image is-16by9">
                           <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
