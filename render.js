@@ -627,14 +627,14 @@ async function renderTweetBody(data, element, liked, reply) {
         $(`.buttons-${data.id}`).replaceWith(`
           <div class="buttons-${data.id}">
             <button class="button like-${data.id} is-info is-small">Like</button>
-            <button class="button retweet-${data.id} is-info is-small">  Retweet </button>
-           <button class="button reply-${data.id} is-info is-small">  Reply </button>
+            <button class="button retweet-${data.id} is-info is-small"> Retweet </button>
+           <button class="button reply-${data.id} is-info is-small"> Reply </button>
          </div>
        `);    
       }
     }
 
-    like(data.id, liked);
+    like(data, liked);
     editButton(data);
     retweetButton(data);
     replyButton(data);
@@ -1207,21 +1207,23 @@ function tweetButton() {
   });
 }
 
-function like(id, liked) {
+function like(data, liked) {
 
   if(liked) {
-      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-success is-small">Liked</button>`)
+      $(`.like-${data.id}`).replaceWith(`<button class="button like-${data.id} is-success is-small">Liked: ${data.likeCount}</button>`)
       
-      $(`.like-${id}`).on('click', async function() {
-          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
-          like(id, !(liked)); 
+      $(`.like-${data.id}`).on('click', async function() {
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${data.id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
+          data.likeCount -= 1;
+          like(data, !(liked)); 
       });
   } else {
-      $(`.like-${id}`).replaceWith(`<button class="button like-${id} is-info is-small">Like</button>`)
+      $(`.like-${data.id}`).replaceWith(`<button class="button like-${data.id} is-info is-small">Like: ${data.likeCount}</button>`)
       
-      $(`.like-${id}`).on('click', async function() {
-          const result = await axios.post(`https://api.426twitter20.com/tweets/${id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
-          like(id, !(liked));
+      $(`.like-${data.id}`).on('click', async function() {
+          const result = await axios.post(`https://api.426twitter20.com/tweets/${data.id}/like`, {userId: localStorage.getItem('uid'), withCredentials: true});
+          data.likeCount += 1;
+          like(data, !(liked));
       });
   }
 }
