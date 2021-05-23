@@ -1,4 +1,5 @@
 axios.defaults.withCredentials = true;
+columnNum = 5;
 
 $( async function () {
 
@@ -539,9 +540,9 @@ async function renderTweetBody(data, element, liked, reply) {
                                       <br>
                                       ${parent.body}
                                       <br>
-                                      <figure class="image has-text-left">
-                                        <iframe class="has-ratio" width="512" height="288" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
-                                      </figure>    
+                                      <figure class="image is-16by9">
+                                        <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                      </figure>
                                   </div>
                                 </div>
                               </article>
@@ -646,7 +647,7 @@ function renderTweetReplys(data) {
     $(`.clickReply-${data.id}`).on('click', async () => {
 
       // a replyfield means no creation of a repliefield can happen
-      if ($(`.replyfield-${data.id}`).length == 0) {
+      if (($(`.replyfield-${data.id}`).length == 0) && ($(`.column`).length < columnNum)) {
       
         let replys = await getReplies(data.id);
         console.log(replys.data);
@@ -811,7 +812,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image has-text-left">
+            <figure class="image is-16by9">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
@@ -847,7 +848,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <figure class="image has-text-left">
+            <figure class="image is-16by9">
               <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
@@ -1059,8 +1060,8 @@ function tweetButton() {
                           ${result.body}
                           <br>
                         </div>
-                        <figure class="image has-text-left">
-                          <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                        <figure class="image is-16by9">
+                         <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
                       <div class="buttons">
