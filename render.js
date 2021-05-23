@@ -376,7 +376,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               ${data.body}
                               <br>
                               <figure class="image has-text-left">
-                                <iframe class="has-ratio" width="640" height="auto" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                                <iframe class="has-ratio" width="640" height="360" position: relative src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                               </figure>
                               </div>
                           </div>
