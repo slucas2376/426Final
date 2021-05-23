@@ -348,9 +348,7 @@ async function renderTweetBody(data, element, liked, reply) {
                     <div class="edit-area-${data.id}">
                       ${data.body}
                       <br>
-                      <figure class="is-fullwidth">
-                        <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
-                      </figure>
+                      <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
                     </div>
                   </div>
                   <div class="retweet-reply-${data.id}"></div>
