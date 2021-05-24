@@ -956,9 +956,9 @@ function retweetButton(data, index) {
     });
 
 
-    $(`.retweet-cancel-${data.id}`).on('click', () => {
-      $(`.retweet-reply-${data.id}`).replaceWith(`
-        <div class="retweet-reply-${data.id}"></div>
+    $(`.retweet-cancel-${data.id}-${index}`).on('click', () => {
+      $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+        <div class="retweet-reply-${data.id}-${index}"></div>
       `);
       retweetButton(data, index);
     });
@@ -1006,9 +1006,9 @@ function replyButton(data, index) {
     });
 
 
-    $(`.reply-cancel-${data.id}`).on('click', () => {
-      $(`.retweet-reply-${data.id}`).replaceWith(`
-        <div class="retweet-reply-${data.id}"></div>
+    $(`.reply-cancel-${data.id}-${index}`).on('click', () => {
+      $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+        <div class="retweet-reply-${data.id}-${index}"></div>
       `);
       replyButton(data, index);
     });
@@ -1098,17 +1098,18 @@ function tweetButton() {
           $(`.feed`).prepend(`
           <br>
             <article class="media tweet-${result.id}">
+                <br>
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
+                        <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId}">
                       <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
+                        <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
                         </div>
@@ -1116,11 +1117,11 @@ function tweetButton() {
                          <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
-                      <div class="buttons">
+                      <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like</button>
-                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
-                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                        <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id}-0 is-info is-small">Reply: ${result.replyCount}</button>
+                        <button class="button edit-${result.id}-0 is-info is-small">Edit</button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
@@ -1137,10 +1138,13 @@ function tweetButton() {
           `);
 
           tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
+          like(result, false);
+          retweetButton(result, 0);
+          replyButton(result, 0);
+          editButton(result, 0);
           deleteButton(result);
+          renderTweetReplies(result);
+          imageToProfile(result.userId);
 
         } else if ($(`#image`).is(`:checked`) && ($(`#link`).val() != "")) {
           
@@ -1156,27 +1160,28 @@ function tweetButton() {
           $(`.feed`).prepend(`
           <br>
             <article class="media tweet-${result.id}">
+                <br>
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
+                        <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId}">
                         <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
+                        <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
                         </div>
                         <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
-                      <div class="buttons">
-                       <button class="button like-${result.id} is-info is-small">Like</button>
-                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
-                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                      <div class="buttons-${result.id}-0">
+                        <button class="button like-${result.id} is-info is-small">Like</button>
+                        <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id}-0 is-info is-small">Reply: ${result.replyCount}</button>
+                        <button class="button edit-${result.id}-0 is-info is-small">Edit</button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
@@ -1191,12 +1196,15 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
-
+          
           tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
+          like(result, false);
+          retweetButton(result, 0);
+          replyButton(result, 0);
+          editButton(result, 0);
           deleteButton(result);
+          renderTweetReplies(result);
+          imageToProfile(result.userId);
 
         } else { 
           let result = await tweet($(`#tweetCreation`).val());
@@ -1205,33 +1213,32 @@ function tweetButton() {
           result = posts[0];
 
           $(`.feed`).prepend(`
-          <br>
             <article class="media tweet-${result.id}">
+                <br>
                 <div class="box media-content">
                   <article class="media">
                     <figure class="media-left">
                       <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
+                        <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.id}">
                       <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
+                        <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
                         </div>
                       </div>
-                      <div class="buttons">
-                        <button class="button like-${result.id} is-info is-small">Like</button>
-                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
-                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
+                      <div class="buttons-${result.id}-0">
+                        <button class="button like-${result.id} is-info is-small">Like: ${result.likeCount}</button>
+                        <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id}-0 is-info is-small">Reply: ${result.replyCount}</button>
+                        <button class="button edit-${result.id}-0 is-info is-small">Edit</button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
                   </article>
-                  
                 </div>
             </article>
           `);
@@ -1245,10 +1252,13 @@ function tweetButton() {
           `);
 
           tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
+          like(result, false);
+          retweetButton(result, 0);
+          replyButton(result, 0);
+          editButton(result, 0);
           deleteButton(result);
+          renderTweetReplies(result);
+          imageToProfile(result.userId);
         }
       
       });
