@@ -1096,9 +1096,10 @@ function tweetButton() {
                         </figure>
                       </div>
                       <div class="buttons">
+                        <button class="button like-${result.id} is-info is-small">Like</button>
+                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
                         <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
@@ -1151,9 +1152,10 @@ function tweetButton() {
                         <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
                       <div class="buttons">
+                       <button class="button like-${result.id} is-info is-small">Like</button>
+                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
                         <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
@@ -1200,9 +1202,10 @@ function tweetButton() {
                         </div>
                       </div>
                       <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small"> Edit </button>
-                        <button class="button retweet-${result.id} is-info is-small"> Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small"> Reply </button>
+                        <button class="button like-${result.id} is-info is-small">Like</button>
+                        <button class="button retweet-${result.id} is-info is-small">Retweet: ${result.retweetCount}</button>
+                        <button class="button reply-${result.id} is-info is-small">Reply: ${result.replyCount}</button>
+                        <button class="button edit-${result.id} is-info is-small">Edit</button>
                         <button class="button delete-${result.id} is-danger is-small"> Delete </button>
                       </div>
                     </div>
