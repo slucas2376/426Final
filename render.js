@@ -49,24 +49,18 @@ async function renderProfile(id) {
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      for (let t in tweetsToAdd) {
-      renderTweetBody(t, `${user.id}-tweets`)
-      }
+      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
   })
   $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
-      let tweetsToAdd = await getUsersTweets(user.id, "likes")
+      let tweetsToAdd = await getUsersTweets(user.id, "likes");
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      for (let t in tweetsToAdd) {
-          await renderTweetBody(t, `${user.id}-tweets`)
-      }
+      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
-      let tweetsToAdd = await getUsersTweets(user.id, "retweets")// array of relevant tweets, most recent first, so just add by iterating through it
+      let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
       $(document.getElementById(`${user.id}-tweets`)).empty();
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-      for (let t of tweetsToAdd) {
-          await renderTweetBody(t, `${user.id}-tweets`)
-      }
+      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
   })
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
   // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
@@ -126,6 +120,12 @@ async function renderUserProfile(user) {
     $('.columns').append(`
     <div class="column edit-${user.id}">
         <div class="box">
+          <article class="message">
+              <div class="message-header">
+                Replies to ${data.userId}'s Tweet
+                <button class="delete deleteReply-${data.id}"></button>
+              </div>
+            </article>
             <div class="user_profile">
             <h2 class="subtitle">Username: ${user.id}</h2>
             <h2 class="subtitle">Display Name: ${user.displayName}</h2>
