@@ -81,18 +81,18 @@ async function renderProfile(id) {
     $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     })
     $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "likes");
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     })
     $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
       $(document.getElementById(`${user.id}-tweets`)).empty();
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     });
   }
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
@@ -306,21 +306,21 @@ async function renderUserData(id, type, element) {
     
     if (type == "liked") {
       
-      await renderNewTweet(user.likedTweets, `.${element}`, false);
+      await renderNewTweet(user.likedTweets, `.${element}`);
 
     } else if (type == "retweet") {
 
-      await renderNewTweet(user.hasRetweeted, `.${element}`, false);
+      await renderNewTweet(user.hasRetweeted, `.${element}`);
 
     } else if (type == "posted") {
 
-      await renderNewTweet(user.postedTweets, `.${element}`, false);
+      await renderNewTweet(user.postedTweets, `.${element}`);
 
     }
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet(data, element, reply) {
+async function renderNewTweet(data, element) {
     // awaiting all recent tweets and users personally like tweet ids
 
     let compare = await getUserLikes(localStorage.getItem('uid'));
@@ -354,7 +354,7 @@ async function renderTweetBody(data, element, liked) {
       index++;
     }
 
-    if(data.type == "tweet") {
+    if(data.type == "tweet" || data.type == "reply") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
@@ -710,7 +710,7 @@ function renderTweetReplies(data) {
           await renderTweetReplies(data);
         });
   
-        await renderNewTweet([data], `.tweetReply-${data.id}`, true);
+        await renderNewTweet([data], `.tweetReply-${data.id}`);
   
         // turns off click event listener for tweet body to avoid creating tons of reply columns
         $(`.clickReply-${data.id}`).off();
@@ -731,7 +731,7 @@ function renderTweetReplies(data) {
         }   
         // renders the new replies similar to the main twitter feed.
         // uses the abstraction of the renderNewTweet function to accomplish this
-        await renderNewTweet(replys.data, `.tweetReply-${data.id}`, false)
+        await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
       }
     }); 
 }
@@ -754,7 +754,7 @@ async function renderMainFeed() {
 
     let data = await recentTweets();
     
-    await renderNewTweet(data, ".feed", false);
+    await renderNewTweet(data, ".feed");
 
 }
 
