@@ -774,12 +774,14 @@ function editButton(data) {
     `);
     }
 
+    $(`.clickReply-${data.id}`).off();
 
     $(`.edit-${data.id}`).replaceWith(`
       <button class="button edit-${data.id} is-info is-small">edit</button>
     `);
 
     $(`.submit-edit-${data.id}`).on('click', async () => {
+      await renderTweetReplys(data);
       let final = $(`.replace-${data.id}`).val();
 
       data.body = final;
@@ -834,7 +836,7 @@ function editButton(data) {
     });
 
     $(`.cancel-edit-${data.id}`).on('click', () => {
-
+      await renderTweetReplys(data);
       if ( data.mediaType == "image") {
         $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
@@ -884,6 +886,7 @@ function retweetButton(data) {
           <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
           <button class="button retweet-cancel-${data.id} is-danger is-small" type="button">Cancel</button>
         </div>
+        <br>
       </div>
     `);
 
@@ -896,7 +899,7 @@ function retweetButton(data) {
       let final = $(`.retweet-body-${data.id}`).val();
 
       let retwe = await retweet(data.id, final);
-      await renderTweetBody(retwe);
+      await renderTweetBody(retwe, `.feed`, false, false);
       $(`.retweet-${data.id}`).replaceWith(`
         <button class="button retweet-${data.id} is-info is-small"> Retweet: ${data.retweetCount} </button>
       `)
@@ -932,6 +935,7 @@ function replyButton(data) {
         <button class="button reply-submit-${data.id} is-info is-small" type="button">Submit Reply</button>
         <button class="button reply-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
       </div>
+      <br>
     </div>
     `);
 
