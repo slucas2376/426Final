@@ -96,7 +96,7 @@ $(document).ready(function() {
       getResultValue: result => (result.displayName + " @" + result.userId),
       onSubmit: result => {
           // whatever goes here will execute when the user presses enter or clicks the autocomplete option; if you don't want that, then add a submit button and handlers and stuff
-          renderProfile(id);
+          renderProfile(result.userId);
       },
       debounceTime: 300
   });
