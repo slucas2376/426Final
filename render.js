@@ -49,18 +49,18 @@ async function renderProfile(id) {
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
   })
   $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "likes");
       $(document.getElementById(`${user.id}-tweets`)).empty();
-      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
       $(document.getElementById(`${user.id}-tweets`)).empty();
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-      await renderNewTweet(tweetsToAdd, `${user.id}-tweets`, false);
+      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
   })
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
   // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
@@ -307,7 +307,6 @@ async function renderNewTweet(data, element, reply) {
     let bool = false;
 
     for (let i = 0; i < data.length; i++ ) {
-      console.log(data[i]);
       if (compare != undefined) {
         for (let j = 0; j < compare.length; j++) {
           if (data[i].id == compare[j].id) {
