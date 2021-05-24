@@ -47,7 +47,7 @@ async function renderProfile(id) {
 
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', () => {
-      let tweetsToAdd = getUsersTweets(user.id, "posts")
+      let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
       for (let t in tweetsToAdd) {
       renderTweetBody(t, `${user.id}-tweets`)
@@ -328,7 +328,7 @@ async function renderNewTweet(data, element, reply) {
 async function renderTweetBody(data, element, liked, reply) {
     let user = await getUser(data.userId);
  
-    if(data.type == "tweet") {
+    if(data.type == "tweet" || data.type == "reply") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
