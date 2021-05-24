@@ -541,7 +541,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                       ${parent.body}
                                       <br>
                                       <figure class="image is-16by9">
-                                        <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe class="has-ratio" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
                                       </figure>
                                   </div>
                                 </div>
@@ -814,7 +814,7 @@ function editButton(data) {
             ${data.body}
             <br>
             <figure class="image is-16by9">
-              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+              <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
         `);
@@ -850,7 +850,7 @@ function editButton(data) {
             ${data.body}
             <br>
             <figure class="image is-16by9">
-              <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+              <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
             </figure>
           </div>
         `);
@@ -1062,7 +1062,7 @@ function tweetButton() {
                           <br>
                         </div>
                         <figure class="image is-16by9">
-                         <iframe class="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
+                         <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
                       <div class="buttons">
