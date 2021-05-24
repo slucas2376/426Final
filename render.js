@@ -32,20 +32,26 @@ async function renderProfile(id) {
 
   if(user.userId != localStorage.getItem('uid')) {
     $('.columns').append(`
-      <div class="column ${user.id}-profile" id="${user.id}-profile">
+        <div class="column ${user.id}-profile" id="${user.id}-profile">
           <div class="box has-background-info">
-              <div class="user_profile">
-                <h2 class="subtitle">Username: ${user.id}</h2>
-                <h2 class="subtitle">Display Name: ${user.displayName}</h2>
-                <h2 class="subtitle">Description: ${user.profileDescription}</h2>
-                <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
-                <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
-                <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
+            <article class="message">
+              <div class="message-header">
+                ${user.displayName}'s Profile Page.
+                <button class="delete deleteReply-${data.id}"></button>
               </div>
+            </article>
+            <div class="user_profile">
+              <h2 class="subtitle">Username: ${user.id}</h2>
+              <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+              <h2 class="subtitle">Description: ${user.profileDescription}</h2>
+              <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
+              <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
+              <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
+            </div>
+            <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
           </div>
-          <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
-      </div>
-    `)
+        </div>
+      `)
 
     // view button handlers
     $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
