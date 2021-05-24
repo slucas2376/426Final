@@ -634,7 +634,7 @@ async function renderTweetBody(data, element, liked) {
     }
     
     if (user.id == localStorage.getItem('uid')) {
-      $(`.buttons-${data.id}`).replaceWith(`
+      $(`.buttons-${data.id}-${index}`).replaceWith(`
         <div class="buttons-${data.id}-${index}">
           <button class="button like-${data.id} is-info is-small">Like</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
@@ -645,7 +645,7 @@ async function renderTweetBody(data, element, liked) {
       `);
         
      } else {
-      $(`.buttons-${data.id}`).replaceWith(`
+      $(`.buttons-${data.id}-${index}`).replaceWith(`
         <div class="buttons-${data.id}-${index}">
           <button class="button like-${data.id} is-info is-small">Like</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
