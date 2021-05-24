@@ -45,7 +45,7 @@ async function renderProfile(id) {
           </div>
           <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
       </div>
-  `)
+    `)
 
     // view button handlers
     $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
