@@ -221,7 +221,7 @@ async function renderUserProfile(user) {
 
         $(`.user_profile`).replaceWith(form);
 
-        $(`.#Save-Changes`).on('click', async () => {
+        $(`#Save-Changes`).on('click', async () => {
             let updatedDisplayName = $(`.display-name`).val();
             let updatedPassword = $(`.new-password`).val();
             let updatedAvatar = $(`.new-avatar`).val();
@@ -294,8 +294,7 @@ async function renderUserProfile(user) {
             url: 'https://api.426twitter20.com/logout',
             withCredentials: true,
         });
-
-        $(`.edit-${user.id}`).remove();
+        window.location.replace("index.html");
     });
 }
 
@@ -348,7 +347,7 @@ async function renderNewTweet(data, element, reply) {
 
 async function renderTweetBody(data, element, liked, reply) {
     let user = await getUser(data.userId);
- 
+    console.log("rendered");
     if(data.type == "tweet") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
@@ -1061,107 +1060,36 @@ function tweetButton() {
         `);
       });
 
-
       $(`#enter`).on(`click`, async () => {
+        let result;
+
         if($(`#video`).is(`:checked`) && ($(`#link`).val() != "")) {
+
           let position = $(`#link`).val().indexOf("watch?v=") + 8;
           let link = $(`#link`).val().substring(position,$(`#link`).val().length);
 
-          let result = await axios.post(`https://api.426twitter20.com/tweets`, 
+          result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "video", mediaId: link, userId: localStorage.getItem('uid')}, {withCredentials: true});
 
-          let user = await getUser(localStorage.getItem('uid'));
           let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
 
-          $(`.feed`).prepend(`
-          <br>
-            <article class="media tweet-${result.id}">
-                <div class="box media-content">
-                  <article class="media">
-                    <figure class="media-left">
-                      <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
-                      </p>
-                    </figure>
-                    <div class="media-content">
-                      <div class="content type-${result.userId}">
-                      <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
-                          ${result.body}
-                          <br>
-                        </div>
-                        <figure class="image is-16by9">
-                         <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
-                        </figure>
-                      </div>
-                      <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
-                      </div>
-                    </div>
-                  </article>
-                  
-                </div>
-            </article>
-          `);
           $('#newTweet').remove();
           $(`.feed`).prepend(`
             <form class="level" id="newTweet">
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
-
-          tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
-          deleteButton(result);
 
         } else if ($(`#image`).is(`:checked`) && ($(`#link`).val() != "")) {
           
-          let result = await axios.post(`https://api.426twitter20.com/tweets`, 
+          result = await axios.post(`https://api.426twitter20.com/tweets`, 
           {type: "tweet", body: $(`#tweetCreation`).val(), mediaType: "image", mediaId: $(`#link`).val(), userId: localStorage.getItem('uid')}, 
           {withCredentials: true});
 
-          let user = await getUser(localStorage.getItem('uid'));
           let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
 
-
-          $(`.feed`).prepend(`
-          <br>
-            <article class="media tweet-${result.id}">
-                <div class="box media-content">
-                  <article class="media">
-                    <figure class="media-left">
-                      <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
-                      </p>
-                    </figure>
-                    <div class="media-content">
-                      <div class="content type-${result.userId}">
-                        <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
-                          ${result.body}
-                          <br>
-                        </div>
-                        <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
-                      </div>
-                      <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small">Edit</button>
-                        <button class="button retweet-${result.id} is-info is-small">  Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small">  Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
-                      </div>
-                    </div>
-                  </article>
-                  
-                </div>
-            </article>
-          `);
           $('#newTweet').remove();
           $(`.feed`).prepend(`
             <form class="level" id="newTweet">
@@ -1169,48 +1097,11 @@ function tweetButton() {
             </form>
           `);
 
-          tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
-          deleteButton(result);
-
-        } else { 
-          let result = await tweet($(`#tweetCreation`).val());
-          let user = await getUser(localStorage.getItem('uid'));
+        } else {
+          
+          result = await tweet($(`#tweetCreation`).val());
           let posts = await getUsersTweets(localStorage.getItem('uid'), "posts");
           result = posts[0];
-
-          $(`.feed`).prepend(`
-          <br>
-            <article class="media tweet-${result.id}">
-                <div class="box media-content">
-                  <article class="media">
-                    <figure class="media-left">
-                      <p class="image is-64x64">
-                        <img class="is-rounded" src="${user.avatar}">
-                      </p>
-                    </figure>
-                    <div class="media-content">
-                      <div class="content type-${result.id}">
-                      <strong>${user.displayName}</strong> <small>@${user.id}</small>
-                        <div class="edit-area-${result.id}">
-                          ${result.body}
-                          <br>
-                        </div>
-                      </div>
-                      <div class="buttons">
-                        <button class="button edit-${result.id} is-info is-small"> Edit </button>
-                        <button class="button retweet-${result.id} is-info is-small"> Retweet </button>
-                        <button class="button reply-${result.id} is-info is-small"> Reply </button>
-                        <button class="button delete-${result.id} is-danger is-small"> Delete </button>
-                      </div>
-                    </div>
-                  </article>
-                  
-                </div>
-            </article>
-          `);
 
           $('#newTweet').remove();
 
@@ -1219,14 +1110,8 @@ function tweetButton() {
               <button class="button is-primary tweet">Tweet</button>
             </form>
           `);
-
-          tweetButton();
-          retweetButton(result);
-          replyButton(result);
-          editButton(result);
-          deleteButton(result);
         }
-      
+        await renderTweetBody(result, '.feed', false);
       });
 
       // if user cancels tweet creation, tweet button is re-instated
