@@ -696,7 +696,7 @@ function renderTweetReplies(data) {
             <div class="box has-background-info tweetReply-${data.id}">
             <article class="message">
               <div class="message-header">
-                Replies to ${data.userId}'s Tweet
+                ${data.userId}'s Tweet
                 <button class="delete deleteReply-${data.id}"></button>
               </div>
             </article>
@@ -711,6 +711,14 @@ function renderTweetReplies(data) {
         });
   
         await renderNewTweet([data], `.tweetReply-${data.id}`);
+        $(`.tweetReply-${data.id}`).append(`
+          <article class="message">
+           <div class="message-header">
+              <br>
+              Replies to ${data.userId}'s Tweet
+            </div>
+          </article>
+        `);
   
         // turns off click event listener for tweet body to avoid creating tons of reply columns
         $(`.clickReply-${data.id}`).off();
@@ -728,10 +736,11 @@ function renderTweetReplies(data) {
               </div>
             </article>
           `)
-        }   
-        // renders the new replies similar to the main twitter feed.
-        // uses the abstraction of the renderNewTweet function to accomplish this
-        await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
+        } else {
+          // renders the new replies similar to the main twitter feed.
+          // uses the abstraction of the renderNewTweet function to accomplish this
+          await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
+        }
       }
     }); 
 }
