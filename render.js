@@ -922,7 +922,7 @@ function retweetButton(data, index) {
       <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <div class="controller">
+            <div class="control">
               <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away" rows="5" class="input" type="text"></textarea>
             </div>  
           </div>
@@ -973,7 +973,7 @@ function replyButton(data, index) {
       <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <div class="controller">
+            <div class="control">
               <textarea class="reply-body-${data.id}-${index}" placeholder="reply away" rows="5" class="input" type="text"></textarea>
             </div>
           </div>
