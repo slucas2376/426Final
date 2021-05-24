@@ -37,7 +37,7 @@ async function renderProfile(id) {
             <article class="message">
               <div class="message-header">
                 ${user.displayName}'s Profile Page.
-                <button class="delete deleteReply-${data.id}"></button>
+                <button class="delete deleteProfileInstance-${user.userId}"></button>
               </div>
             </article>
             <div class="user_profile">
