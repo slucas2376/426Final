@@ -178,7 +178,6 @@ async function renderUserProfile(user) {
                     <label class="label">Display Name</label>
                     <div class="control">
                       <textarea class="textarea display-name small" placeholder="${user.displayName}" form=".fillout box"></textarea>
-                      <input type = "submit">
                     </div>
                 </div>
     
@@ -186,7 +185,6 @@ async function renderUserProfile(user) {
                     <div class="control">
                         <label class="label">Password</label>
                         <textarea class="textarea new-password small" placeholder="${user.password}" form=".fillout box"></textarea>
-                        <input type = "submit">
                     </div>
                 </div>
 
@@ -194,14 +192,12 @@ async function renderUserProfile(user) {
                   <div class="control">
                       <label class="label">Profile Avatar</label>
                       <textarea class="textarea new-avatar small" placeholder="${user.avatar}" form=".fillout box"></textarea>
-                      <input type = "submit">
                   </div>
                 </div>
                 <div class="field">
                   <div class="control">
                     <label class="label">Profile Description</label>
                     <textarea class="textarea new-description small" placeholder="${user.profileDescription}" form=".fillout box"></textarea>
-                    <input type = "submit">
                   </div>
                 </div>
                 <div class="field is-grouped is-grouped-centered">
@@ -225,7 +221,7 @@ async function renderUserProfile(user) {
 
         $(`.user_profile`).replaceWith(form);
 
-        $(`.fillout box`).on('submit', async(e) => {
+        $(`.#Save-Changes`).on('click', async () => {
             let updatedDisplayName = $(`.display-name`).val();
             let updatedPassword = $(`.new-password`).val();
             let updatedAvatar = $(`.new-avatar`).val();
