@@ -18,6 +18,27 @@ $( async function () {
   logoutButton()
 });
 
+// initializes all navbar buttons
+function mainPageFeed(user){
+  $(`#replaceFeed`).on('click', async () => {
+    $(`.mainfeed`).remove();
+    await renderMainFeed();
+  });
+
+  $(`#showProfile`).on('click', async () => {
+    await renderProfile(user.id);
+  });
+
+  $(`#editProfile`).on('click', async () => {
+    await renderUserProfile(user)
+  });
+
+  $(`#reset-page`).on(`click`, async () => {
+    $(`.column`).remove();
+    await renderMainFeed();
+  });
+}
+
 // does this need to be async? idk really, if it doesn't have to be then probably best to make it sync
 async function renderProfile(id) {
   // takes an input user ID and generates a new column with their profile and buttons to display their posted tweets, likes, and retweets
