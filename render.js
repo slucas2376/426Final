@@ -649,7 +649,7 @@ async function renderTweetBody(data, element, liked, reply) {
 }
 
 function imageToProfile(id){
-  $(`.userGate-${id}`),on('click', async () => {
+  $(`.userGate-${id}`).on('click', async () => {
     await renderProfile(id);
   })
 }
