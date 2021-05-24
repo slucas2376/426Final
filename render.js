@@ -920,11 +920,13 @@ function retweetButton(data, index) {
   $(`.retweet-${data.id}-${index}`).on('click', () => {
     $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
       <div class="retweet-reply-${data.id}-${index}">
-        <div class="field">
-          <div class="contianer">
-            <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away" rows="5" class="input" type="text"></textarea>
+        <form class="fillout box">
+          <div class="field">
+            <div class="contianer">
+              <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away" rows="5" class="input" type="text"></textarea>
+            </div>
           </div>
-        </div>
+        </form>
         <div class="retweet-buttons-${data.id}-${index}">
           <button class="button retweet-submit-${data.id}-${index} is-info is-small" type="button">Submit Retweet</button>
           <button class="button retweet-cancel-${data.id}-${index} is-danger is-small" type="button">Cancel</button>
@@ -969,11 +971,13 @@ function replyButton(data, index) {
   $(`.reply-${data.id}-${index}`).on('click', () => {
     $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
       <div class="retweet-reply-${data.id}-${index}">
-        <div class="field">
-          <div class="contianer">
-            <textarea class="reply-body-${data.id}-${index}" placeholder="reply away" rows="5" class="input" type="text"></textarea>
+        <form class="fillout box">  
+          <div class="field">
+            <div class="contianer">
+              <textarea class="reply-body-${data.id}-${index}" placeholder="reply away" rows="5" class="input" type="text"></textarea>
+            </div>
           </div>
-        </div>
+        </form>
       <div class="reply-buttons-${data.id}-${index}">
         <button class="button reply-submit-${data.id}-${index} is-info is-small" type="button">Submit Reply</button>
         <button class="button reply-cancel-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
