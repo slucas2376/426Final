@@ -137,8 +137,7 @@ async function renderUserProfile(user) {
         <div class="box">
           <article class="message">
               <div class="message-header">
-                Replies to ${data.userId}'s Tweet
-                <button class="delete deleteReply-${data.id}"></button>
+                <button class="delete deleteReply-${user.id}"></button>
               </div>
             </article>
             <div class="user_profile">
