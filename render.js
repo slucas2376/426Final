@@ -30,7 +30,7 @@ async function renderProfile(id) {
       $(document.getElementById(`${user.id}-profile`)).remove();
   }
 
-  if(user.userId != localStorage.getItem('uid')) {
+  if(user.id != localStorage.getItem('uid')) {
     $('.columns').append(`
         <div class="column ${user.id}-profile" id="${user.id}-profile">
           <div class="box has-background-info">
@@ -50,6 +50,7 @@ async function renderProfile(id) {
                 <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
               </div>
             </div>
+            <br>
             <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
           </div>
         </div>
@@ -73,7 +74,7 @@ async function renderProfile(id) {
       await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
     })
   } else {
-
+    await renderUserProfile(user);
   }
   
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
@@ -291,22 +292,16 @@ async function renderUserData(id, type, element) {
     let user = await getUser(id);
     
     if (type == "liked") {
-
-        for ( let i = 0; i < user.likedTweets.length; i++ ) {
-            await renderTweetBody(user.likedTweets, element);
-        }
+      
+      await renderNewTweet(user.likedTweets, `.${element}`, false);
 
     } else if (type == "retweet") {
 
-        for( let i = 0; i < user.hasRetweeted.length; i++) {
-            await renderTweetBody(user.hasRetweeted, element);
-        }
+      await renderNewTweet(user.hasRetweeted, `.${element}`, false);
 
     } else if (type == "posted") {
 
-        for ( let i = 0; i < user.postedTweets.length; i++ ) {
-            await renderTweetBody(user.postedTweets, element);
-        }
+      await renderNewTweet(user.postedTweets, `.${element}`, false);
 
     }
 }
@@ -341,7 +336,7 @@ async function renderNewTweet(data, element, reply) {
 async function renderTweetBody(data, element, liked, reply) {
     let user = await getUser(data.userId);
  
-    if(data.type == "tweet" || data.type == "reply") {
+    if(data.type == "tweet") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
@@ -350,7 +345,7 @@ async function renderTweetBody(data, element, liked, reply) {
               <article class="media">
                 <figure class="media-left">
                   <div class="image is-64x64">
-                    <img class="is-rounded" src="${user.avatar}">
+                    <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                   </div>
                 </figure>
                 <div class="media-content">
@@ -379,7 +374,7 @@ async function renderTweetBody(data, element, liked, reply) {
                     <article class="media">
                       <figure class="media-left">
                         <div class="image is-64x64">
-                          <img class="is-rounded" src="${user.avatar}">
+                          <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                         </div>
                       </figure>
                       <div class="media-content">
@@ -413,7 +408,7 @@ async function renderTweetBody(data, element, liked, reply) {
               <article class="media">
                 <figure class="media-left">
                   <div class="image is-64x64">
-                    <img class="is-rounded" src="${user.avatar}">
+                    <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                   </div>
                 </figure>
                 <div class="media-content">
@@ -447,7 +442,7 @@ async function renderTweetBody(data, element, liked, reply) {
                         <article class="media">
                           <figure class="media-left">
                             <div class="image is-64x64">
-                              <img class="is-rounded" src="${user.avatar}">
+                              <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                             </div>
                           </figure>
                           <div class="media-content">
@@ -480,7 +475,7 @@ async function renderTweetBody(data, element, liked, reply) {
                       <article class="media">
                         <figure class="media-left">
                           <div class="image is-64x64">
-                            <img class="is-rounded" src="${user.avatar}">
+                            <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                           </div>
                         </figure>
                         <div class="media-content">
@@ -495,7 +490,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               <article class="media">
                                 <figure class="media-left">
                                   <div class="image is-64x64">
-                                    <img class="is-rounded" src="${userParent.avatar}">
+                                    <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
                                   </div>
                                 </figure>
                                 <div class="media-content">
@@ -529,7 +524,7 @@ async function renderTweetBody(data, element, liked, reply) {
                       <article class="media">
                         <figure class="media-left">
                           <div class="image is-64x64">
-                            <img class="is-rounded" src="${user.avatar}">
+                            <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                           </div>
                         </figure>
                         <div class="media-content">
@@ -544,7 +539,7 @@ async function renderTweetBody(data, element, liked, reply) {
                               <article class="media">
                                 <figure class="media-left">
                                   <div class="image is-64x64">
-                                    <img class="is-rounded" src="${userParent.avatar}">
+                                    <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
                                   </div>
                                 </figure>
                                 <div class="media-content">
@@ -578,7 +573,7 @@ async function renderTweetBody(data, element, liked, reply) {
                         <article class="media">
                           <figure class="media-left">
                             <div class="image is-64x64">
-                              <img class="is-rounded" src="${user.avatar}">
+                              <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
                             </div>
                           </figure>
                           <div class="media-content">
@@ -593,7 +588,7 @@ async function renderTweetBody(data, element, liked, reply) {
                                 <article class="media">
                                   <figure class="media-left">
                                     <div class="image is-64x64">
-                                      <img class="is-rounded" src="${userParent.avatar}">
+                                      <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
                                     </div>
                                   </figure>
                                   <div class="media-content">
@@ -617,17 +612,18 @@ async function renderTweetBody(data, element, liked, reply) {
                 `);
             }
         renderTweetReplies(parent);
-    } 
+        imageToProfile(userParent.id)
+    }
     
     if(!reply){
       if (user.id == localStorage.getItem('uid')) {
         $(`.buttons-${data.id}`).replaceWith(`
           <div class="buttons-${data.id}">
-            <button class="button edit-${data.id} is-info is-small">Edit</button>
             <button class="button like-${data.id} is-info is-small">Like</button>
             <button class="button retweet-${data.id} is-info is-small">Retweet: ${data.retweetCount}</button>
             <button class="button reply-${data.id} is-info is-small">Reply: ${data.replyCount}</button>
-           <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+            <button class="button edit-${data.id} is-info is-small">Edit</button>
+            <button class="button delete-${data.id} is-danger is-small"> Delete </button>
           </div>
        `);
         
@@ -648,7 +644,14 @@ async function renderTweetBody(data, element, liked, reply) {
     replyButton(data);
     deleteButton(data);
     renderTweetReplies(data);
+    imageToProfile(user.id);
 
+}
+
+function imageToProfile(id){
+  $(`.userGate-${id}`),on('click', async () => {
+    await renderProfile(id);
+  })
 }
 
 function renderTweetReplies(data) {
