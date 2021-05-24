@@ -376,7 +376,7 @@ async function renderTweetBody(data, element, liked) {
                     </div>
                   </div>
                   <div class="retweet-reply-${data.id}-${index}"></div>
-                  <div class="buttons-${data.id}"></div>
+                  <div class="buttons-${data.id}-${index}"></div>
                 </div>
               </article>
               
@@ -409,7 +409,7 @@ async function renderTweetBody(data, element, liked) {
                           </div>
                         </div>
                         <div class="retweet-reply-${data.id}-${index}"></div>
-                        <div class="buttons-${data.id}"></div>
+                        <div class="buttons-${data.id}-${index}"></div>
                       </div>
                     </article>
                     
@@ -437,7 +437,7 @@ async function renderTweetBody(data, element, liked) {
                     </p>
                   </div>
                   <div class="retweet-reply-${data.id}-${index}"></div>
-                  <div class="buttons-${data.id}"></div>
+                  <div class="buttons-${data.id}-${index}"></div>
                 </div>
               </article>
               
@@ -479,7 +479,7 @@ async function renderTweetBody(data, element, liked) {
                               </article>
                             </div>
                             <div class="retweet-reply-${data.id}-${index}"></div>
-                            <div class="buttons-${data.id}"></div>
+                            <div class="buttons-${data.id}-${index}"></div>
                           </div>
                         </article>
                       </div>
@@ -525,7 +525,7 @@ async function renderTweetBody(data, element, liked) {
                               </article>
                           </div>
                           <div class="retweet-reply-${data.id}-${index}"></div>
-                          <div class="buttons-${data.id}"></div>
+                          <div class="buttons-${data.id}-${index}"></div>
                         </div>
                       </article>
                       
@@ -574,7 +574,7 @@ async function renderTweetBody(data, element, liked) {
                               </article>
                           </div>
                           <div class="retweet-reply-${data.id}-${index}"></div>
-                          <div class="buttons-${data.id}"></div>
+                          <div class="buttons-${data.id}-${index}"></div>
                         </div>
                       </article>
                       
@@ -621,7 +621,7 @@ async function renderTweetBody(data, element, liked) {
                                 </article>
                             </div>
                             <div class="retweet-reply-${data.id}-${index}"></div>
-                            <div class="buttons-${data.id}"></div>
+                            <div class="buttons-${data.id}-${index}"></div>
                           </div>
                         </article>
                         
@@ -635,7 +635,7 @@ async function renderTweetBody(data, element, liked) {
     
     if (user.id == localStorage.getItem('uid')) {
       $(`.buttons-${data.id}`).replaceWith(`
-        <div class="buttons-${data.id}">
+        <div class="buttons-${data.id}-${index}">
           <button class="button like-${data.id} is-info is-small">Like</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
           <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
@@ -646,7 +646,7 @@ async function renderTweetBody(data, element, liked) {
         
      } else {
       $(`.buttons-${data.id}`).replaceWith(`
-        <div class="buttons-${data.id}">
+        <div class="buttons-${data.id}-${index}">
           <button class="button like-${data.id} is-info is-small">Like</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
           <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount} </button>
@@ -1278,7 +1278,7 @@ function deleteButton(data) {
     await deleteTweet(data.id);
     // removes base tweet and the associated tweetReply column with it
     $(`.tweet-${data.id}`).remove();
-    $(`.tweetReply-${data.id}`).remove();
+    $(`.replyField-${data.id}`).remove();
   });
 }
 
