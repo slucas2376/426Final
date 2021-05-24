@@ -712,9 +712,9 @@ function renderTweetReplies(data) {
   
         await renderNewTweet([data], `.tweetReply-${data.id}`);
         $(`.tweetReply-${data.id}`).append(`
+          <br>
           <article class="message">
            <div class="message-header">
-              <br>
               Replies to ${data.userId}'s Tweet
             </div>
           </article>
@@ -922,7 +922,7 @@ function retweetButton(data, index) {
       <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away"></textarea>
+            <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away" rows="5" class="input" type="text"></textarea>
           </div>
         </div>
         <div class="retweet-buttons-${data.id}-${index}">
@@ -971,7 +971,7 @@ function replyButton(data, index) {
       <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <textarea class="reply-body-${data.id}-${index}" placeholder="reply away"></textarea>
+            <textarea class="reply-body-${data.id}-${index}" placeholder="reply away" rows="5" class="input" type="text"></textarea>
           </div>
         </div>
       <div class="reply-buttons-${data.id}-${index}">
