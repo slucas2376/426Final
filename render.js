@@ -840,7 +840,7 @@ function editButton(data) {
           <div class="edit-area-${data.id}">
             ${data.body}
             <br>
-            <img src="${data.imageLink}">
+            <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
           </div>
         `);
 
@@ -1118,9 +1118,7 @@ function tweetButton() {
                           ${result.body}
                           <br>
                         </div>
-                        <figure class="image is-1by1">
-                          <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
-                        </figure>
+                        <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
                       <div class="buttons">
                         <button class="button edit-${result.id} is-info is-small">Edit</button>
