@@ -25,12 +25,8 @@ async function renderProfile(id) {
   let user = await getUser(id);
   // user will be empty object if no such registered user exists
   if (user == {}) {console.log("profile retrieval failed"); return;}
-  if (document.getElementById(`${user.id}-profile`) != null) {
-      // if there's already an element for that user's profile, remove it and make a new one I guess?
-      $(document.getElementById(`${user.id}-profile`)).remove();
-  }
 
-  
+  if($(`#${user.id}-profile`).length == 0) {
     $('.columns').append(`
         <div class="column ${user.id}-profile" id="${user.id}-profile">
           <div class="box has-background-info">
@@ -77,7 +73,7 @@ async function renderProfile(id) {
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
       await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
     });
-  
+  }
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
   // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
   $(document.getElementById(`${user.id}-profile-remove`)).on('click', () => {
