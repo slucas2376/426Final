@@ -958,7 +958,7 @@ function retweetButton(data, index) {
       $(`.retweet-reply-${data.id}`).replaceWith(`
         <div class="retweet-reply-${data.id}"></div>
       `);
-      retweetButton(data);
+      retweetButton(data, index);
     });
   })
 
@@ -1006,7 +1006,7 @@ function replyButton(data, index) {
       $(`.retweet-reply-${data.id}`).replaceWith(`
         <div class="retweet-reply-${data.id}"></div>
       `);
-      replyButton(data);
+      replyButton(data, index);
     });
   })
 }
