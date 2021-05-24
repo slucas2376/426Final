@@ -29,9 +29,11 @@ async function renderProfile(id) {
       // if there's already an element for that user's profile, remove it and make a new one I guess?
       $(document.getElementById(`${user.id}-profile`)).remove();
   }
-  $('.columns').append(`
+
+  if(user.userId != localStorage.getItem('uid')) {
+    $('.columns').append(`
       <div class="column ${user.id}-profile" id="${user.id}-profile">
-          <div class="box">
+          <div class="box has-background-info">
               <div class="user_profile">
                 <h2 class="subtitle">Username: ${user.id}</h2>
                 <h2 class="subtitle">Display Name: ${user.displayName}</h2>
@@ -45,23 +47,27 @@ async function renderProfile(id) {
       </div>
   `)
 
-  // view button handlers
-  $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
+    // view button handlers
+    $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
       await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
-  })
-  $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
+    })
+    $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "likes");
       $(document.getElementById(`${user.id}-tweets`)).empty();
       await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
-  })
-  $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
+    })
+    $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
       $(document.getElementById(`${user.id}-tweets`)).empty();
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
       await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
-  })
+    })
+  } else {
+
+  }
+  
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
   // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
   $(document.getElementById(`${user.id}-profile-remove`)).on('click', () => {
@@ -602,7 +608,7 @@ async function renderTweetBody(data, element, liked, reply) {
                     </article>
                 `);
             }
-        renderTweetReplys(parent);
+        renderTweetReplies(parent);
     } 
     
     if(!reply){
@@ -633,11 +639,11 @@ async function renderTweetBody(data, element, liked, reply) {
     retweetButton(data);
     replyButton(data);
     deleteButton(data);
-    renderTweetReplys(data);
+    renderTweetReplies(data);
 
 }
 
-function renderTweetReplys(data) {
+function renderTweetReplies(data) {
     // when new tweet bodies of the same id are created the listener is removed and re-applied to all intances
     // avoids major error of placing multiple of the same event listeners
     
@@ -668,7 +674,7 @@ function renderTweetReplys(data) {
         $(`.deleteReply-${data.id}`).on('click', async () => {
           $(`.replyfield-${data.id}`).remove();
           columnNum -= 1;
-          await renderTweetReplys(data);
+          await renderTweetReplies(data);
         });
   
         await renderNewTweet([data], `.tweetReply-${data.id}`, true);
