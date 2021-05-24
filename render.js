@@ -339,14 +339,14 @@ async function renderNewTweet(data, element, reply) {
       }
 
       if (data[i] != {}) {
-        await renderTweetBody(data[i], element, bool, reply);
+        await renderTweetBody(data[i], element, bool);
       }
 
       bool = false;
     }
 }
 
-async function renderTweetBody(data, element, liked, reply) {
+async function renderTweetBody(data, element, liked) {
     let user = await getUser(data.userId);
     let index = 0;
 
@@ -633,38 +633,39 @@ async function renderTweetBody(data, element, liked, reply) {
         imageToProfile(userParent.id)
     }
     
-    if(!reply){
-      if (user.id == localStorage.getItem('uid')) {
-        $(`.buttons-${data.id}`).replaceWith(`
-          <div class="buttons-${data.id}">
-            <button class="button like-${data.id} is-info is-small">Like</button>
-            <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
-            <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
-            <button class="button edit-${data.id}-${index} is-info is-small">Edit</button>
-            <button class="button delete-${data.id} is-danger is-small"> Delete </button>
-          </div>
-       `);
+    if (user.id == localStorage.getItem('uid')) {
+      $(`.buttons-${data.id}`).replaceWith(`
+        <div class="buttons-${data.id}">
+          <button class="button like-${data.id} is-info is-small">Like</button>
+          <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
+          <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
+          <button class="button edit-${data.id}-${index} is-info is-small">Edit</button>
+          <button class="button delete-${data.id} is-danger is-small"> Delete </button>
+        </div>
+      `);
         
-      } else {
-        $(`.buttons-${data.id}`).replaceWith(`
-          <div class="buttons-${data.id}">
-            <button class="button like-${data.id} is-info is-small">Like</button>
-            <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
-            <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount} </button>
-         </div>
-       `);    
-      }
-    } else {
-
+     } else {
+      $(`.buttons-${data.id}`).replaceWith(`
+        <div class="buttons-${data.id}">
+          <button class="button like-${data.id} is-info is-small">Like</button>
+          <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
+          <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount} </button>
+       </div>
+     `);    
     }
 
     like(data, liked);
     editButton(data, index);
-    retweetButton(data);
-    replyButton(data);
+    retweetButton(data, index);
+    replyButton(data, index);
     deleteButton(data);
     renderTweetReplies(data);
     imageToProfile(user.id);
+
+}
+
+// finish later
+function intializeAllButtons(tweet, user) {
 
 }
 
@@ -905,42 +906,42 @@ function editButton(data, index) {
   });
 }
 
-function retweetButton(data) {
+function retweetButton(data, index) {
 
-  $(`.retweet-${data.id}`).on('click', () => {
-    $(`.retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}">
+  $(`.retweet-${data.id}-${index}`).on('click', () => {
+    $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+      <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <textarea class="retweet-body-${data.id}" placeholder="retweet away"></textarea>
+            <textarea class="retweet-body-${data.id}-${index}" placeholder="retweet away"></textarea>
           </div>
         </div>
-        <div class="retweet-buttons-${data.id}">
-          <button class="button retweet-submit-${data.id} is-info is-small" type="button">Submit Retweet</button>
-          <button class="button retweet-cancel-${data.id} is-danger is-small" type="button">Cancel</button>
+        <div class="retweet-buttons-${data.id}-${index}">
+          <button class="button retweet-submit-${data.id}-${index} is-info is-small" type="button">Submit Retweet</button>
+          <button class="button retweet-cancel-${data.id}-${index} is-danger is-small" type="button">Cancel</button>
         </div>
         <br>
       </div>
     `);
 
-    $(`.retweet-${data.id}`).replaceWith(`
-      <button class="button retweet-${data.id} is-info is-small">Retweet: ${data.retweetCount}</button>
+    $(`.retweet-${data.id}-${index}`).replaceWith(`
+      <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
     `);
 
-    $(`.retweet-submit-${data.id}`).on('click', async () => {
+    $(`.retweet-submit-${data.id}-${index}`).on('click', async () => {
       data.retweetCount += 1;
-      let final = $(`.retweet-body-${data.id}`).val();
+      let final = $(`.retweet-body-${data.id}-${index}`).val();
 
       let retwe = await retweet(data.id, final);
-      await renderTweetBody(retwe, `.feed`, false, false);
+      await renderTweetBody(retwe, `.feed`, false);
       $(`.retweet-${data.id}`).replaceWith(`
-        <button class="button retweet-${data.id} is-info is-small"> Retweet: ${data.retweetCount} </button>
+        <button class="button retweet-${data.id}-${index} is-info is-small"> Retweet: ${data.retweetCount} </button>
       `)
 
-      $(`retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}"></div>
+      $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+      <div class="retweet-reply-${data.id}-${index}"></div>
       `);
-      retweetButton(data);
+      retweetButton(data, index);
     });
 
 
@@ -955,40 +956,40 @@ function retweetButton(data) {
   
 }
 
-function replyButton(data) {
-  $(`.reply-${data.id}`).on('click', () => {
-    $(`.retweet-reply-${data.id}`).replaceWith(`
-      <div class="retweet-reply-${data.id}">
+function replyButton(data, index) {
+  $(`.reply-${data.id}-${index}`).on('click', () => {
+    $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+      <div class="retweet-reply-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
-            <textarea class="reply-body-${data.id}" placeholder="reply away"></textarea>
+            <textarea class="reply-body-${data.id}-${index}" placeholder="reply away"></textarea>
           </div>
         </div>
-      <div class="reply-buttons-${data.id}">
-        <button class="button reply-submit-${data.id} is-info is-small" type="button">Submit Reply</button>
-        <button class="button reply-cancel-${data.id} is-danger is-small" type="button"> Cancel </button>
+      <div class="reply-buttons-${data.id}-${index}">
+        <button class="button reply-submit-${data.id}-${index} is-info is-small" type="button">Submit Reply</button>
+        <button class="button reply-cancel-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
       </div>
       <br>
     </div>
     `);
 
-    $(`.reply-${data.id}`).replaceWith(`
-      <button class="button reply-${data.id} is-info is-small">Reply: ${data.replyCount}</button>
+    $(`.reply-${data.id}-${index}`).replaceWith(`
+      <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
     `);
 
-    $(`.reply-submit-${data.id}`).on('click', async () => {
+    $(`.reply-submit-${data.id}-${index}`).on('click', async () => {
       data.replyCount += 1;
-      let final = $(`.reply-body-${data.id}`).val();
+      let final = $(`.reply-body-${data.id}-${index}`).val();
       await reply(data.id, final);
 
-      $(`.reply-${data.id}`).replaceWith(`
-        <button class="button reply-${data.id} is-info is-small"> Reply: ${data.replyCount} </button>
+      $(`.reply-${data.id}-${index}`).replaceWith(`
+        <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
-      $(`.retweet-reply-${data.id}`).replaceWith(`
-        <div class="retweet-reply-${data.id}"></div>
+      $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
+        <div class="retweet-reply-${data.id}-${index}"></div>
       `);
-      replyButton(data);
+      replyButton(data, index);
     });
 
 
