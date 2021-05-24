@@ -669,10 +669,10 @@ function renderTweetReplys(data) {
         $(`.deleteReply-${data.id}`).on('click', async () => {
           $(`.replyfield-${data.id}`).remove();
           columnNum -= 1;
-          renderTweetReplys(data);
+          await renderTweetReplys(data);
         });
   
-        renderNewTweet([data], `.tweetReply-${data.id}`, true);
+        await renderNewTweet([data], `.tweetReply-${data.id}`, true);
   
         // turns off click event listener for tweet body to avoid creating tons of reply columns
         $(`.clickReply-${data.id}`).off();
@@ -774,14 +774,11 @@ function editButton(data) {
     `);
     }
 
-    $(`.clickReply-${data.id}`).off();
-
     $(`.edit-${data.id}`).replaceWith(`
       <button class="button edit-${data.id} is-info is-small">edit</button>
     `);
 
     $(`.submit-edit-${data.id}`).on('click', async () => {
-      renderTweetReplys(data);
       let final = $(`.replace-${data.id}`).val();
 
       data.body = final;
@@ -836,7 +833,6 @@ function editButton(data) {
     });
 
     $(`.cancel-edit-${data.id}`).on('click', () => {
-      renderTweetReplys(data);
       if ( data.mediaType == "image") {
         $(`.edit-area-${data.id}`).replaceWith(`
           <div class="edit-area-${data.id}">
