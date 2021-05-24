@@ -46,26 +46,26 @@ async function renderProfile(id) {
   `)
 
   // view button handlers
-  $(document.getElementById(`${user.id}-posted`)).on('click', () => {
+  $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
       let tweetsToAdd = await getUsersTweets(user.id, "posts")
       $(document.getElementById(`${user.id}-tweets`)).empty();
       for (let t in tweetsToAdd) {
       renderTweetBody(t, `${user.id}-tweets`)
       }
   })
-  $(document.getElementById(`${user.id}-liked`)).on('click', () => {
-      let tweetsToAdd = getUsersTweets(user.id, "likes")
+  $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
+      let tweetsToAdd = await getUsersTweets(user.id, "likes")
       $(document.getElementById(`${user.id}-tweets`)).empty();
       for (let t in tweetsToAdd) {
-          renderTweetBody(t, `${user.id}-tweets`)
+          await renderTweetBody(t, `${user.id}-tweets`)
       }
   })
-  $(document.getElementById(`${user.id}-retweeted`)).on('click', () => {
-      let tweetsToAdd = getUsersTweets(user.id, "retweets")// array of relevant tweets, most recent first, so just add by iterating through it
+  $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
+      let tweetsToAdd = await getUsersTweets(user.id, "retweets")// array of relevant tweets, most recent first, so just add by iterating through it
       $(document.getElementById(`${user.id}-tweets`)).empty();
       // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
       for (let t of tweetsToAdd) {
-          renderTweetBody(t, `${user.id}-tweets`)
+          await renderTweetBody(t, `${user.id}-tweets`)
       }
   })
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
