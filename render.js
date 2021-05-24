@@ -11,7 +11,7 @@ $( async function () {
   $(`.name-here`).append(`Welcome ${result.displayName}`)
   // rendering the main feed
   await renderMainFeed();
-
+  mainPageFeed(result);
   //calling renderProfile to render current user's profileS
 
   //await renderProfile(result.id);
