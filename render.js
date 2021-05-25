@@ -471,13 +471,16 @@ async function renderTweetBody(data, element, liked) {
                   </div>
                 </figure>
                 <div class="media-content">
-                  <div class="content type-${data.userId} clickReply-${data.id}">
+                  <div class="content type-${data.userId}">
+                  <div class="clickReply-${data.id}>
                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                     <div class="edit-area-${data.id}-${index}">
                       ${data.body}
                       <br>
                       <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
                     </div>
+                  </div>
+                  <div class="edit-buttons-${data.id}-${index}></div>
                   </div>
                   <div class="retweet-reply-${data.id}-${index}"></div>
                   <div class="buttons-${data.id}-${index}"></div>
@@ -511,6 +514,7 @@ async function renderTweetBody(data, element, liked) {
                               </figure>
                               </div>
                           </div>
+                          <div class="edit-buttons-${data.id}-${index}></div>
                         </div>
                         <div class="retweet-reply-${data.id}-${index}"></div>
                         <div class="buttons-${data.id}-${index}"></div>
@@ -534,12 +538,16 @@ async function renderTweetBody(data, element, liked) {
                   </div>
                 </figure>
                 <div class="media-content">
-                  <div class="content type-${data.userId} clickReply-${data.id}">
+                  <div class="content type-${data.userId}">
+                  <div class="clickReply-${data.id}">
                     <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                     <p class="edit-area-${data.id}-${index}">
                         ${data.body}
                     </p>
                   </div>
+                  <div class="edit-buttons-${data.id}-${index}></div>
+                  </div>
+                  <div class="edit-buttons-${data.id}-${index}></div>
                   <div class="retweet-reply-${data.id}-${index}"></div>
                   <div class="buttons-${data.id}-${index}"></div>
                 </div>
@@ -568,7 +576,8 @@ async function renderTweetBody(data, element, liked) {
                             </div>
                           </figure>
                           <div class="media-content">
-                            <div class="content type-${data.userId} clickReply-${data.id}">
+                            <div class="content type-${data.userId}>
+                            <div class="clickReply-${data.id}">
                               <strong>${user.displayName}</strong> <small>@${data.userId}</small>
                               <div class="edit-area-${data.id}-${index}">
                               ${data.body}
@@ -581,6 +590,8 @@ async function renderTweetBody(data, element, liked) {
                                 </div>
                                 <br>
                               </article>
+                            </div>
+                            <div class="edit-buttons-${data.id}-${index}></div>
                             </div>
                             <div class="retweet-reply-${data.id}-${index}"></div>
                             <div class="buttons-${data.id}-${index}"></div>
@@ -609,6 +620,7 @@ async function renderTweetBody(data, element, liked) {
                                 </div>
                                 <br>
                               </div>
+                              <div class="edit-buttons-${data.id}-${index}></div>
                               <article class="media">
                                 <figure class="media-left">
                                   <div class="image is-64x64">
@@ -659,6 +671,7 @@ async function renderTweetBody(data, element, liked) {
                               </div>
                               <br>
                               </div>
+                              <div class="edit-buttons-${data.id}-${index}></div>
                               <article class="media">
                                 <figure class="media-left">
                                   <div class="image is-64x64">
@@ -709,6 +722,7 @@ async function renderTweetBody(data, element, liked) {
                                   </div>
                                   <br>
                                 </div>
+                                <div class="edit-buttons-${data.id}-${index}></div>
                                 <article class="media">
                                   <figure class="media-left">
                                     <div class="image is-64x64">
@@ -759,6 +773,7 @@ async function renderTweetBody(data, element, liked) {
                                   </div>
                                   <br>
                                 </div>
+                                <div class="edit-buttons-${data.id}-${index}></div>
                                 <article class="media">
                                   <figure class="media-left">
                                     <div class="image is-64x64">
@@ -938,10 +953,6 @@ function editButton(data, index) {
             <textarea class="replace-video-${data.id}-${index}"> https://www.youtube.com/watch?v=${data.videoId} </textarea>
           </div>
         </div>
-        <div class="edit-buttons-${data.id}-${index}">
-          <button class="button submit-edit-${data.id}-${index} is-info is-small" type="button">Submit Edit</button>
-          <button class="button cancel-edit-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
-        </div>
       </div>
       `);
     } else if (data.mediaType == "image") {
@@ -955,10 +966,6 @@ function editButton(data, index) {
             <textarea class="replace-image-${data.id}-${index}"> ${data.imageLink} </textarea>
             </div>
         </div>
-        <div class="edit-buttons-${data.id}-${index}">
-          <button class="button submit-edit-${data.id}-${index} is-info is-small" type="button">Submit Edit</button>
-          <button class="button cancel-edit-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
-        </div>
       </div>
       `);
     } else {
@@ -969,13 +976,16 @@ function editButton(data, index) {
             <textarea class="replace-${data.id}-${index}"> ${data.body} </textarea>
           </div>
         </div>
-        <div class="edit-buttons-${data.id}-${index}">
-          <button class="button submit-edit-${data.id}-${index} is-info is-small" type="button">Submit Edit</button>
-          <button class="button cancel-edit-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
-        </div>
       </div>
     `);
     }
+
+    $(`.edit-buttons-${data.id}-${index}`).replaceWith(`
+    <div class="edit-buttons-${data.id}-${index}">
+      <button class="button submit-edit-${data.id}-${index} is-info is-small" type="button">Submit Edit</button>
+      <button class="button cancel-edit-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
+    </div>
+    `)
 
     $(`.edit-${data.id}-${index}`).replaceWith(`
       <button class="button edit-${data.id}-${index} is-info is-small">Edit</button>
@@ -1031,7 +1041,9 @@ function editButton(data, index) {
         `);
         
       }
-
+      $(`.edit-buttons-${data.id}-${index}`).replaceWith(`
+      <div class="edit-buttons-${data.id}-${index}"></div>
+      `)
       editButton(data, index);
     });
 
@@ -1064,7 +1076,9 @@ function editButton(data, index) {
           </div>
         `);
       }
-
+      $(`.edit-buttons-${data.id}-${index}`).replaceWith(`
+      <div class="edit-buttons-${data.id}-${index}"></div>
+      `)
       editButton(data, index);
 
     })
