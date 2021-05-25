@@ -109,15 +109,15 @@ function userButtons(user) {
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
     let tweetsToAdd = await getUsersTweets(user.id, "posts");
-
+    let sendTweets = [];
     for (let i = 0; i <tweetsToAdd.length; i++ ) {
-      if(tweetsToAdd[i].type == "reply") {
-        delete tweetsToAdd[i];
+      if(tweetsToAdd[i].type != "reply") {
+        sendTweets.push(tweetsToAdd[i])
       }
     }
 
     $(document.getElementById(`${user.id}-tweets`)).empty();
-    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    await renderNewTweet(sendTweets, `#${user.id}-tweets`);
     
     $(`.buttons-${user.id}`).replaceWith(`
     <div class="buttons-${user.id} center">
