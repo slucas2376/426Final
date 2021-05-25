@@ -199,7 +199,7 @@ async function renderUserProfile(user) {
           <article class="message">
               <div class="message-header">
                 Edit Page
-                <button class="delete deleteReply-${user.id}"></button>
+                <button class="delete deleteEditColumn-${user.id}"></button>
               </div>
             </article>
             <div class="user_profile">
@@ -212,6 +212,8 @@ async function renderUserProfile(user) {
         </div>
     </div>
     `);
+
+    $(`.`)
 
     //click handler for edit button
     $(`.user_edit_button`).on('click', async(e) => {
@@ -381,7 +383,7 @@ async function renderUserProfile(user) {
                 "avatar": updatedAvatar,
                 "profileDescription": updatedProfileDescription,
                 "currentPassword": currentPassword,
-                userId: localStorage.getItem(`uid`)
+                "userId": localStorage.getItem(`uid`)
             },
         });
         } catch {
