@@ -281,45 +281,52 @@ async function renderUserProfile(user) {
             let updatedProfileDescription = $(`.new-description`).val();
             let currentPassword = $(`.current-password`).val();
 
+            if (updatedDisplayName == "") {
+              updatedDisplayName = user.displayName;
+            }
+
+            if (updatedPassword == "") {
+              updatedPassword = user.password;
+            }
+
+            if (updatedAvatar == "") {
+              updatedAvatar = user.avatar;
+            }
+
             if(currentPassword != "") {
 
               try {
-
+                const result = await axios({
+                  method: 'put',
+                  url: 'https://api.426twitter20.com/users/' + user.id,
+                  withCredentials: true,
+                  data: {
+                      "displayName": updatedDisplayName,
+                      "password": updatedPassword,
+                      "avatar": updatedAvatar,
+                      "profileDescription": updatedProfileDescription,
+                      "currentPassword": currentPassword
+                  },
+              });
               } catch {
                 $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
                     You didn't enter you correct, original password. Please try again.
                   </label>
                 `);
+
+                return false;
               }
               
+            } else {
+              $(`.fail-message`).replaceWith(`
+                  <label class="label has-text-centered is-danger fail-message">
+                    You didn't enter you correct, original password. Please try again.
+                  </label>
+                `);
+
+                return false;
             }
-
-
-            if (updatedDisplayName == "") {
-                updatedDisplayName = user.displayName;
-            }
-
-            if (updatedPassword == "") {
-                updatedPassword = user.password;
-            }
-
-            if (updatedAvatar == "") {
-                updatedAvatar = user.avatar;
-            }
-
-            //axios request
-            const result = await axios({
-                method: 'put',
-                url: 'https://api.426twitter20.com/users/' + user.id,
-                withCredentials: true,
-                data: {
-                    "displayName": updatedDisplayName,
-                    "password": updatedPassword,
-                    "avatar": updatedAvatar,
-                    "profileDescription": updatedProfileDescription
-                },
-            });
 
             $(`.edit-${user.id}`).remove();
 
@@ -692,6 +699,7 @@ async function renderTweetBody(data, element, liked) {
                                 </article>
                             </div>
                             <button class=" button is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
+                            <br>
                             <br>
                             <div class="retweet-reply-${data.id}-${index}"></div>
                             <div class="buttons-${data.id}-${index}"></div>
