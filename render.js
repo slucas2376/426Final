@@ -1238,7 +1238,6 @@ function tweetButton() {
                         </figure>
                       </div>
                       <div class="retweet-reply-${result.id}-0"></div>
-                      <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like</button>
                         <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
@@ -1300,7 +1299,6 @@ function tweetButton() {
                         <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
                       <div class="retweet-reply-${result.id}-0"></div>
-                      <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like</button>
                         <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
@@ -1355,7 +1353,6 @@ function tweetButton() {
                         </div>
                       </div>
                       <div class="retweet-reply-${result.id}-0"></div>
-                      <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like: ${result.likeCount}</button>
                         <button class="button retweet-${result.id}-0 is-info is-small">Retweet: ${result.retweetCount}</button>
