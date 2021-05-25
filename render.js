@@ -73,10 +73,10 @@ async function renderProfile(id) {
             </div>
           </article>
 
-              <div class="buttons-${user.id}">
-                <button class="is-button is-info" id="${user.id}-posted">View Posted Tweets</button>
-                <button class="is-button is-info" id="${user.id}-liked">View Liked Tweets</button>
-                <button class="is-button is-info" id="${user.id}-retweeted">View Retweets</button>
+              <div class="buttons-${user.id} center">
+                <button class="is-button is-info is-one-third" id="${user.id}-posted">View Posted Tweets</button>
+                <button class="is-button is-info is-one-third" id="${user.id}-liked">View Liked Tweets</button>
+                <button class="is-button is-info is-one-third" id="${user.id}-retweeted">View Retweets</button>
               </div>
             </div>
             <br>
