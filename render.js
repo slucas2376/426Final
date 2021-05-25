@@ -290,6 +290,10 @@ async function renderUserProfile(user) {
               updatedDisplayName = user.displayName;
             }
 
+            if (updatedProfileDescription == "") {
+              updatedProfileDescription = user.profileDescription;
+            }
+
             if (updatedPassword == "") {
               updatedPassword = user.password;
             }
@@ -310,19 +314,7 @@ async function renderUserProfile(user) {
 
             if(currentPassword != "") {
               try {
-                const result = await axios({
-                  method: 'put',
-                  url: 'https://api.426twitter20.com/users/' + user.id,
-                  withCredentials: true,
-                  data: {
-                      "userId": localStorage.getItem(`uid`),
-                      "currentPassword": currentPassword,
-                      "displayName": updatedDisplayName,
-                      "password": updatedPassword,
-                      "avatar": updatedAvatar,
-                      "profileDescription": updatedProfileDescription,                  
-                  },
-              });
+                await editUser(localStorage.getItem('uid'), updatedDisplayName, updatedPassword, updatedAvatar, updatedProfileDescription, currentPassword);
               } catch {
                 $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
@@ -1517,11 +1509,16 @@ async function deleteUser(id) {
     const result = await axios.delete(`https://api.426twitter20.com/users/${id}`, {withCredentials: true});
 }
 
-async function editUser(id, name, pass, avat, descript) {
-    const result = await axios.put(`https://api.426twitter20.com/users/${id}`, {displayName: name,
-    password: pass,
-    avatar: avat,
-    profileDescription: descript}, {withCredentials: true});
+async function editUser(id, name, pass, avat, descript, curpass) {
+    const result = await axios.put(`https://api.426twitter20.com/users/${id}`, {
+      userId: id,
+      displayName: name,
+      password: pass,
+      avatar: avat,
+      profileDescription: descript,
+      currentPassword: curpass
+      }, 
+      {withCredentials: true});
 }
 
 async function getReplies(id) {
