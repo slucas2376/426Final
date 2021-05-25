@@ -83,6 +83,7 @@ async function renderProfile(id) {
               <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
             </div>
           </div>
+          <br>
           <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
           </div>
         </div>
@@ -110,18 +111,27 @@ function userButtons(user) {
     let tweetsToAdd = await getUsersTweets(user.id, "posts");
     $(document.getElementById(`${user.id}-tweets`)).empty();
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    $(`#${user.id}-posted`).ofF();
-    $(`#${user.id}-likes`).off();
-    $(`#${user.id}-retweeted`).off()
+    
+    $(`#${user.id}-posted`).replaceWith(`
+    <div class="buttons-${user.id} center">
+      <button class="button is-primary is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
+      <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
+      <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
+    </div>
+    `);
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
     let tweetsToAdd = await getUsersTweets(user.id, "likes");
     $(document.getElementById(`${user.id}-tweets`)).empty();
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    $(`#${user.id}-posted`).ofF();
-    $(`#${user.id}-likes`).off();
-    $(`#${user.id}-retweeted`).off()
+    $(`#${user.id}-posted`).replaceWith(`
+    <div class="buttons-${user.id} center">
+      <button class="button is-link is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
+      <button class="button is-primary is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
+      <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
+    </div>
+    `);
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
@@ -129,9 +139,13 @@ function userButtons(user) {
     $(document.getElementById(`${user.id}-tweets`)).empty();
     // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    $(`#${user.id}-posted`).ofF();
-    $(`#${user.id}-likes`).off();
-    $(`#${user.id}-retweeted`).off()
+    $(`#${user.id}-posted`).replaceWith(`
+    <div class="buttons-${user.id} center">
+      <button class="button is-link is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
+      <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
+      <button class="button is-primary is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
+    </div>
+    `);
     userButtons(user);
   });
 }
