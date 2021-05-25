@@ -1094,7 +1094,251 @@ function retweetButton(data, index) {
 
       let retwe = await retweet(data.id, final);
 
-      console.log(retwe);
+      // prepending retweet to feed
+
+      parent = await getTweet(retwe.parentId);
+      let userParent = await getUser(parent.userId);
+      element = `.feed`;
+      if (parent == "Tweet has been deleted.") {
+              $(`${element}`).prepend(`
+                  <article class="media tweet-${retwe.id}">
+                    <br>  
+                    <div class="box media-content">
+                      <article class="media">
+                        <figure class="media-left">
+                          <div class="image is-64x64">
+                            <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                          </div>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content type-${retwe.userId} clickReply-${retwe.id}">
+                            <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                            <div class="edit-area-${retwe.id}-${index}">
+                            ${retwe.body}
+                            </div>
+                            <br>
+                            <article class="media">
+                              <br>
+                              <div class="media-content">
+                                <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                              </div>
+                              <br>
+                            </article>
+                          </div>
+                          <div class="retweet-reply-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}"></div>
+                        </div>
+                      </article>
+                    </div>
+                  </article>
+              `);
+          } else if ( parent.mediaType == "image" ) {
+            $(`${element}`).prepend(`
+                <article class="media tweet-${retwe.id}">
+                <br>
+                  <div class="box media-content">
+                    <article class="media">
+                      <figure class="media-left">
+                        <div class="image is-64x64">
+                          <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                        </div>
+                      </figure>
+                      <div class="media-content">
+                        <div class="content type-${retwe.userId}">
+                            <div class="clickReply-${retwe.id}">
+                              <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                              <div class="edit-area-${retwe.id}-${index}">
+                                ${retwe.body}
+                              </div>
+                              <br>
+                            </div>
+                            <article class="media">
+                              <figure class="media-left">
+                                <div class="image is-64x64">
+                                  <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
+                                </div>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${parent.userId}">
+                                  <div class="clickReply-${parent.id}">
+                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                    <br>
+                                    ${parent.body}
+                                    <br>
+                                    <img class="has-ratio" width="50%" height="50%" src="${parent.imageLink}">
+                                    <br>
+                                  </div>
+                                </div>
+                              </div>
+                            </article>
+                        </div>
+                        <div class="retweet-reply-${retwe.id}-${index}"></div>
+                        <div class="buttons-${retwe.id}-${index}"></div>
+                      </div>
+                    </article>
+                    
+                  </div>
+
+                </article>
+            `);
+          
+          } else if( parent.mediaType == "video" ) { 
+            $(`${element}`).prepend(`
+                <article class="media tweet-${retwe.id}">
+                  <br>
+                  <div class="box media-content">
+                    <article class="media">
+                      <figure class="media-left">
+                        <div class="image is-64x64">
+                          <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                        </div>
+                      </figure>
+                      <div class="media-content">
+                        <div class="content type-${retwe.userId}">
+                          <div class="clickReply-${retwe.id}">
+                            <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                            <div class="edit-area-${retwe.id}-${index}">
+                              ${retwe.body}
+                            </div>
+                            <br>
+                            </div>
+                            <article class="media">
+                              <figure class="media-left">
+                                <div class="image is-64x64">
+                                  <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
+                                </div>
+                              </figure>
+                              <div class="media-content">
+                                <div class="content type-${parent.userId} clickReply-${parent.id}">
+                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                    <br>
+                                    ${parent.body}
+                                    <br>
+                                    <figure class="image is-16by9">
+                                      <iframe class="has-ratio" src="https://www.youtube.com/embed/${parent.videoId}" frameborder="0" allowfullscreen></iframe>
+                                    </figure>
+                                </div>
+                              </div>
+                            </article>
+                        </div>
+                        <div class="retweet-reply-${retwe.id}-${index}"></div>
+                        <div class="buttons-${retwe.id}-${index}"></div>
+                      </div>
+                    </article>
+                    
+                  </div>
+
+                </article>
+            `);
+
+          } else if (parent.type == "reply") {
+            let replyParent = await getTweet(parent.parentId);
+              $(`${element}`).prepend(`
+                  <article class="media tweet-${retwe.id}">
+                    <br>  
+                    <div class="box media-content">
+                      <article class="media">
+                        <figure class="media-left">
+                          <div class="image is-64x64">
+                            <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                          </div>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content type-${retwe.userId}">
+                              <div class="clickReply-${retwe.id}">
+                                <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                                <div class="edit-area-${retwe.id}-${index}">
+                                  ${retwe.body}
+                                </div>
+                                <br>
+                              </div>
+                              <article class="media">
+                                <figure class="media-left">
+                                  <div class="image is-64x64">
+                                    <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
+                                  </div>
+                                </figure>
+                                <div class="media-content">
+                                  <div class="content type-${parent.userId} clickReply-${parent.id}">
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                      <div>
+                                      ${parent.body}
+                                      </div>
+                                      <br>
+                                  </div>
+                                </div>
+                              </article>
+                          </div>
+                          <button class=" button is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
+                          <br>
+                          <br>
+                          <div class="retweet-reply-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}"></div>
+                        </div>
+                      </article>
+                      
+                    </div>
+                  </article>
+              `);
+            
+              renderTweetReplies(replyParent);
+          } else {
+            $(`${element}`).prepend(`
+                  <article class="media tweet-${retwe.id}">
+                    <br>  
+                    <div class="box media-content">
+                      <article class="media">
+                        <figure class="media-left">
+                          <div class="image is-64x64">
+                            <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                          </div>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content type-${retwe.userId}">
+                              <div class="clickReply-${retwe.id}">
+                                <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                                <div class="edit-area-${retwe.id}-${index}">
+                                  ${retwe.body}
+                                </div>
+                                <br>
+                              </div>
+                              <article class="media">
+                                <figure class="media-left">
+                                  <div class="image is-64x64">
+                                    <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
+                                  </div>
+                                </figure>
+                                <div class="media-content">
+                                  <div class="content type-${parent.userId} clickReply-${parent.id}">
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                      <div>
+                                      ${parent.body}
+                                      </div>
+                                      <br>
+                                  </div>
+                                </div>
+                              </article>
+                          </div>
+                          <div class="retweet-reply-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}"></div>
+                        </div>
+                      </article>
+                      
+                    </div>
+                  </article>
+              `);
+          }
+        renderTweetReplies(parent);
+        imageToProfile(userParent.id)
+        like(retwe, liked);
+        editButton(retwe, index);
+        retweetButton(retwe, index);
+        replyButton(retwe, index);
+        deleteButton(retwe);
+        renderTweetReplies(retwe);
+        imageToProfile(user.id);
+
+        
 
       $(`.retweet-${data.id}`).replaceWith(`
         <button class="button retweet-${data.id}-${index} is-info is-small"> Retweet: ${data.retweetCount} </button>
