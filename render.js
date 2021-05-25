@@ -60,7 +60,7 @@ async function renderProfile(id) {
             <div class="user_profile-${user.id}">
             <article class="media">
             <figure class="media-left">
-              <div class="image is-256x256">
+              <div class="image is-128x128">
                 <img class="is-rounded" src="${user.avatar}">
               </div>
             </figure>
