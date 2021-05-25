@@ -198,6 +198,7 @@ async function renderUserProfile(user) {
         <div class="box">
           <article class="message">
               <div class="message-header">
+                Edit Page
                 <button class="delete deleteReply-${user.id}"></button>
               </div>
             </article>
@@ -315,7 +316,7 @@ async function renderUserProfile(user) {
                       "avatar": updatedAvatar,
                       "profileDescription": updatedProfileDescription,
                       "currentPassword": currentPassword,
-                      userId: localStorage.getItem(`uid`)
+                      "userId": localStorage.getItem(`uid`)
                   },
               });
               } catch {
