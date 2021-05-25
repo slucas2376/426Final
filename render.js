@@ -378,7 +378,7 @@ async function renderNewTweet(data, element) {
         }
       }
 
-      if (data[i] != {}) {
+      if (data[i] != {} || data[i] != undefined) {
         await renderTweetBody(data[i], element, bool);
       }
 
