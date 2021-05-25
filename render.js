@@ -94,6 +94,11 @@ async function renderProfile(id) {
 }
 
 function userButtons(user) {
+  // removing listeners from the major buttons
+  $(`#${user.id}-posted`).ofF();
+  $(`#${user.id}-likes`).off();
+  $(`#${user.id}-retweeted`).off()
+
   $(`.exitUser-${user.id}`).on('click', () => {
     $(`.${user.id}-profile`).remove();
   });
