@@ -102,7 +102,8 @@ function userButtons(user) {
 
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
-    let tweetsToAdd = await getUsersTweets(user.id, "posts")
+    let tweetsToAdd = await getUsersTweets(user.id, "posts");
+    $(document.getElementById(`${user.id}-tweets`)).empty();
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     $(`#${user.id}-posted`).ofF();
     $(`#${user.id}-likes`).off();
@@ -643,6 +644,7 @@ async function renderTweetBody(data, element, liked) {
                                 </article>
                             </div>
                             <button class=" button is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
+                            <br>
                             <div class="retweet-reply-${data.id}-${index}"></div>
                             <div class="buttons-${data.id}-${index}"></div>
                           </div>
