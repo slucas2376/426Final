@@ -1108,6 +1108,9 @@ function retweetButton(data, index) {
 
       let retwe = await retweet(data.id, final);
       await renderTweetBody(retwe, `.feed`, false);
+      $(`.retweet-${data.id}`).replaceWith(`
+        <button class="button retweet-${data.id}-${index} is-info is-small"> Retweet: ${data.retweetCount} </button>
+      `)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
       <div class="retweet-reply-${data.id}-${index}"></div>
@@ -1130,6 +1133,7 @@ function retweetButton(data, index) {
 }
 
 function replyButton(data, index) {
+
   $(`.reply-${data.id}-${index}`).on('click', () => {
     $(`.edit-${data.id}-${index}`).off();
     $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
@@ -1147,6 +1151,10 @@ function replyButton(data, index) {
       </div>
       <br>
     </div>
+    `);
+
+    $(`.reply-${data.id}-${index}`).replaceWith(`
+      <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
     `);
 
     $(`.reply-submit-${data.id}-${index}`).on('click', async () => {
