@@ -576,8 +576,57 @@ async function renderTweetBody(data, element, liked) {
                   </article>
               `);
 
-            } else {
+            } else if (parent.type == "reply") {
+              let replyParent = await getTweet(parent.id)
                 $(`${element}`).append(`
+                    <article class="media tweet-${data.id}">
+                      <br>  
+                      <div class="box media-content">
+                        <article class="media">
+                          <figure class="media-left">
+                            <div class="image is-64x64">
+                              <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                            </div>
+                          </figure>
+                          <div class="media-content">
+                            <div class="content type-${data.userId}">
+                                <div class="clickReply-${data.id}">
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}</small>
+                                  <div class="edit-area-${data.id}-${index}">
+                                    ${data.body}
+                                  </div>
+                                  <br>
+                                </div>
+                                <article class="media">
+                                  <figure class="media-left">
+                                    <div class="image is-64x64">
+                                      <img class="is-rounded userGate-${userParent.id}" src="${userParent.avatar}">
+                                    </div>
+                                  </figure>
+                                  <div class="media-content">
+                                    <div class="content type-${parent.userId} clickReply-${parent.id}">
+                                        <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                        <div>
+                                        ${parent.body}
+                                        </div>
+                                        <br>
+                                        <button class="has-info clickReply-${replyParent.id}"> Show Origin Feed </button>
+                                    </div>
+                                  </div>
+                                </article>
+                            </div>
+                            <div class="retweet-reply-${data.id}-${index}"></div>
+                            <div class="buttons-${data.id}-${index}"></div>
+                          </div>
+                        </article>
+                        
+                      </div>
+                    </article>
+                `);
+              
+                renderTweetReplies(replyParent);
+            } else {
+              $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
                       <br>  
                       <div class="box media-content">
