@@ -1513,7 +1513,7 @@ async function editUser(id, name, pass, avat, descript, curpass) {
     const result = await axios.put(`https://api.426twitter20.com/users/${id}`, {
       userId: id,
       displayName: name,
-      password: pass,
+      updatedPassword: pass,
       avatar: avat,
       profileDescription: descript,
       currentPassword: curpass
