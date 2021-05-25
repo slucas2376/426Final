@@ -111,8 +111,8 @@ function userButtons(user) {
     let tweetsToAdd = await getUsersTweets(user.id, "posts");
 
     for (let i = 0; i <tweetsToAdd.length; i++ ) {
-      if(data[i].type == "reply") {
-        delete data[i];
+      if(tweetsToAdd[i].type == "reply") {
+        delete tweetsToAdd[i];
       }
     }
 
