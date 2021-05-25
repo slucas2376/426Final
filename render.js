@@ -1096,7 +1096,7 @@ function retweetButton(data, index) {
       let retwe = newRetwe.data;
 
       // prepending retweet to feed
-
+      let user = await getUser(data.userId)
       let parent = await getTweet(retwe.parentId);
       let userParent = await getUser(parent.userId);
       let element = `.feed`;
