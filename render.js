@@ -1331,13 +1331,22 @@ function retweetButton(data, index) {
           }
         renderTweetReplies(parent);
         imageToProfile(userParent.id)
-        like(retwe, liked);
+        like(retwe, false);
         editButton(retwe, index);
         retweetButton(retwe, index);
         replyButton(retwe, index);
         deleteButton(retwe);
         renderTweetReplies(retwe);
         imageToProfile(user.id);
+
+        $('#newTweet').remove();
+          $(`.feed`).prepend(`
+            <form class="level" id="newTweet">
+              <button class="button is-primary tweet">Tweet</button>
+            </form>
+          `);
+
+        tweetButton();
 
         
 
