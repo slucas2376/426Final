@@ -70,8 +70,8 @@ async function renderProfile(id) {
             </figure>
             <div class="media-content">
               <div class="box"
-                <h2 class="subtitle">Username: ${user.id}</h2>
-                <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+                <h2 class="subtitle">UserId: ${user.id}</h2>
+                <h2 class="subtitle">Profile Name: ${user.displayName}</h2>
                 <h2 class="subtitle">Description: ${user.profileDescription}</h2>
               </div>              
             </div>
