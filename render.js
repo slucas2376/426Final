@@ -129,7 +129,6 @@ $(document).ready(function() {
   });
 });
 
-
 async function getUsersTweets(userId, type) {
   const result = await axios.get(`https://api.426twitter20.com/tweets/user/${type}/${userId}`);
   return result.data;
@@ -138,13 +137,6 @@ async function getUsersTweets(userId, type) {
 async function getUserLikes(userId) {
   const result = await axios.get(`https://api.426twitter20.com/tweets/user/likes/${userId}`)
   return result.data;
-}
-
-
-async function viewUserProfile(user) {
-  ('.userProfile').on('click', async(e) => {
-    await renderUserProfile(user);
-  });
 }
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
