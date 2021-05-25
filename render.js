@@ -109,6 +109,13 @@ function userButtons(user) {
   // view button handlers
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
     let tweetsToAdd = await getUsersTweets(user.id, "posts");
+
+    for (let i = 0; i <tweetsToAdd.length; i++ ) {
+      if(data[i].type == "reply") {
+        delete data[i];
+      }
+    }
+
     $(document.getElementById(`${user.id}-tweets`)).empty();
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     
@@ -401,26 +408,6 @@ async function renderUserProfile(user) {
       });
     });
 
-}
-
-async function renderUserData(id, type, element) {
-    $(`.${element}`).replaceWith(`<div class="${element}"></div>`);
-    
-    let user = await getUser(id);
-    
-    if (type == "liked") {
-      
-      await renderNewTweet(user.likedTweets, `.${element}`);
-
-    } else if (type == "retweet") {
-
-      await renderNewTweet(user.hasRetweeted, `.${element}`);
-
-    } else if (type == "posted") {
-
-      await renderNewTweet(user.postedTweets, `.${element}`);
-
-    }
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
