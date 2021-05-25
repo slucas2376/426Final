@@ -614,7 +614,7 @@ async function renderTweetBody(data, element, liked) {
                                   </div>
                                 </article>
                             </div>
-                            <button class="is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
+                            <button class=" button is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
                             <div class="retweet-reply-${data.id}-${index}"></div>
                             <div class="buttons-${data.id}-${index}"></div>
                           </div>
