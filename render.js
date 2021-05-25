@@ -315,12 +315,12 @@ async function renderUserProfile(user) {
                   url: 'https://api.426twitter20.com/users/' + user.id,
                   withCredentials: true,
                   data: {
+                      "userId": localStorage.getItem(`uid`),
+                      "currentPassword": currentPassword,
                       "displayName": updatedDisplayName,
                       "password": updatedPassword,
                       "avatar": updatedAvatar,
-                      "profileDescription": updatedProfileDescription,
-                      "currentPassword": currentPassword,
-                      "userId": localStorage.getItem(`uid`)
+                      "profileDescription": updatedProfileDescription,                  
                   },
               });
               } catch {
