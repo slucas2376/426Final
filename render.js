@@ -83,53 +83,40 @@ async function renderProfile(id) {
         </div>
       `)
 
-    $(`.exitUser-${user.id}`).on('click', () => {
-      $(`.${user.id}-profile`).remove();
-    });
+    userButtons(user);
 
-    // view button handlers
-    $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
-      let tweetsToAdd = await getUsersTweets(user.id, "posts")
-      $(`.buttons-${user.id}`).replaceWith(`
-        <div class="buttons-${user.id} center">
-          <button class="button is-primary is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
-          <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
-          <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
-        </div>
-      `);
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    })
-    $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
-      let tweetsToAdd = await getUsersTweets(user.id, "likes");
-      $(document.getElementById(`${user.id}-tweets`)).empty();
-      $(`.buttons-${user.id}`).replaceWith(`
-        <div class="buttons-${user.id} center">
-          <button class="button is-primary is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
-          <button class="button is-link is-primary" id="${user.id}-liked">View Liked Tweets</button>
-          <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
-        </div>
-      `);
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    })
-    $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
-      let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
-      $(document.getElementById(`${user.id}-tweets`)).empty();
-      $(`.buttons-${user.id}`).replaceWith(`
-        <div class="buttons-${user.id} center">
-          <button class="button is-primary is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
-          <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
-          <button class="button is-link is-primary" id="${user.id}-retweeted">View Retweets</button>
-        </div>
-      `);
-      // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-      await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
-    });
   }
   /*// column delete button handler; replace `${user.id}-profile-remove` with whatever the column delete button is actually being called
   // (and make sure it's in an id field, or that you use the get by class functionality instead of get by ID)
   $(document.getElementById(`${user.id}-profile-remove`)).on('click', () => {
       $(document.getElementById(`${user.id}-profile`)).remove();
   })*/
+}
+
+function userButtons(user) {
+  $(`.exitUser-${user.id}`).on('click', () => {
+    $(`.${user.id}-profile`).remove();
+  });
+
+  // view button handlers
+  $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
+    let tweetsToAdd = await getUsersTweets(user.id, "posts")
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    userButtons(user);
+  })
+  $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
+    let tweetsToAdd = await getUsersTweets(user.id, "likes");
+    $(document.getElementById(`${user.id}-tweets`)).empty();
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    userButtons(user);
+  })
+  $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
+    let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
+    $(document.getElementById(`${user.id}-tweets`)).empty();
+    // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    userButtons(user);
+  });
 }
 
 // autocomplete user search code; if this messes up the on-document-loading code then probably port it up there with whatever syntax changes are necessary
