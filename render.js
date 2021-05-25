@@ -1097,9 +1097,9 @@ function retweetButton(data, index) {
 
       // prepending retweet to feed
 
-      parent = await getTweet(retwe.parentId);
+      let parent = await getTweet(retwe.parentId);
       let userParent = await getUser(parent.userId);
-      element = `.feed`;
+      let element = `.feed`;
       if (parent == "Tweet has been deleted.") {
               $(`${element}`).prepend(`
                   <article class="media tweet-${retwe.id}">
