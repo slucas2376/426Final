@@ -280,7 +280,11 @@ async function renderUserProfile(user) {
             let updatedAvatar = $(`.new-avatar`).val();
             let updatedProfileDescription = $(`.new-description`).val();
             let currentPassword = $(`.current-password`).val();
-
+            console.log(updateDisplayName);
+            console.log(updatedPassword);
+            console.log(updatedAvatar);
+            console.log(updatedProfileDescription);
+            console.log(currentPassword);
             if (updatedDisplayName == "") {
               updatedDisplayName = user.displayName;
             }
@@ -358,6 +362,30 @@ async function renderUserProfile(user) {
     //click handler for delete button
     $(`#delete-profile`).on('click', async(e) => {
         //axios request
+
+        try {
+          const result = await axios({
+            method: 'put',
+            url: 'https://api.426twitter20.com/users/' + user.id,
+            withCredentials: true,
+            data: {
+                "displayName": updatedDisplayName,
+                "password": updatedPassword,
+                "avatar": updatedAvatar,
+                "profileDescription": updatedProfileDescription,
+                "currentPassword": currentPassword
+            },
+        });
+        } catch {
+          $(`.fail-message`).replaceWith(`
+            <label class="label has-text-centered is-danger fail-message">
+              You didn't enter you correct, original password. Please try again.
+            </label>
+          `);
+
+          return false;
+        }
+
         const result = await axios({
             method: 'delete',
             url: 'https://api.426twitter20.com/users/' + user.id,
