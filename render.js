@@ -192,6 +192,9 @@ async function renderUserProfile(user) {
     
     $('.columns').append(`
     <div class="column edit-${user.id}">
+        <div class="title has-text-centered">
+          Edit Profile
+        </div>
         <div class="box">
           <article class="message">
               <div class="message-header">
@@ -214,17 +217,10 @@ async function renderUserProfile(user) {
         let form = `
         <form class="fillout box">
                 <div class="field">
-                    <label class="label  has-text-centered">Edit your profile!</label>
+                    <label class="label  has-text-centered">Remember, the page will reload once changes are submited!</label>
                     <label class="label">Display Name</label>
                     <div class="control">
                       <textarea class="textarea display-name small" placeholder="${user.displayName}" form=".fillout box"></textarea>
-                    </div>
-                </div>
-    
-                <div class="field">
-                    <div class="control">
-                        <label class="label">Password</label>
-                        <textarea class="textarea new-password small" placeholder="${user.password}" form=".fillout box"></textarea>
                     </div>
                 </div>
 
@@ -240,6 +236,23 @@ async function renderUserProfile(user) {
                     <textarea class="textarea new-description small" placeholder="${user.profileDescription}" form=".fillout box"></textarea>
                   </div>
                 </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Current Password</label>
+                        <textarea class="textarea current-password small" placeholder="Needed to change any of your accounts properties" form=".fillout box"></textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="label">New Password</label>
+                        <textarea class="textarea new-password small" placeholder="Keep blank if you don't want to change your password" form=".fillout box"></textarea>
+                    </div>
+                </div>
+
+                <label class="label has-text-centered is-danger fail-message"></label>
+
                 <div class="field is-grouped is-grouped-centered">
                     <p class="control">
                         <a id="Save-Changes" class="button is-info">
@@ -266,6 +279,22 @@ async function renderUserProfile(user) {
             let updatedPassword = $(`.new-password`).val();
             let updatedAvatar = $(`.new-avatar`).val();
             let updatedProfileDescription = $(`.new-description`).val();
+            let currentPassword = $(`.current-password`).val();
+
+            if(currentPassword != "") {
+
+              try {
+
+              } catch {
+                $(`.fail-message`).replaceWith(`
+                  <label class="label has-text-centered is-danger fail-message">
+                    You didn't enter you correct, original password. Please try again.
+                  </label>
+                `);
+              }
+              
+            }
+
 
             if (updatedDisplayName == "") {
                 updatedDisplayName = user.displayName;
@@ -301,7 +330,7 @@ async function renderUserProfile(user) {
                 withCredentials: true,
             });
 
-            renderUserProfile(user2.data);
+            await renderUserProfile(user2.data);
         });
 
         //click handler for cancel button
@@ -315,7 +344,7 @@ async function renderUserProfile(user) {
                 withCredentials: true,
             });
 
-            renderUserProfile(user2.data);
+            await renderUserProfile(user2.data);
         });
     });
 
