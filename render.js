@@ -443,7 +443,7 @@ async function renderTweetBody(data, element, liked) {
 
         parent = await getTweet(data.parentId);
         let userParent = await getUser(parent.userId);
-
+        console.log(parent);
         if (parent == "Tweet has been deleted.") {
                 $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
@@ -511,6 +511,7 @@ async function renderTweetBody(data, element, liked) {
                                       ${parent.body}
                                       <br>
                                       <img class="has-ratio" width="50%" height="50%" src="${parent.imageLink}">
+                                      <br>
                                     </div>
                                   </div>
                                 </div>
