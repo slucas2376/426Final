@@ -1110,7 +1110,7 @@ function retweetButton(data, index) {
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
       `);
-      editButton(data.id, index);
+      editButton(data, index);
       retweetButton(data, index);
     });
   })
