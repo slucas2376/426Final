@@ -95,9 +95,6 @@ async function renderProfile(id) {
 
 function userButtons(user) {
   // removing listeners from the major buttons
-  $(`#${user.id}-posted`).ofF();
-  $(`#${user.id}-likes`).off();
-  $(`#${user.id}-retweeted`).off()
 
   $(`.exitUser-${user.id}`).on('click', () => {
     $(`.${user.id}-profile`).remove();
@@ -107,12 +104,18 @@ function userButtons(user) {
   $(document.getElementById(`${user.id}-posted`)).on('click', async () => {
     let tweetsToAdd = await getUsersTweets(user.id, "posts")
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    $(`#${user.id}-posted`).ofF();
+    $(`#${user.id}-likes`).off();
+    $(`#${user.id}-retweeted`).off()
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-liked`)).on('click', async () => {
     let tweetsToAdd = await getUsersTweets(user.id, "likes");
     $(document.getElementById(`${user.id}-tweets`)).empty();
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    $(`#${user.id}-posted`).ofF();
+    $(`#${user.id}-likes`).off();
+    $(`#${user.id}-retweeted`).off()
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
@@ -120,6 +123,9 @@ function userButtons(user) {
     $(document.getElementById(`${user.id}-tweets`)).empty();
     // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
     await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    $(`#${user.id}-posted`).ofF();
+    $(`#${user.id}-likes`).off();
+    $(`#${user.id}-retweeted`).off()
     userButtons(user);
   });
 }
