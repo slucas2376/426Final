@@ -213,7 +213,9 @@ async function renderUserProfile(user) {
     </div>
     `);
 
-    $(`.`)
+    $(`.deleteEditColumn-${user.id}`).on('click', () => {
+      $(`.edit-${user.id}`).remove();
+    })
 
     //click handler for edit button
     $(`.user_edit_button`).on('click', async(e) => {
