@@ -225,34 +225,34 @@ async function renderUserProfile(user) {
                     <label class="label  has-text-centered">Remember, the page will reload once changes are submited!</label>
                     <label class="label">Display Name</label>
                     <div class="control">
-                      <textarea class="textarea display-name small" placeholder="${user.displayName}" form=".fillout box"></textarea>
+                      <textarea class="textarea display-name small" placeholder="${user.displayName}" form="fillout box"></textarea>
                     </div>
                 </div>
 
                 <div class="field">
                   <div class="control">
                       <label class="label">Profile Avatar</label>
-                      <textarea class="textarea new-avatar small" placeholder="${user.avatar}" form=".fillout box"></textarea>
+                      <textarea class="textarea new-avatar small" placeholder="${user.avatar}" form="fillout box"></textarea>
                   </div>
                 </div>
                 <div class="field">
                   <div class="control">
                     <label class="label">Profile Description</label>
-                    <textarea class="textarea new-description small" placeholder="${user.profileDescription}" form=".fillout box"></textarea>
+                    <textarea class="textarea new-description small" placeholder="${user.profileDescription}" form="fillout box"></textarea>
                   </div>
                 </div>
 
                 <div class="field">
                     <div class="control">
                         <label class="label">Current Password</label>
-                        <textarea class="textarea current-password small" placeholder="Needed to change any of your accounts properties" form=".fillout box"></textarea>
+                        <textarea class="textarea current-password small" placeholder="Needed to change any of your accounts properties" form="fillout box"></textarea>
                     </div>
                 </div>
 
                 <div class="field">
                     <div class="control">
                         <label class="label">New Password</label>
-                        <textarea class="textarea new-password small" placeholder="Keep blank if you don't want to change your password" form=".fillout box"></textarea>
+                        <textarea class="textarea new-password small" placeholder="Keep blank if you don't want to change your password" form="fillout box"></textarea>
                     </div>
                 </div>
 
@@ -302,12 +302,6 @@ async function renderUserProfile(user) {
               updatedPassword = currentPassword;
             }
 
-            console.log(updatedDisplayName);
-            console.log(updatedPassword);
-            console.log(updatedAvatar);
-            console.log(updatedProfileDescription);
-            console.log(currentPassword);
-
             if(currentPassword != "") {
               try {
                 await editUser(localStorage.getItem('uid'), updatedDisplayName, updatedPassword, updatedAvatar, updatedProfileDescription, currentPassword);
@@ -331,16 +325,7 @@ async function renderUserProfile(user) {
                 return false;
             }
 
-            $(`.edit-${user.id}`).remove();
-
-            //get new user object
-            const user2 = await axios({
-                method: 'get',
-                url: 'https://api.426twitter20.com/users/' + user.id,
-                withCredentials: true,
-            });
-
-            await renderUserProfile(user2.data);
+            location.reload();
         });
 
         //click handler for cancel button
@@ -361,30 +346,49 @@ async function renderUserProfile(user) {
     //click handler for delete button
     $(`#delete-profile`).on('click', async(e) => {
         //axios request
+        let updatedDisplayName = $(`.display-name`).val();
+        let updatedPassword = $(`.new-password`).val();
+        let updatedAvatar = $(`.new-avatar`).val();
+        let updatedProfileDescription = $(`.new-description`).val();
+        let currentPassword = $(`.current-password`).val();
 
-        try {
-          const result = await axios({
-            method: 'put',
-            url: 'https://api.426twitter20.com/users/' + user.id,
-            withCredentials: true,
-            data: {
-                "displayName": updatedDisplayName,
-                "password": updatedPassword,
-                "avatar": updatedAvatar,
-                "profileDescription": updatedProfileDescription,
-                "currentPassword": currentPassword,
-                "userId": localStorage.getItem(`uid`)
-            },
-        });
-        } catch {
-          $(`.fail-message`).replaceWith(`
-            <label class="label has-text-centered is-danger fail-message">
-              You didn't enter you correct, original password. Please try again.
-            </label>
-          `);
-
-          return false;
+        if (updatedDisplayName == "") {
+          updatedDisplayName = user.displayName;
         }
+
+        if (updatedProfileDescription == "") {
+          updatedProfileDescription = user.profileDescription;
+        }
+
+        if (updatedAvatar == "") {
+          updatedAvatar = user.avatar;
+        }
+
+        if (updatedPassword == "") {
+          updatedPassword = currentPassword;
+        }
+
+        if(currentPassword != "") {
+          try {
+            await editUser(localStorage.getItem('uid'), updatedDisplayName, updatedPassword, updatedAvatar, updatedProfileDescription, currentPassword);
+          } catch {
+            $(`.fail-message`).replaceWith(`
+              <label class="label has-text-centered is-danger fail-message">
+                You need the correct password when deleting your profile.
+              </label>
+            `);
+            return false;
+          }
+              
+          } else {
+            $(`.fail-message`).replaceWith(`
+              <label class="label has-text-centered is-danger fail-message">
+                You didn't enter you correct password. Please try again.
+              </label>
+            `);
+
+            return false;
+          }
 
         const result = await axios({
             method: 'delete',
