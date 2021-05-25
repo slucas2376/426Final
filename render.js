@@ -280,11 +280,7 @@ async function renderUserProfile(user) {
             let updatedAvatar = $(`.new-avatar`).val();
             let updatedProfileDescription = $(`.new-description`).val();
             let currentPassword = $(`.current-password`).val();
-            console.log(updatedDisplayName);
-            console.log(updatedPassword);
-            console.log(updatedAvatar);
-            console.log(updatedProfileDescription);
-            console.log(currentPassword);
+
             if (updatedDisplayName == "") {
               updatedDisplayName = user.displayName;
             }
@@ -297,8 +293,17 @@ async function renderUserProfile(user) {
               updatedAvatar = user.avatar;
             }
 
-            if(currentPassword != "") {
+            if (updatedPassword == "") {
+              updatedPassword = currentPassword;
+            }
 
+            console.log(updatedDisplayName);
+            console.log(updatedPassword);
+            console.log(updatedAvatar);
+            console.log(updatedProfileDescription);
+            console.log(currentPassword);
+
+            if(currentPassword != "") {
               try {
                 const result = await axios({
                   method: 'put',
@@ -309,7 +314,8 @@ async function renderUserProfile(user) {
                       "password": updatedPassword,
                       "avatar": updatedAvatar,
                       "profileDescription": updatedProfileDescription,
-                      "currentPassword": currentPassword
+                      "currentPassword": currentPassword,
+                      userId: localStorage.getItem(`uid`)
                   },
               });
               } catch {
@@ -373,7 +379,8 @@ async function renderUserProfile(user) {
                 "password": updatedPassword,
                 "avatar": updatedAvatar,
                 "profileDescription": updatedProfileDescription,
-                "currentPassword": currentPassword
+                "currentPassword": currentPassword,
+                userId: localStorage.getItem(`uid`)
             },
         });
         } catch {
@@ -389,6 +396,9 @@ async function renderUserProfile(user) {
         const result = await axios({
             method: 'delete',
             url: 'https://api.426twitter20.com/users/' + user.id,
+            data: {
+              userId: localStorage.getItem(`uid`)
+            },
             withCredentials: true,
         });
 
@@ -396,6 +406,9 @@ async function renderUserProfile(user) {
         const result2 = await axios({
             method: 'get',
             url: 'https://api.426twitter20.com/logout',
+            data: {
+              userId: localStorage.getItem(`uid`)
+            },
             withCredentials: true,
         });
 
