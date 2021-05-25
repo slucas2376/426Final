@@ -280,7 +280,7 @@ async function renderUserProfile(user) {
             let updatedAvatar = $(`.new-avatar`).val();
             let updatedProfileDescription = $(`.new-description`).val();
             let currentPassword = $(`.current-password`).val();
-            console.log(updateDisplayName);
+            console.log(updatedDisplayName);
             console.log(updatedPassword);
             console.log(updatedAvatar);
             console.log(updatedProfileDescription);
