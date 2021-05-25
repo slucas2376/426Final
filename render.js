@@ -206,8 +206,7 @@ async function renderUserProfile(user) {
             <h2 class="subtitle">Username: ${user.id}</h2>
             <h2 class="subtitle">Display Name: ${user.displayName}</h2>
             <h2 class="subtitle">Description: ${user.profileDescription}</h2>
-            <button type="submit" class="user_edit_button is-button is-info">Edit User</button>
-            <button type="submit" class="user_delete_button is-button is-danger">Delete User</button>
+            <button type="submit" class=" button user_edit_button is-button is-info is-center">Edit User</button>
             </div>
         </div>
     </div>
@@ -341,76 +340,67 @@ async function renderUserProfile(user) {
 
             await renderUserProfile(user2.data);
         });
-    });
 
-    //click handler for delete button
-    $(`#delete-profile`).on('click', async(e) => {
-        //axios request
-        let updatedDisplayName = $(`.display-name`).val();
-        let updatedPassword = $(`.new-password`).val();
-        let updatedAvatar = $(`.new-avatar`).val();
-        let updatedProfileDescription = $(`.new-description`).val();
-        let currentPassword = $(`.current-password`).val();
+         //click handler for delete button
+    $(`#delete-profile`).on('click', async() => {
+      //axios request
+      let updatedDisplayName = $(`.display-name`).val();
+      let updatedPassword = $(`.new-password`).val();
+      let updatedAvatar = $(`.new-avatar`).val();
+      let updatedProfileDescription = $(`.new-description`).val();
+      let currentPassword = $(`.current-password`).val();
 
-        if (updatedDisplayName == "") {
-          updatedDisplayName = user.displayName;
+      if (updatedDisplayName == "") {
+        updatedDisplayName = user.displayName;
+      }
+
+      if (updatedProfileDescription == "") {
+        updatedProfileDescription = user.profileDescription;
+      }
+
+      if (updatedAvatar == "") {
+        updatedAvatar = user.avatar;
+      }
+
+      if (updatedPassword == "") {
+        updatedPassword = currentPassword;
+      }
+
+      if(currentPassword != "") {
+        try {
+          await editUser(localStorage.getItem('uid'), updatedDisplayName, updatedPassword, updatedAvatar, updatedProfileDescription, currentPassword);
+        } catch {
+          $(`.fail-message`).replaceWith(`
+            <label class="label has-text-centered is-danger fail-message">
+              You need the correct password when deleting your profile.
+            </label>
+          `);
+          return false;
         }
+            
+        } else {
+          $(`.fail-message`).replaceWith(`
+            <label class="label has-text-centered is-danger fail-message">
+              You didn't enter you correct password. Please try again.
+            </label>
+          `);
 
-        if (updatedProfileDescription == "") {
-          updatedProfileDescription = user.profileDescription;
+          return false;
         }
-
-        if (updatedAvatar == "") {
-          updatedAvatar = user.avatar;
-        }
-
-        if (updatedPassword == "") {
-          updatedPassword = currentPassword;
-        }
-
-        if(currentPassword != "") {
-          try {
-            await editUser(localStorage.getItem('uid'), updatedDisplayName, updatedPassword, updatedAvatar, updatedProfileDescription, currentPassword);
-          } catch {
-            $(`.fail-message`).replaceWith(`
-              <label class="label has-text-centered is-danger fail-message">
-                You need the correct password when deleting your profile.
-              </label>
-            `);
-            return false;
-          }
-              
-          } else {
-            $(`.fail-message`).replaceWith(`
-              <label class="label has-text-centered is-danger fail-message">
-                You didn't enter you correct password. Please try again.
-              </label>
-            `);
-
-            return false;
-          }
 
         const result = await axios({
-            method: 'delete',
-            url: 'https://api.426twitter20.com/users/' + user.id,
-            data: {
-              userId: localStorage.getItem(`uid`)
-            },
-            withCredentials: true,
+          method: 'delete',
+          url: 'https://api.426twitter20.com/users/' + user.id,
+          data: {
+            userId: localStorage.getItem(`uid`)
+          },
+          withCredentials: true,
         });
 
-        //axios request again
-        const result2 = await axios({
-            method: 'get',
-            url: 'https://api.426twitter20.com/logout',
-            data: {
-              userId: localStorage.getItem(`uid`)
-            },
-            withCredentials: true,
-        });
-
-        window.location.replace("index.html");
+        wSindow.location.replace("index.html");
+      });
     });
+
 }
 
 async function renderUserData(id, type, element) {
