@@ -577,7 +577,7 @@ async function renderTweetBody(data, element, liked) {
               `);
 
             } else if (parent.type == "reply") {
-              let replyParent = await getTweet(parent.id)
+              let replyParent = await getTweet(parent.parentId);
                 $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
                       <br>  
@@ -610,11 +610,11 @@ async function renderTweetBody(data, element, liked) {
                                         ${parent.body}
                                         </div>
                                         <br>
-                                        <button class="has-info clickReply-${replyParent.id}"> Show Origin Feed </button>
                                     </div>
                                   </div>
                                 </article>
                             </div>
+                            <button class="is-info clickReply-${parent.parentId} is-small"> Show Origin Feed </button>
                             <div class="retweet-reply-${data.id}-${index}"></div>
                             <div class="buttons-${data.id}-${index}"></div>
                           </div>
