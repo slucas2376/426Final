@@ -779,7 +779,7 @@ async function renderTweetBody(data, element, liked) {
     if (user.id == localStorage.getItem('uid')) {
       $(`.buttons-${data.id}-${index}`).replaceWith(`
         <div class="buttons-${data.id}-${index}">
-          <button class="button like-${data.id} is-info is-small">Like</button>
+          <button class="button like-${data.id} is-info is-small">Like: ${data.likeCount}</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
           <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount}</button>
           <button class="button edit-${data.id}-${index} is-info is-small">Edit</button>
@@ -790,7 +790,7 @@ async function renderTweetBody(data, element, liked) {
      } else {
       $(`.buttons-${data.id}-${index}`).replaceWith(`
         <div class="buttons-${data.id}-${index}">
-          <button class="button like-${data.id} is-info is-small">Like</button>
+          <button class="button like-${data.id} is-info is-small">Like: ${data.likeCount}</button>
           <button class="button retweet-${data.id}-${index} is-info is-small">Retweet: ${data.retweetCount}</button>
           <button class="button reply-${data.id}-${index} is-info is-small">Reply: ${data.replyCount} </button>
        </div>
@@ -1096,7 +1096,7 @@ function retweetButton(data, index) {
       let retwe = newRetwe.data;
 
       // prepending retweet to feed
-      let user = await getUser(data.userId)
+      let user = await getUser(retwe.userId)
       let parent = await getTweet(retwe.parentId);
       let userParent = await getUser(parent.userId);
       let element = `.feed`;
@@ -1127,7 +1127,13 @@ function retweetButton(data, index) {
                             </article>
                           </div>
                           <div class="retweet-reply-${retwe.id}-${index}"></div>
-                          <div class="buttons-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}">
+                            <button class="button like-${retwe.id} is-info is-small">Like: ${retwe.likeCount}</button>
+                            <button class="button retweet-${retwe.id}-${index} is-info is-small">Retweet: ${retwe.retweetCount}</button>
+                            <button class="button reply-${retwe.id}-${index} is-info is-small">Reply: ${retwe.replyCount}</button>
+                            <button class="button edit-${retwe.id}-${index} is-info is-small">Edit</button>
+                            <button class="button delete-${retwe.id} is-danger is-small"> Delete </button>
+                        </div>
                         </div>
                       </article>
                     </div>
@@ -1174,7 +1180,13 @@ function retweetButton(data, index) {
                             </article>
                         </div>
                         <div class="retweet-reply-${retwe.id}-${index}"></div>
-                        <div class="buttons-${retwe.id}-${index}"></div>
+                        <div class="buttons-${retwe.id}-${index}">
+                          <button class="button like-${retwe.id} is-info is-small">Like: ${retwe.likeCount}</button>
+                          <button class="button retweet-${retwe.id}-${index} is-info is-small">Retweet: ${retwe.retweetCount}</button>
+                          <button class="button reply-${retwe.id}-${index} is-info is-small">Reply: ${retwe.replyCount}</button>
+                          <button class="button edit-${retwe.id}-${index} is-info is-small">Edit</button>
+                          <button class="button delete-${retwe.id} is-danger is-small"> Delete </button>
+                        </div>
                       </div>
                     </article>
                     
@@ -1223,7 +1235,13 @@ function retweetButton(data, index) {
                             </article>
                         </div>
                         <div class="retweet-reply-${retwe.id}-${index}"></div>
-                        <div class="buttons-${retwe.id}-${index}"></div>
+                        <div class="buttons-${retwe.id}-${index}">
+                          <button class="button like-${retwe.id} is-info is-small">Like: ${retwe.likeCount}</button>
+                          <button class="button retweet-${retwe.id}-${index} is-info is-small">Retweet: ${retwe.retweetCount}</button>
+                          <button class="button reply-${retwe.id}-${index} is-info is-small">Reply: ${retwe.replyCount}</button>
+                          <button class="button edit-${retwe.id}-${index} is-info is-small">Edit</button>
+                          <button class="button delete-${retwe.id} is-danger is-small"> Delete </button>
+                        </div>
                       </div>
                     </article>
                     
@@ -1274,7 +1292,13 @@ function retweetButton(data, index) {
                           <br>
                           <br>
                           <div class="retweet-reply-${retwe.id}-${index}"></div>
-                          <div class="buttons-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}">
+                            <button class="button like-${retwe.id} is-info is-small">Like: ${retwe.likeCount}</button>
+                            <button class="button retweet-${retwe.id}-${index} is-info is-small">Retweet: ${retwe.retweetCount}</button>
+                            <button class="button reply-${retwe.id}-${index} is-info is-small">Reply: ${retwe.replyCount}</button>
+                            <button class="button edit-${retwe.id}-${index} is-info is-small">Edit</button>
+                            <button class="button delete-${retwe.id} is-danger is-small"> Delete </button>
+                          </div>
                         </div>
                       </article>
                       
@@ -1321,7 +1345,13 @@ function retweetButton(data, index) {
                               </article>
                           </div>
                           <div class="retweet-reply-${retwe.id}-${index}"></div>
-                          <div class="buttons-${retwe.id}-${index}"></div>
+                          <div class="buttons-${retwe.id}-${index}">
+                            <button class="button like-${retwe.id} is-info is-small">Like: ${retwe.likeCount}</button>
+                            <button class="button retweet-${retwe.id}-${index} is-info is-small">Retweet: ${retwe.retweetCount}</button>
+                            <button class="button reply-${retwe.id}-${index} is-info is-small">Reply: ${retwe.replyCount}</button>
+                            <button class="button edit-${retwe.id}-${index} is-info is-small">Edit</button>
+                            <button class="button delete-${retwe.id} is-danger is-small"> Delete </button>
+                          </div>
                         </div>
                       </article>
                       
