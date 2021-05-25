@@ -912,12 +912,11 @@ async function renderMainFeed() {
 
 function editButton(data, index) {
 
-  $(`.clickReply-${data.id}`).off();
-  $(`.retweet-${data.id}-${index}`).off();
-  $(`.reply-${data.id}-${index}`).off();
-
   $(`.edit-${data.id}-${index}`).on('click', () => {
-
+    $(`.clickReply-${data.id}`).off();
+    $(`.retweet-${data.id}-${index}`).off();
+    $(`.reply-${data.id}-${index}`).off();
+    
     if (data.mediaType == "video") {
       $(`.edit-area-${data.id}-${index}`).replaceWith(`
       <div class="edit-area-${data.id}">
