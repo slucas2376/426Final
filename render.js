@@ -1093,7 +1093,9 @@ function retweetButton(data, index) {
       let final = $(`.retweet-body-${data.id}-${index}`).val();
 
       let retwe = await retweet(data.id, final);
-      await renderTweetBody(retwe, `.feed`, false);
+
+      console.log(retwe);
+
       $(`.retweet-${data.id}`).replaceWith(`
         <button class="button retweet-${data.id}-${index} is-info is-small"> Retweet: ${data.retweetCount} </button>
       `)
