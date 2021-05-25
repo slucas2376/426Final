@@ -942,7 +942,7 @@ function editButton(data, index) {
     }
 
     $(`.edit-${data.id}-${index}`).replaceWith(`
-      <button class="button edit-${data.id}-${index} is-info is-small">edit</button>
+      <button class="button edit-${data.id}-${index} is-info is-small">Edit</button>
     `);
 
     $(`.submit-edit-${data.id}-${index}`).on('click', async () => {
