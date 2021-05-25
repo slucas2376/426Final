@@ -294,10 +294,6 @@ async function renderUserProfile(user) {
               updatedProfileDescription = user.profileDescription;
             }
 
-            if (updatedPassword == "") {
-              updatedPassword = user.password;
-            }
-
             if (updatedAvatar == "") {
               updatedAvatar = user.avatar;
             }
