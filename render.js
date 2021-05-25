@@ -1092,7 +1092,8 @@ function retweetButton(data, index) {
       data.retweetCount += 1;
       let final = $(`.retweet-body-${data.id}-${index}`).val();
 
-      let retwe = await retweet(data.id, final);
+      let newRetwe = await retweet(data.id, final);
+      let retwe = newRetwe.data;
 
       // prepending retweet to feed
 
