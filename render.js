@@ -1237,7 +1237,7 @@ function tweetButton() {
                          <iframe class="has-ratio" src="https://www.youtube.com/embed/${data.videoId}" frameborder="0" allowfullscreen></iframe>
                         </figure>
                       </div>
-                      <div class="retweet-reply-${result.id}-${index}"></div>
+                      <div class="retweet-reply-${result.id}-0"></div>
                       <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like</button>
@@ -1299,7 +1299,7 @@ function tweetButton() {
                         </div>
                         <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
-                      <div class="retweet-reply-${result.id}-${index}"></div>
+                      <div class="retweet-reply-${result.id}-0"></div>
                       <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like</button>
@@ -1354,7 +1354,7 @@ function tweetButton() {
                           <br>
                         </div>
                       </div>
-                      <div class="retweet-reply-${result.id}-${index}"></div>
+                      <div class="retweet-reply-${result.id}-0"></div>
                       <br>
                       <div class="buttons-${result.id}-0">
                         <button class="button like-${result.id} is-info is-small">Like: ${result.likeCount}</button>
