@@ -56,30 +56,28 @@ async function renderProfile(id) {
                 <button class="delete exitUser-${user.id}"></button>
               </div>
             </article>
+            
             <div class="user_profile-${user.id}">
-              <article class="media">
-                <figure class="media-left">
-                  <div class="image is-128x128">
-                    <img class="is-rounded" src="${user.avatar}">
-                  </div>
-                </figure>
-                <div class="media-content">
-                  <div class="box"
-                    <h2 class="subtitle">Username: ${user.id}</h2>
-                    <h2 class="subtitle">Display Name: ${user.displayName}</h2>
-                    <h2 class="subtitle">Description: ${user.profileDescription}</h2>
-                  </div>              
-                </div>
-              </article>
+            <article class="media">
+            <figure class="media-left">
+              <div class="image is-128x128">
+                <img class="is-rounded" src="${user.avatar}">
+              </div>
+            </figure>
+            <div class="media-content">
+              <div class="box"
+                <h2 class="subtitle">Username: ${user.id}</h2>
+                <h2 class="subtitle">Display Name: ${user.displayName}</h2>
+                <h2 class="subtitle">Description: ${user.profileDescription}</h2>
+              </div>              
             </div>
-          </div>
-          
-          <div class="buttons-${user.id} center">
-            <button class="button is-link is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
-            <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
-            <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
-          </div>
-          <div class="box has-background-info">
+          </article>
+              <div class="buttons-${user.id} center">
+                <button class="button is-link is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
+                <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
+                <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
+              </div>
+            </div>
             <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
           </div>
         </div>
