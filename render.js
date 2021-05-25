@@ -72,14 +72,13 @@ async function renderProfile(id) {
               </div>              
             </div>
           </article>
-
+              <br>
               <div class="buttons-${user.id} center">
                 <button class="button is-link is-fullwidth" id="${user.id}-posted">View Posted Tweets</button>
                 <button class="button is-link is-fullwidth" id="${user.id}-liked">View Liked Tweets</button>
                 <button class="button is-link is-fullwidth" id="${user.id}-retweeted">View Retweets</button>
               </div>
             </div>
-            <br>
             <div class="${user.id}-tweets" id="${user.id}-tweets"></div>
           </div>
         </div>
