@@ -1227,7 +1227,7 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.userId}">
+                      <div class="content type-${result.userId} clickReply-${result.id}">
                       <strong>${user.displayName}</strong> <small>@${user.id}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
@@ -1290,7 +1290,7 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.userId}">
+                      <div class="content type-${result.userId} clickReply-${result.id}">
                         <strong>${user.displayName}</strong> <small>@${user.id}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
@@ -1345,7 +1345,7 @@ function tweetButton() {
                       </p>
                     </figure>
                     <div class="media-content">
-                      <div class="content type-${result.id}">
+                      <div class="content type-${result.id} clickReply-${result.id}">
                       <strong>${user.displayName}</strong> <small>@${user.id}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
