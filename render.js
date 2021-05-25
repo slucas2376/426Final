@@ -1511,9 +1511,9 @@ async function deleteUser(id) {
 
 async function editUser(id, name, pass, avat, descript, curpass) {
     const result = await axios.put(`https://api.426twitter20.com/users/${id}`, {
+      updatedPassword: pass,
       userId: id,
       displayName: name,
-      updatedPassword: pass,
       avatar: avat,
       profileDescription: descript,
       currentPassword: curpass
