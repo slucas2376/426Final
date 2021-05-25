@@ -50,9 +50,13 @@ async function renderProfile(id) {
   if($(`#${user.id}-profile`).length == 0) {
     $('.columns').append(`
         <div class="column ${user.id}-profile" id="${user.id}-profile">
+        <div class="title has-text-centered">
+          View of ${user.displayName}'s Profile
+        </div>
           <div class="box has-background-info">
             <article class="message">
               <div class="message-header">
+                ${user.displayName}'s Profile
                 <button class="delete exitUser-${user.id}"></button>
               </div>
             </article>
@@ -821,7 +825,7 @@ async function renderMainFeed() {
     $(`.columns`).append(`
         <div class="column mainfeed">
             <div class="title has-text-centered">
-              Whats Happening!
+              What's Happening!
             </div>
             <div class="box has-background-info feed">
                 <form class="level" id="newTweet">
