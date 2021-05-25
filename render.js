@@ -397,7 +397,7 @@ async function renderUserProfile(user) {
           withCredentials: true,
         });
 
-        wSindow.location.replace("index.html");
+        window.location.replace("index.html");
       });
     });
 
