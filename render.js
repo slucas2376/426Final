@@ -38,7 +38,7 @@ function mainPageFeed(user){
   
       let data = await recentTweets();
       
-      await renderNewTweet(data, ".feed");
+      await renderNewTweet(data, ".feed", false);
       
       setTimeout(function() {
         $(`#showProfile`).off();
@@ -156,7 +156,7 @@ function userButtons(user) {
     }
 
     $(document.getElementById(`${user.id}-tweets`)).empty();
-    await renderNewTweet(sendTweets, `#${user.id}-tweets`);
+    await renderNewTweet(sendTweets, `#${user.id}-tweets`, false);
     
     userButtons(user);
   })
@@ -171,7 +171,7 @@ function userButtons(user) {
 
     let tweetsToAdd = await getUsersTweets(user.id, "likes");
     $(document.getElementById(`${user.id}-tweets`)).empty();
-    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
@@ -185,7 +185,7 @@ function userButtons(user) {
     let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
     $(document.getElementById(`${user.id}-tweets`)).empty();
     // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
     userButtons(user);
   });
 }
@@ -446,7 +446,7 @@ async function renderUserProfile(user) {
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet(data, element) {
+async function renderNewTweet(data, element, source) {
     // awaiting all recent tweets and users personally like tweet ids
 
     let compare = await getUserLikes(localStorage.getItem('uid'));
@@ -465,14 +465,14 @@ async function renderNewTweet(data, element) {
       }
 
       if (data[i] != {} || data[i] != undefined) {
-        await renderTweetBody(data[i], element, bool);
+        await renderTweetBody(data[i], element, bool, source);
       }
 
       bool = false;
     }
 }
 
-async function renderTweetBody(data, element, liked) {
+async function renderTweetBody(data, element, liked, source) {
     let user = await getUser(data.userId);
     let index = 0;
 
@@ -480,7 +480,7 @@ async function renderTweetBody(data, element, liked) {
       index++;
     }
     console.log(data);
-    if(data.type == "tweet" || data.type == "reply") {
+    if((data.type == "tweet" || data.type == "reply") && !source) {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
@@ -808,6 +808,40 @@ async function renderTweetBody(data, element, liked) {
             }
         renderTweetReplies(parent);
         imageToProfile(userParent.id)
+    } else {
+      let replyParent = await getTweet(data.parentId);
+      $(`${element}`).append(`
+        <article class="media tweet-${data.id}">
+          <br>    
+          <div class="box media-content">
+              <article class="media">
+                <figure class="media-left">
+                  <div class="image is-64x64">
+                    <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                  </div>
+                </figure>
+                <div class="media-content">
+                  <div class="content type-${data.userId} clickReply-${data.id}">
+                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
+                    <div class="edit-area-${data.id}-${index}">
+                      ${data.body}
+                      <br>
+                      <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
+                    </div>
+                  </div>
+                  <button class=" button is-info clickReply-${data.parentId} is-small"> Show Origin Feed </button>
+                  <br>
+                  <br>
+                  <div class="retweet-reply-${data.id}-${index}"></div>
+                  <div class="buttons-${data.id}-${index}"></div>
+                </div>
+              </article>
+              
+            </div>
+        </article>
+        
+        `);
+        renderTweetReplies(replyParent);
     }
     
     if (user.id == localStorage.getItem('uid')) {
@@ -889,7 +923,12 @@ function renderTweetReplies(data) {
           await renderTweetReplies(data);
         });
   
-        await renderNewTweet([data], `.tweetReply-${data.id}`);
+        if(data.parentId != "" || data.parentId != undefined) {
+          await renderNewTweet([data], `.tweetReply-${data.id}`, true);
+        } else {
+          await renderNewTweet([data], `.tweetReply-${data.id}`, false);
+        }
+
         $(`.tweetReply-${data.id}`).append(`
           <br>
           <article class="message">
@@ -919,7 +958,7 @@ function renderTweetReplies(data) {
         } else {
           // renders the new replies similar to the main twitter feed.
           // uses the abstraction of the renderNewTweet function to accomplish this
-          await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
+          await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`, false)
         }
       }
     }); 
@@ -943,7 +982,7 @@ async function renderMainFeed() {
 
     let data = await recentTweets();
     
-    await renderNewTweet(data, ".feed");
+    await renderNewTweet(data, ".feed", false);
 
 }
 
