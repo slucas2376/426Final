@@ -544,7 +544,6 @@ async function renderTweetBody(data, element, liked) {
 
         parent = await getTweet(data.parentId);
         let userParent = await getUser(parent.userId);
-        console.log(parent);
         if (parent == "Tweet has been deleted.") {
                 $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
@@ -833,7 +832,6 @@ function renderTweetReplies(data) {
       if (($(`.replyfield-${data.id}`).length == 0) && (columnNum < 5)) {
         columnNum += 1;
         let replys = await getReplies(data.id);
-        console.log(replys.data);
         // initializing the new tweet and reply column
         // Later there will be a close button to delete the column completely and reinstantiate the reply event listener for the tweet body
         $('.columns').append(
