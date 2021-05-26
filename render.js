@@ -494,7 +494,7 @@ async function renderTweetBody(data, element, liked) {
                 </figure>
                 <div class="media-content">
                   <div class="content type-${data.userId} clickReply-${data.id}">
-                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                     <div class="edit-area-${data.id}-${index}">
                       ${data.body}
                       <br>
@@ -524,7 +524,7 @@ async function renderTweetBody(data, element, liked) {
                       <div class="media-content">
                         <div class="content type-${data.userId}">
                           <div class="clickReply-${data.id}">
-                            <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                            <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                               <div class="edit-area-${data.id}-${index}">
                               ${data.body}
                               <br>
@@ -557,7 +557,7 @@ async function renderTweetBody(data, element, liked) {
                 </figure>
                 <div class="media-content">
                   <div class="content type-${data.userId} clickReply-${data.id}">
-                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                     <p class="edit-area-${data.id}-${index}">
                         ${data.body}
                     </p>
@@ -590,7 +590,7 @@ async function renderTweetBody(data, element, liked) {
                           </figure>
                           <div class="media-content">
                             <div class="content type-${data.userId} clickReply-${data.id}">
-                              <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                              <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                               <div class="edit-area-${data.id}-${index}">
                               ${data.body}
                               </div>
@@ -624,7 +624,7 @@ async function renderTweetBody(data, element, liked) {
                         <div class="media-content">
                           <div class="content type-${data.userId}">
                               <div class="clickReply-${data.id}">
-                                <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                                <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                                 <div class="edit-area-${data.id}-${index}">
                                   ${data.body}
                                 </div>
@@ -639,7 +639,7 @@ async function renderTweetBody(data, element, liked) {
                                 <div class="media-content">
                                   <div class="content type-${parent.userId}">
                                     <div class="clickReply-${parent.id}">
-                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createAt.substring(0,10)}</small>
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                       <br>
                                       ${parent.body}
                                       <br>
@@ -674,7 +674,7 @@ async function renderTweetBody(data, element, liked) {
                         <div class="media-content">
                           <div class="content type-${data.userId}">
                             <div class="clickReply-${data.id}">
-                              <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                              <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                               <div class="edit-area-${data.id}-${index}">
                                 ${data.body}
                               </div>
@@ -688,7 +688,7 @@ async function renderTweetBody(data, element, liked) {
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createAt.substring(0,10)}</small>
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                       <br>
                                       ${parent.body}
                                       <br>
@@ -724,7 +724,7 @@ async function renderTweetBody(data, element, liked) {
                           <div class="media-content">
                             <div class="content type-${data.userId}">
                                 <div class="clickReply-${data.id}">
-                                  <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                                   <div class="edit-area-${data.id}-${index}">
                                     ${data.body}
                                   </div>
@@ -738,7 +738,7 @@ async function renderTweetBody(data, element, liked) {
                                   </figure>
                                   <div class="media-content">
                                     <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                        <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createAt.substring(0,10)}</small>
+                                        <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                         <div>
                                         ${parent.body}
                                         </div>
@@ -774,7 +774,7 @@ async function renderTweetBody(data, element, liked) {
                           <div class="media-content">
                             <div class="content type-${data.userId}">
                                 <div class="clickReply-${data.id}">
-                                  <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createAt.substring(0,10)}</small>
+                                  <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
                                   <div class="edit-area-${data.id}-${index}">
                                     ${data.body}
                                   </div>
@@ -788,7 +788,7 @@ async function renderTweetBody(data, element, liked) {
                                   </figure>
                                   <div class="media-content">
                                     <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                        <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createAt.substring(0,10)}</small>
+                                        <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                         <div>
                                         ${parent.body}
                                         </div>
