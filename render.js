@@ -1,5 +1,6 @@
 axios.defaults.withCredentials = true;
 let columnNum = 0;
+let call = 0;
 
 $( async function () {
 
@@ -22,20 +23,28 @@ $( async function () {
 function mainPageFeed(user){
   $(`#replaceFeed`).on('click', async () => {
 
-    $(`.feed`).replaceWith(`
-    <div class="box has-background-info feed">
-      <form class="level" id="newTweet">
-        <button class="button is-primary tweet">Tweet</button>
-      </form>
-    </div>
-    `)
+      $(`#replaceFeed`).off();
+      $(`#reset-page`).off();
 
-    tweetButton();
-
-    let data = await recentTweets();
-    
-    await renderNewTweet(data, ".feed");
-    setTimeout(3000);
+      $(`.feed`).replaceWith(`
+      <div class="box has-background-info feed">
+        <form class="level" id="newTweet">
+          <button class="button is-primary tweet">Tweet</button>
+        </form>
+      </div>
+      `)
+  
+      tweetButton();
+  
+      let data = await recentTweets();
+      
+      await renderNewTweet(data, ".feed");
+      
+      setTimeout(function() {
+        $(`#showProfile`).off();
+        $(`#editProfile`).off();
+        mainPageFeed(user);
+      }, 3000)
   });
 
   $(`#showProfile`).on('click', async () => {
@@ -48,7 +57,16 @@ function mainPageFeed(user){
 
   $(`#reset-page`).on(`click`, async () => {
     $(`.column`).remove();
+    $(`#replaceFeed`).off();
+    $(`#reset-page`).off();
+    
     await renderMainFeed();
+
+    setTimeout(function() {
+      $(`#showProfile`).off();
+      $(`#editProfile`).off();
+      mainPageFeed(user);
+    }, 3000)
   });
 }
 
@@ -211,8 +229,8 @@ async function getUserLikes(userId) {
 
 //Javascript function to render the users own profile. Comes with edit buttons and the ability to manipulate your profile.
 async function renderUserProfile(user) {
-    
-    $('.columns').append(`
+    if($(`.edit-${user.id}`).length == 0) {
+      $('.columns').append(`
     <div class="column edit-${user.id}">
         <div class="title has-text-centered">
           Edit Profile
@@ -423,6 +441,8 @@ async function renderUserProfile(user) {
       });
     });
 
+    }
+    
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
