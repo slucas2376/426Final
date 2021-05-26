@@ -1635,10 +1635,10 @@ function tweetButton() {
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
+                          <figure class="image is-16by9">
+                            <iframe class="has-ratio" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
+                          </figure>
                         </div>
-                        <figure class="image is-16by9">
-                         <iframe class="has-ratio" src="https://www.youtube.com/embed/${result.videoId}" frameborder="0" allowfullscreen></iframe>
-                        </figure>
                       </div>
                       <div class="retweet-reply-${result.id}-0"></div>
                       <div class="buttons-${result.id}-0">
@@ -1698,6 +1698,7 @@ function tweetButton() {
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
+                          <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                         </div>
                         <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
