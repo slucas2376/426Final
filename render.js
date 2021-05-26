@@ -924,7 +924,7 @@ function renderTweetReplies(data, replies) {
           await renderTweetReplies(data, replies);
         });
   
-        if(replyItself) {
+        if(replies) {
           await renderNewTweet([data], `.tweetReply-${data.id}`, true);
         } else {
           await renderNewTweet([data], `.tweetReply-${data.id}`, false);
