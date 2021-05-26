@@ -1597,9 +1597,9 @@ function tweetButton() {
       
         $(`.image-video`).replaceWith(`
           <div class="field image-video">
-            <label class="label">Image URL</label>
+            <label class="label">Image and Gif URLs</label>
             <div class="control">
-              <input id="link" class="input" type="text" placeholder="image link">
+              <input id="link" class="input" type="text" placeholder="image or gif link">
             </div>
           </div>
         `);
