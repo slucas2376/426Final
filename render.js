@@ -44,7 +44,7 @@ function mainPageFeed(user){
         $(`#showProfile`).off();
         $(`#editProfile`).off();
         mainPageFeed(user);
-      }, 3000)
+      }, 2000)
   });
 
   $(`#showProfile`).on('click', async () => {
@@ -59,14 +59,14 @@ function mainPageFeed(user){
     $(`.column`).remove();
     $(`#replaceFeed`).off();
     $(`#reset-page`).off();
-    
+
     await renderMainFeed();
 
     setTimeout(function() {
       $(`#showProfile`).off();
       $(`#editProfile`).off();
       mainPageFeed(user);
-    }, 3000)
+    }, 2000)
   });
 }
 
