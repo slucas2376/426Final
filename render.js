@@ -759,7 +759,7 @@ async function renderTweetBody(data, element, liked, source) {
                     </article>
                 `);
               
-                renderTweetReplies(replyParent);
+                renderTweetReplies(replyParent, false);
             } else {
               $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
@@ -806,7 +806,7 @@ async function renderTweetBody(data, element, liked, source) {
                     </article>
                 `);
             }
-        renderTweetReplies(parent);
+        renderTweetReplies(parent, false);
         imageToProfile(userParent.id)
     
     } else {
@@ -842,7 +842,7 @@ async function renderTweetBody(data, element, liked, source) {
         </article>
         
         `);
-        renderTweetReplies(replyParent);
+        renderTweetReplies(replyParent, true);
     }
     
     if (user.id == localStorage.getItem('uid')) {
@@ -871,7 +871,7 @@ async function renderTweetBody(data, element, liked, source) {
     retweetButton(data, index);
     replyButton(data, index);
     deleteButton(data);
-    renderTweetReplies(data);
+    renderTweetReplies(data, false);
     imageToProfile(user.id);
 
 }
@@ -888,7 +888,7 @@ function imageToProfile(id){
   })
 }
 
-function renderTweetReplies(data) {
+function renderTweetReplies(data, replies) {
     // when new tweet bodies of the same id are created the listener is removed and re-applied to all intances
     // avoids major error of placing multiple of the same event listeners
     
@@ -921,10 +921,10 @@ function renderTweetReplies(data) {
         $(`.deleteReply-${data.id}`).on('click', async () => {
           $(`.replyfield-${data.id}`).remove();
           columnNum -= 1;
-          await renderTweetReplies(data);
+          await renderTweetReplies(data, replies);
         });
   
-        if(data.parentId != "" || data.parentId != undefined) {
+        if(replyItself) {
           await renderNewTweet([data], `.tweetReply-${data.id}`, true);
         } else {
           await renderNewTweet([data], `.tweetReply-${data.id}`, false);
@@ -1100,7 +1100,7 @@ function editButton(data, index) {
       }
       retweetButton(data, index);
       replyButton(data, index);
-      renderTweetReplies(data);
+      renderTweetReplies(data, false);
       editButton(data, index);
     });
 
@@ -1135,7 +1135,7 @@ function editButton(data, index) {
       }
       retweetButton(data, index);
       replyButton(data, index);
-      renderTweetReplies(data);
+      renderTweetReplies(data, false);
       editButton(data, index);
     });
   });
@@ -1383,7 +1383,7 @@ function retweetButton(data, index) {
                   </article>
               `);
             
-              renderTweetReplies(replyParent);
+              renderTweetReplies(replyParent, true);
           } else {
             $(`${element}`).prepend(`
                   <article class="media tweet-${retwe.id}">
@@ -1436,14 +1436,14 @@ function retweetButton(data, index) {
                   </article>
               `);
           }
-        renderTweetReplies(parent);
+        renderTweetReplies(parent, false);
         imageToProfile(userParent.id)
         like(retwe, false);
         editButton(retwe, index);
         retweetButton(retwe, index);
         replyButton(retwe, index);
         deleteButton(retwe);
-        renderTweetReplies(retwe);
+        renderTweetReplies(retwe, false);
         imageToProfile(user.id);
 
         $('#newTweet').remove();
@@ -1557,7 +1557,7 @@ function replyButton(data, index) {
       retweetButton(replys.data, 0);
       replyButton(replys.data, 0);
       deleteButton(replys.data);
-      renderTweetReplies(replys.data);
+      renderTweetReplies(replys.data, false);
       imageToProfile(replys.data.userId);
 
 
@@ -1708,7 +1708,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result);
+          renderTweetReplies(result, false);
           imageToProfile(result.userId);
 
         } else if ($(`#image`).is(`:checked`) && ($(`#link`).val() != "")) {
@@ -1769,7 +1769,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result);
+          renderTweetReplies(result, false);
           imageToProfile(result.userId);
 
         } else { 
@@ -1824,7 +1824,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result);
+          renderTweetReplies(result, false);
           imageToProfile(result.userId);
         }
       
