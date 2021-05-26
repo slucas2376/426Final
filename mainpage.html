@@ -32,7 +32,14 @@
     
     
       <nav class="navbar is-transparent is-info" role="navigation" aria-label="main navigation">
-            
+        <div class="navbar-brand">
+          <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="mainMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+    
         <div class="navbar-menu" id="mainMenu">
           <div class="navbar-start">
             <a id="replaceFeed" class="navbar-item">
@@ -57,24 +64,25 @@
               Reset Page
             </a>
           </div>
-    
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div id="autocomplete" class="autocomplete">
-                  <label for="userPicker">User search：</label>
-                      <input id="userPicker" class="autocomplete-input">
-                          <ul class="autocomplete-result-list" style="color:black"></ul>
-              </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div id="autocomplete" class="autocomplete">
+                <label for="userPicker">User search：</label>
+                    <input id="userPicker" class="autocomplete-input">
+                        <ul class="autocomplete-result-list" style="color:black"></ul>
             </div>
-            <div class="navbar-item">
-              <div class="field is-grouped">
-                <p class="control">
-                  <button class="button logout" type="button">Logout</button>
-                </p>
-              </div>
+          </div>
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <button class="button logout" type="button">Logout</button>
+              </p>
             </div>
           </div>
         </div>
+
       </nav>
       <div class="results"></div>
       <div id="root">
