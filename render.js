@@ -1700,7 +1700,6 @@ function tweetButton() {
                           <br>
                           <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                         </div>
-                        <img class="has-ratio" width="50%" height="50%" src="${result.imageLink}">
                       </div>
                       <div class="retweet-reply-${result.id}-0"></div>
                       <div class="buttons-${result.id}-0">
