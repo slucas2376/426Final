@@ -870,7 +870,7 @@ function renderTweetReplies(data) {
         $('.columns').append(
           `<div class="column replyfield-${data.id}">
             <div class="title has-text-centered">
-              What's Happening!
+              What's ${data.userId}'s Replies like?
             </div>
             <div class="box has-background-info tweetReply-${data.id}">
             <article class="message">
