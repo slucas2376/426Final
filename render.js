@@ -906,7 +906,7 @@ function renderTweetReplies(data) {
         // no replys gives basic "no replies" message
         if (replys.data.length == 0) {
           $(`.tweetReplyField-${data.id}`).append(`
-            <article class="media noReplys-${data.id}">
+            <article class="media noReplies-${data.id}">
               <div class="box media-content">
                 <article class="media">
                   <figure class="media-left">
@@ -1475,7 +1475,7 @@ function replyButton(data, index) {
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
-      $(`.noReplys-${data.id}`).remove();
+      $(`.noReplies-${data.id}`).remove();
 
       await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
 
