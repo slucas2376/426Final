@@ -1470,7 +1470,7 @@ function replyButton(data, index) {
       data.replyCount += 1;
       let final = $(`.reply-body-${data.id}-${index}`).val();
       let replys = await reply(data.id, final);
-
+      console.log(replys);
       $(`.reply-${data.id}-${index}`).replaceWith(`
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
