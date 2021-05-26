@@ -347,7 +347,7 @@ async function renderUserProfile(user) {
               } catch {
                 $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
-                    You didn't enter you correct, original password. Please try again.
+                    You didn't enter your correct, original password. Please try again.
                   </label>
                 `);
 
@@ -357,7 +357,7 @@ async function renderUserProfile(user) {
             } else {
               $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
-                    You didn't enter you correct, original password. Please try again.
+                    You didn't enter your correct, original password. Please try again.
                   </label>
                 `);
 
@@ -421,7 +421,7 @@ async function renderUserProfile(user) {
         } else {
           $(`.fail-message`).replaceWith(`
             <label class="label has-text-centered is-danger fail-message">
-              You didn't enter you correct password. Please try again.
+              You didn't enter your correct password. Please try again.
             </label>
           `);
 
@@ -598,7 +598,7 @@ async function renderTweetBody(data, element, liked) {
                               <article class="media">
                                 <br>
                                 <div class="media-content">
-                                  <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                                  <p> Whoops, this tweet was deleted. Sorry for the inconvenience </p>
                                 </div>
                                 <br>
                               </article>
@@ -910,7 +910,7 @@ function renderTweetReplies(data) {
               <div class="box media-content">
                 <article class="media">
                   <figure class="media-left">
-                    <h1 class="has-text-centered"> No replys </h1>
+                    <h1 class="has-text-centered"> No replies </h1>
                   </figure>
                 </article>
               </div>
@@ -1158,7 +1158,7 @@ function retweetButton(data, index) {
                             <article class="media">
                               <br>
                               <div class="media-content">
-                                <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
+                                <p> Whoops, this tweet was deleted. Sorry for the inconvenience. </p>
                               </div>
                               <br>
                             </article>
