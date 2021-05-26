@@ -479,7 +479,7 @@ async function renderTweetBody(data, element, liked) {
     while ($(`.edit-area-${data.id}-${index}`).length > 0) {
       index++;
     }
-
+    console.log(data);
     if(data.type == "tweet" || data.type == "reply") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
@@ -897,6 +897,7 @@ function renderTweetReplies(data) {
               Replies to ${data.userId}'s Tweet
             </div>
           </article>
+          <div class="tweetReplyField-${data.id}"></div>
         `);
   
         // turns off click event listener for tweet body to avoid creating tons of reply columns
@@ -904,8 +905,8 @@ function renderTweetReplies(data) {
   
         // no replys gives basic "no replies" message
         if (replys.data.length == 0) {
-          $(`.tweetReply-${data.id}`).append(`
-            <article class="media tweet-${data.id}">
+          $(`.tweetReplyField-${data.id}`).append(`
+            <article class="media noReplys-${data.id}">
               <div class="box media-content">
                 <article class="media">
                   <figure class="media-left">
@@ -918,7 +919,7 @@ function renderTweetReplies(data) {
         } else {
           // renders the new replies similar to the main twitter feed.
           // uses the abstraction of the renderNewTweet function to accomplish this
-          await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
+          await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
         }
       }
     }); 
@@ -1474,7 +1475,9 @@ function replyButton(data, index) {
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
-      await renderNewTweet(replys.data, `.tweetReply-${replys.data.id}`)
+      $(`.noReplys-${data.id}`).remove();
+
+      await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
