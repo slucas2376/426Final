@@ -1468,11 +1468,13 @@ function replyButton(data, index) {
     $(`.reply-submit-${data.id}-${index}`).on('click', async () => {
       data.replyCount += 1;
       let final = $(`.reply-body-${data.id}-${index}`).val();
-      await reply(data.id, final);
+      let replys = await reply(data.id, final);
 
       $(`.reply-${data.id}-${index}`).replaceWith(`
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
+
+      await renderNewTweet(replys.data, `.tweetReply-${replys.id}`)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
