@@ -1150,7 +1150,7 @@ function retweetButton(data, index) {
                         </figure>
                         <div class="media-content">
                           <div class="content type-${retwe.userId} clickReply-${retwe.id}">
-                            <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                            <strong>${user.displayName}</strong> <small>@${retwe.userId}: ${retwe.createdAt.substring(0,10)}</small>
                             <div class="edit-area-${retwe.id}-${index}">
                             ${retwe.body}
                             </div>
@@ -1190,7 +1190,7 @@ function retweetButton(data, index) {
                       <div class="media-content">
                         <div class="content type-${retwe.userId}">
                             <div class="clickReply-${retwe.id}">
-                              <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                              <strong>${user.displayName}</strong> <small>@${retwe.userId}: ${retwe.createdAt.substring(0,10)}</small>
                               <div class="edit-area-${retwe.id}-${index}">
                                 ${retwe.body}
                               </div>
@@ -1205,7 +1205,7 @@ function retweetButton(data, index) {
                               <div class="media-content">
                                 <div class="content type-${parent.userId}">
                                   <div class="clickReply-${parent.id}">
-                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                     <br>
                                     ${parent.body}
                                     <br>
@@ -1246,7 +1246,7 @@ function retweetButton(data, index) {
                       <div class="media-content">
                         <div class="content type-${retwe.userId}">
                           <div class="clickReply-${retwe.id}">
-                            <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                            <strong>${user.displayName}</strong> <small>@${retwe.userId}: ${retwe.createdAt.substring(0,10)}</small>
                             <div class="edit-area-${retwe.id}-${index}">
                               ${retwe.body}
                             </div>
@@ -1260,7 +1260,7 @@ function retweetButton(data, index) {
                               </figure>
                               <div class="media-content">
                                 <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                    <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                     <br>
                                     ${parent.body}
                                     <br>
@@ -1302,7 +1302,7 @@ function retweetButton(data, index) {
                         <div class="media-content">
                           <div class="content type-${retwe.userId}">
                               <div class="clickReply-${retwe.id}">
-                                <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                                <strong>${user.displayName}</strong> <small>@${retwe.userId}: ${retwe.createdAt.substring(0,10)}</small>
                                 <div class="edit-area-${retwe.id}-${index}">
                                   ${retwe.body}
                                 </div>
@@ -1316,7 +1316,7 @@ function retweetButton(data, index) {
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                       <div>
                                       ${parent.body}
                                       </div>
@@ -1358,7 +1358,7 @@ function retweetButton(data, index) {
                         <div class="media-content">
                           <div class="content type-${retwe.userId}">
                               <div class="clickReply-${retwe.id}">
-                                <strong>${user.displayName}</strong> <small>@${retwe.userId}</small>
+                                <strong>${user.displayName}</strong> <small>@${retwe.userId}: ${retwe.createdAt.substring(0,10)}</small>
                                 <div class="edit-area-${retwe.id}-${index}">
                                   ${retwe.body}
                                 </div>
@@ -1372,7 +1372,7 @@ function retweetButton(data, index) {
                                 </figure>
                                 <div class="media-content">
                                   <div class="content type-${parent.userId} clickReply-${parent.id}">
-                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}</small>
+                                      <strong>${userParent.displayName}</strong> <small>@${parent.userId}: ${parent.createdAt.substring(0,10)}</small>
                                       <div>
                                       ${parent.body}
                                       </div>
@@ -1491,7 +1491,7 @@ function replyButton(data, index) {
               </figure>
               <div class="media-content">
                 <div class="content type-${replys.data.userId} clickReply-${replys.data.id}">
-                  <strong>${user.displayName}</strong> <small>@${replys.data.userId}</small>
+                  <strong>${user.displayName}</strong> <small>@${replys.data.userId}: ${replys.data.createdAt.substring(0,10)}</small>
                   <p class="edit-area-${replys.data.id}-0">
                       ${replys.data.body}
                   </p>
@@ -1631,7 +1631,7 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId} clickReply-${result.id}">
-                      <strong>${user.displayName}</strong> <small>@${user.id}</small>
+                      <strong>${user.displayName}</strong> <small>@${user.id}: ${result.createdAt.substring(0,10)}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
@@ -1694,7 +1694,7 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.userId} clickReply-${result.id}">
-                        <strong>${user.displayName}</strong> <small>@${user.id}</small>
+                        <strong>${user.displayName}</strong> <small>@${user.id}: ${result.createdAt.substring(0,10)}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
@@ -1749,7 +1749,7 @@ function tweetButton() {
                     </figure>
                     <div class="media-content">
                       <div class="content type-${result.id} clickReply-${result.id}">
-                      <strong>${user.displayName}</strong> <small>@${user.id}</small>
+                      <strong>${user.displayName}</strong> <small>@${user.id}: ${result.createdAt.substring(0,10)}</small>
                         <div class="edit-area-${result.id}-0">
                           ${result.body}
                           <br>
