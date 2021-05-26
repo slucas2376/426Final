@@ -955,7 +955,7 @@ function editButton(data, index) {
     
     if (data.mediaType == "video") {
       $(`.edit-area-${data.id}-${index}`).replaceWith(`
-      <div class="edit-area-${data.id}">
+      <div class="edit-area-${data.id}-${index}">
         <div class="field">
           <div class="contianer">
             <p> Main Body </p>
