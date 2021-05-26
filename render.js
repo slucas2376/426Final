@@ -1496,7 +1496,8 @@ function replyButton(data, index) {
                       ${replys.data.body}
                   </p>
                 </div>
-                <div class="retweet-reply-${replys.data.id}-0">
+                <div class="retweet-reply-${replys.data.id}-0"></div>
+                <div class="buttons-${data.id}-${index}">
                   <button class="button like-${replys.data.id} is-info is-small">Like: ${replys.data.likeCount}</button>
                   <button class="button retweet-${replys.data.id}-0 is-info is-small">Retweet: ${replys.data.retweetCount}</button>
                   <button class="button reply-${replys.data.id}-0 is-info is-small">Reply: ${replys.data.replyCount}</button>
