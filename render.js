@@ -1470,14 +1470,14 @@ function replyButton(data, index) {
       data.replyCount += 1;
       let final = $(`.reply-body-${data.id}-${index}`).val();
       let replys = await reply(data.id, final);
-      console.log(replys);
+
       $(`.reply-${data.id}-${index}`).replaceWith(`
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
       $(`.noReplies-${data.id}`).remove();
 
-      await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
+      await renderNewTweet(replys.data, `.tweetReplyField-${replys.data.parentId}`)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
