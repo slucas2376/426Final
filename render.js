@@ -44,7 +44,7 @@ function mainPageFeed(user){
         $(`#showProfile`).off();
         $(`#editProfile`).off();
         mainPageFeed(user);
-      }, 2000)
+      }, 1750)
   });
 
   $(`#showProfile`).on('click', async () => {
@@ -66,7 +66,7 @@ function mainPageFeed(user){
       $(`#showProfile`).off();
       $(`#editProfile`).off();
       mainPageFeed(user);
-    }, 2000)
+    }, 1750)
   });
 }
 
