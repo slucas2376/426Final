@@ -1474,7 +1474,7 @@ function replyButton(data, index) {
         <button class="button reply-${data.id}-${index} is-info is-small"> Reply: ${data.replyCount} </button>
       `)
 
-      await renderNewTweet(replys.data, `.tweetReply-${replys.id}`)
+      await renderNewTweet(replys.data, `.tweetReply-${replys.data.id}`)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
