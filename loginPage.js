@@ -17,7 +17,6 @@ function signIn() {
             $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Sign in didn't work, your password or user id was incorrect or not registered </p>`);
             return false;
         }
-        console.log(result.data)
         localStorage.setItem('uid', userName)
         window.location.replace("mainpage.html");
         return true;

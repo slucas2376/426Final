@@ -479,7 +479,7 @@ async function renderTweetBody(data, element, liked, source) {
     while ($(`.edit-area-${data.id}-${index}`).length > 0) {
       index++;
     }
-    console.log(data);
+
     if((data.type == "tweet" || data.type == "reply") && !source) {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
@@ -808,6 +808,7 @@ async function renderTweetBody(data, element, liked, source) {
             }
         renderTweetReplies(parent);
         imageToProfile(userParent.id)
+    
     } else {
       let replyParent = await getTweet(data.parentId);
       $(`${element}`).append(`
