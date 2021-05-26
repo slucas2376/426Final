@@ -38,7 +38,7 @@ function mainPageFeed(user){
   
       let data = await recentTweets();
       
-      await renderNewTweet(data, ".feed", false);
+      await renderNewTweet(data, ".feed");
       
       setTimeout(function() {
         $(`#showProfile`).off();
@@ -156,7 +156,7 @@ function userButtons(user) {
     }
 
     $(document.getElementById(`${user.id}-tweets`)).empty();
-    await renderNewTweet(sendTweets, `#${user.id}-tweets`, false);
+    await renderNewTweet(sendTweets, `#${user.id}-tweets`);
     
     userButtons(user);
   })
@@ -171,7 +171,7 @@ function userButtons(user) {
 
     let tweetsToAdd = await getUsersTweets(user.id, "likes");
     $(document.getElementById(`${user.id}-tweets`)).empty();
-    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     userButtons(user);
   })
   $(document.getElementById(`${user.id}-retweeted`)).on('click', async () => {
@@ -185,7 +185,7 @@ function userButtons(user) {
     let tweetsToAdd = await getUsersTweets(user.id, "retweets"); // array of relevant tweets, most recent first, so just add by iterating through it
     $(document.getElementById(`${user.id}-tweets`)).empty();
     // if this for loop syntax doesn't work just rewrite it as the long one I guess? or figure out the rendering issue
-    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`, false);
+    await renderNewTweet(tweetsToAdd, `#${user.id}-tweets`);
     userButtons(user);
   });
 }
@@ -347,7 +347,7 @@ async function renderUserProfile(user) {
               } catch {
                 $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
-                    You didn't enter your correct, original password. Please try again.
+                    You didn't enter you correct, original password. Please try again.
                   </label>
                 `);
 
@@ -357,7 +357,7 @@ async function renderUserProfile(user) {
             } else {
               $(`.fail-message`).replaceWith(`
                   <label class="label has-text-centered is-danger fail-message">
-                    You didn't enter your correct, original password. Please try again.
+                    You didn't enter you correct, original password. Please try again.
                   </label>
                 `);
 
@@ -421,7 +421,7 @@ async function renderUserProfile(user) {
         } else {
           $(`.fail-message`).replaceWith(`
             <label class="label has-text-centered is-danger fail-message">
-              You didn't enter your correct password. Please try again.
+              You didn't enter you correct password. Please try again.
             </label>
           `);
 
@@ -446,7 +446,7 @@ async function renderUserProfile(user) {
 }
 
 // still trying to figure out exactly how to provide the "tweet" object. 
-async function renderNewTweet(data, element, source) {
+async function renderNewTweet(data, element) {
     // awaiting all recent tweets and users personally like tweet ids
 
     let compare = await getUserLikes(localStorage.getItem('uid'));
@@ -465,22 +465,22 @@ async function renderNewTweet(data, element, source) {
       }
 
       if (data[i] != {} || data[i] != undefined) {
-        await renderTweetBody(data[i], element, bool, source);
+        await renderTweetBody(data[i], element, bool);
       }
 
       bool = false;
     }
 }
 
-async function renderTweetBody(data, element, liked, source) {
+async function renderTweetBody(data, element, liked) {
     let user = await getUser(data.userId);
     let index = 0;
 
     while ($(`.edit-area-${data.id}-${index}`).length > 0) {
       index++;
     }
-
-    if((data.type == "tweet" || data.type == "reply") && !source) {
+    console.log(data);
+    if(data.type == "tweet" || data.type == "reply") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`
         <article class="media tweet-${data.id}">
@@ -598,7 +598,7 @@ async function renderTweetBody(data, element, liked, source) {
                               <article class="media">
                                 <br>
                                 <div class="media-content">
-                                  <p> Whoops, this tweet was deleted. Sorry for the inconvenience </p>
+                                  <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                                 </div>
                                 <br>
                               </article>
@@ -759,7 +759,7 @@ async function renderTweetBody(data, element, liked, source) {
                     </article>
                 `);
               
-                renderTweetReplies(replyParent, false);
+                renderTweetReplies(replyParent);
             } else {
               $(`${element}`).append(`
                     <article class="media tweet-${data.id}">
@@ -806,43 +806,8 @@ async function renderTweetBody(data, element, liked, source) {
                     </article>
                 `);
             }
-        renderTweetReplies(parent, false);
+        renderTweetReplies(parent);
         imageToProfile(userParent.id)
-    
-    } else {
-      let replyParent = await getTweet(data.parentId);
-      $(`${element}`).append(`
-        <article class="media tweet-${data.id}">
-          <br>    
-          <div class="box media-content">
-              <article class="media">
-                <figure class="media-left">
-                  <div class="image is-64x64">
-                    <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
-                  </div>
-                </figure>
-                <div class="media-content">
-                  <div class="content type-${data.userId} clickReply-${data.id}">
-                    <strong>${user.displayName}</strong> <small>@${data.userId}: ${data.createdAt.substring(0,10)}</small>
-                    <div class="edit-area-${data.id}-${index}">
-                      ${data.body}
-                      <br>
-                      <img class="has-ratio" width="50%" height="50%" src="${data.imageLink}">
-                    </div>
-                  </div>
-                  <button class=" button is-info clickReply-${data.parentId} is-small"> Show Origin Feed </button>
-                  <br>
-                  <br>
-                  <div class="retweet-reply-${data.id}-${index}"></div>
-                  <div class="buttons-${data.id}-${index}"></div>
-                </div>
-              </article>
-              
-            </div>
-        </article>
-        
-        `);
-        renderTweetReplies(replyParent, true);
     }
     
     if (user.id == localStorage.getItem('uid')) {
@@ -871,7 +836,7 @@ async function renderTweetBody(data, element, liked, source) {
     retweetButton(data, index);
     replyButton(data, index);
     deleteButton(data);
-    renderTweetReplies(data, false);
+    renderTweetReplies(data);
     imageToProfile(user.id);
 
 }
@@ -888,7 +853,7 @@ function imageToProfile(id){
   })
 }
 
-function renderTweetReplies(data, replies) {
+function renderTweetReplies(data) {
     // when new tweet bodies of the same id are created the listener is removed and re-applied to all intances
     // avoids major error of placing multiple of the same event listeners
     
@@ -921,15 +886,10 @@ function renderTweetReplies(data, replies) {
         $(`.deleteReply-${data.id}`).on('click', async () => {
           $(`.replyfield-${data.id}`).remove();
           columnNum -= 1;
-          await renderTweetReplies(data, replies);
+          await renderTweetReplies(data);
         });
   
-        if(replies) {
-          await renderNewTweet([data], `.tweetReply-${data.id}`, true);
-        } else {
-          await renderNewTweet([data], `.tweetReply-${data.id}`, false);
-        }
-
+        await renderNewTweet([data], `.tweetReply-${data.id}`);
         $(`.tweetReply-${data.id}`).append(`
           <br>
           <article class="message">
@@ -950,7 +910,7 @@ function renderTweetReplies(data, replies) {
               <div class="box media-content">
                 <article class="media">
                   <figure class="media-left">
-                    <h1 class="has-text-centered"> No replies </h1>
+                    <h1 class="has-text-centered"> No replys </h1>
                   </figure>
                 </article>
               </div>
@@ -959,7 +919,7 @@ function renderTweetReplies(data, replies) {
         } else {
           // renders the new replies similar to the main twitter feed.
           // uses the abstraction of the renderNewTweet function to accomplish this
-          await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`, false)
+          await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
         }
       }
     }); 
@@ -983,7 +943,7 @@ async function renderMainFeed() {
 
     let data = await recentTweets();
     
-    await renderNewTweet(data, ".feed", false);
+    await renderNewTweet(data, ".feed");
 
 }
 
@@ -1100,7 +1060,7 @@ function editButton(data, index) {
       }
       retweetButton(data, index);
       replyButton(data, index);
-      renderTweetReplies(data, false);
+      renderTweetReplies(data);
       editButton(data, index);
     });
 
@@ -1135,7 +1095,7 @@ function editButton(data, index) {
       }
       retweetButton(data, index);
       replyButton(data, index);
-      renderTweetReplies(data, false);
+      renderTweetReplies(data);
       editButton(data, index);
     });
   });
@@ -1198,7 +1158,7 @@ function retweetButton(data, index) {
                             <article class="media">
                               <br>
                               <div class="media-content">
-                                <p> Whoops, this tweet was deleted. Sorry for the inconvenience. </p>
+                                <p> Whoops, this tweet was deleted. Sorry for the inconviencence </p>
                               </div>
                               <br>
                             </article>
@@ -1383,7 +1343,7 @@ function retweetButton(data, index) {
                   </article>
               `);
             
-              renderTweetReplies(replyParent, true);
+              renderTweetReplies(replyParent);
           } else {
             $(`${element}`).prepend(`
                   <article class="media tweet-${retwe.id}">
@@ -1436,14 +1396,14 @@ function retweetButton(data, index) {
                   </article>
               `);
           }
-        renderTweetReplies(parent, false);
+        renderTweetReplies(parent);
         imageToProfile(userParent.id)
         like(retwe, false);
         editButton(retwe, index);
         retweetButton(retwe, index);
         replyButton(retwe, index);
         deleteButton(retwe);
-        renderTweetReplies(retwe, false);
+        renderTweetReplies(retwe);
         imageToProfile(user.id);
 
         $('#newTweet').remove();
@@ -1557,7 +1517,7 @@ function replyButton(data, index) {
       retweetButton(replys.data, 0);
       replyButton(replys.data, 0);
       deleteButton(replys.data);
-      renderTweetReplies(replys.data, false);
+      renderTweetReplies(replys.data);
       imageToProfile(replys.data.userId);
 
 
@@ -1708,7 +1668,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result, false);
+          renderTweetReplies(result);
           imageToProfile(result.userId);
 
         } else if ($(`#image`).is(`:checked`) && ($(`#link`).val() != "")) {
@@ -1769,7 +1729,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result, false);
+          renderTweetReplies(result);
           imageToProfile(result.userId);
 
         } else { 
@@ -1824,7 +1784,7 @@ function tweetButton() {
           replyButton(result, 0);
           editButton(result, 0);
           deleteButton(result);
-          renderTweetReplies(result, false);
+          renderTweetReplies(result);
           imageToProfile(result.userId);
         }
       
