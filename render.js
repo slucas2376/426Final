@@ -1477,7 +1477,7 @@ function replyButton(data, index) {
 
       $(`.noReplys-${data.id}`).remove();
 
-      await renderNewTweet(replys.data, `.tweetReply-${data.id}`)
+      await renderNewTweet(replys.data, `.tweetReplyField-${data.id}`)
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
