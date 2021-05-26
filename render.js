@@ -1477,8 +1477,48 @@ function replyButton(data, index) {
 
       $(`.noReplies-${data.id}`).remove();
 
-      console.log(replys.data.parentId);
-      await renderTweetBody(replys.data, `.tweetReplyField-${replys.data.parentId}`, false);
+      let user = await getUser(replys.data.userId)
+
+      $(`.tweetReplyField-${replys.data.parentId}`).prepend(`
+      <article class="media tweet-${replys.data.id}">
+        <br>    
+        <div class="box media-content">
+            <article class="media">
+              <figure class="media-left">
+                <div class="image is-64x64">
+                  <img class="is-rounded userGate-${user.id}" src="${user.avatar}">
+                </div>
+              </figure>
+              <div class="media-content">
+                <div class="content type-${replys.data.userId} clickReply-${replys.data.id}">
+                  <strong>${user.displayName}</strong> <small>@${replys.data.userId}</small>
+                  <p class="edit-area-${replys.data.id}-0">
+                      ${replys.data.body}
+                  </p>
+                </div>
+                <div class="retweet-reply-${replys.data.id}-0">
+                  <button class="button like-${replys.data.id} is-info is-small">Like: ${replys.data.likeCount}</button>
+                  <button class="button retweet-${replys.data.id}-0 is-info is-small">Retweet: ${replys.data.retweetCount}</button>
+                  <button class="button reply-${replys.data.id}-0 is-info is-small">Reply: ${replys.data.replyCount}</button>
+                  <button class="button edit-${replys.data.id}-0 is-info is-small">Edit</button>
+                  <button class="button delete-${replys.data.id} is-danger is-small"> Delete </button>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+        </article>
+      
+      `);
+
+      like(replys.data, false);
+      editButton(replys.data, 0);
+      retweetButton(replys.data, 0);
+      replyButton(replys.data, 0);
+      deleteButton(replys.data);
+      renderTweetReplies(replys.data);
+      imageToProfile(replys.data.userId);
+
 
       $(`.retweet-reply-${data.id}-${index}`).replaceWith(`
         <div class="retweet-reply-${data.id}-${index}"></div>
