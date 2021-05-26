@@ -21,6 +21,7 @@ $( async function () {
 // initializes all navbar buttons
 function mainPageFeed(user){
   $(`#replaceFeed`).on('click', async () => {
+
     $(`.feed`).replaceWith(`
     <div class="box has-background-info feed">
       <form class="level" id="newTweet">
@@ -34,6 +35,7 @@ function mainPageFeed(user){
     let data = await recentTweets();
     
     await renderNewTweet(data, ".feed");
+    setTimeout(3000);
   });
 
   $(`#showProfile`).on('click', async () => {
