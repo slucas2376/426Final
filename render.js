@@ -21,8 +21,19 @@ $( async function () {
 // initializes all navbar buttons
 function mainPageFeed(user){
   $(`#replaceFeed`).on('click', async () => {
-    $(`.mainfeed`).remove();
-    await renderMainFeed();
+    $(`.feed`).replaceWith(`
+    <div class="box has-background-info feed">
+      <form class="level" id="newTweet">
+        <button class="button is-primary tweet">Tweet</button>
+      </form>
+    </div>
+    `)
+
+    tweetButton();
+
+    let data = await recentTweets();
+    
+    await renderNewTweet(data, ".feed");
   });
 
   $(`#showProfile`).on('click', async () => {
