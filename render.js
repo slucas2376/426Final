@@ -76,7 +76,6 @@ async function renderProfile(id) {
   // needs to add a column remove button at some point; when you work out formatting the handler is in there, just needs a button to attach to
   let user = await getUser(id);
   // user will be empty object if no such registered user exists
-  if (user == {}) {console.log("profile retrieval failed"); return;}
 
   if($(`#${user.id}-profile`).length == 0) {
     $('.columns').append(`
@@ -479,7 +478,7 @@ async function renderTweetBody(data, element, liked) {
     while ($(`.edit-area-${data.id}-${index}`).length > 0) {
       index++;
     }
-    console.log(data);
+
     if(data.type == "tweet" || data.type == "reply") {
       if(data.mediaType == "image") {
         $(`${element}`).append(`

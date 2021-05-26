@@ -82,19 +82,14 @@ function signIn() {
     
         $(`#start`).on('click', async () => {
 
-            console.log($(`#id`).val());
-            console.log($(`#name`).val());
-            console.log($(`#pass`).val());
-            console.log($(`#avat`).val());           
-
             try {
                 let result = await register(`${$(`#id`).val()}`, `${$(`#name`).val()}`, `${$(`#pass`).val()}`, `${$(`#avat`).val()}`);
             } catch (error) {
                 $(`#warning`).replaceWith(`<p class="has-text-centered has-text-danger"> Make sure your userid is not already in your use.</p>`);
                 return false;
             }
+            
             localStorage.setItem('uid', $(`#id`).val());
-            console.log(localStorage.getItem('uid'));
             window.location.replace("mainpage.html");
             return true;
         });
