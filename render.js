@@ -980,7 +980,7 @@ function editButton(data, index) {
             <p> Image Link </p>
             <textarea class="replace-image-${data.id}-${index}"> ${data.imageLink} </textarea>
             </div>
-        </div>
+          </div>
         <div class="edit-buttons-${data.id}-${index}">
           <button class="button submit-edit-${data.id}-${index} is-info is-small" type="button">Submit Edit</button>
           <button class="button cancel-edit-${data.id}-${index} is-danger is-small" type="button"> Cancel </button>
