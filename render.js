@@ -1,6 +1,5 @@
 axios.defaults.withCredentials = true;
 let columnNum = 0;
-let call = 0;
 
 $( async function () {
 
